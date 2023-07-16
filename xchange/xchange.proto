@@ -1,0 +1,33 @@
+syntax = 'proto3';
+
+package xchange;
+import "google/protobuf/empty.proto";
+import "player.proto";
+import "player_wrappers.proto";
+import "anticheat_types.proto";
+
+message PlayerReceipt {
+  string internalId = 1;
+}
+
+message TimestampedReportData {
+  int32 timestamp = 1;
+  repeated WildcardReportData data = 2;
+}
+
+message PlayerReport{
+  Player player = 1;
+  //timestamp->report data
+  map<int32, TimestampedReportData> data = 2;
+}
+
+message PlayerExecution{
+  Judgement judgement = 2;
+  string message = 3;
+}
+
+service Anticheat {
+  rpc AddPlayer(Player) returns (PlayerReceipt) {}
+  rpc RemovePlayer(PlayerReceipt) returns (google.protobuf.Empty) {}
+  rpc Report(PlayerReport) returns (PlayerExecution){}
+}

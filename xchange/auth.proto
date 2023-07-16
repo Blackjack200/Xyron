@@ -1,0 +1,18 @@
+syntax = 'proto3';
+
+package xchange;
+import "google/protobuf/empty.proto";
+
+message ClientInfo {
+  string key = 1;
+}
+
+message ClientReceipt{
+  bool success = 1;
+  string internalId = 2;
+}
+
+service AuthServer{
+  rpc Login(ClientInfo) returns (ClientReceipt) {}
+  rpc Logout(ClientInfo) returns (google.protobuf.Empty) {}
+}

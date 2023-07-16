@@ -1,0 +1,9 @@
+syntax = 'proto3';
+
+package xchange;
+
+enum Judgement {
+  NONE = 0;
+  AMBIGUOUS = 1;
+  BAN = 2;
+}

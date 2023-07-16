@@ -1,0 +1,105 @@
+syntax = 'proto3';
+
+package xchange;
+import "google/protobuf/empty.proto";
+import "primitive_types.proto";
+
+enum GameMode {
+  Survival = 0;
+  Creative = 1;
+  Adventure = 2;
+  Spectator = 3;
+}
+
+enum InputMode {
+  MouseKeyboard = 0;
+  Touch = 1;
+  Gamepad = 2;
+  MotionController = 3;
+}
+
+enum DeviceOS {
+  Android = 0;
+  IOS = 1;
+  OSX = 2;
+  AMAZON = 3;
+  GEAR_VR = 4;
+  HOLOLENS = 5;
+  WINDOWS_10 = 6;
+  WIN32 = 7;
+  DEDICATED = 8;
+  TVOS = 9;
+  PLAYSTATION = 10;
+  NINTENDO = 11;
+  XBOX = 12;
+  WINDOWS_PHONE = 13;
+}
+
+enum PlayerAction {
+  Jump = 0;
+  Swing = 1;
+  StartSprint = 2;
+  StopSprint = 3;
+  StartSneak = 4;
+  StopSneak = 5;
+  StartSprintFlying = 6;
+  StopSprintFlying = 7;
+  StartGliding = 8;
+  StopGliding = 9;
+  StartSwimming = 10;
+  StopSwimming = 11;
+}
+
+enum DamageCause {
+  Contact = 0;
+  EntityAttack = 1;
+  Projectile = 2;
+  Suffocation = 3;
+  Fall = 4;
+  Fire = 5;
+  FireTick = 6;
+  Lava = 7;
+  Drowning = 8;
+  BlockExplosion = 9;
+  EntityExplosion = 10;
+  Void = 11;
+  Suicide = 12;
+  Magic = 13;
+  Custom = 14;
+  Starvation = 15;
+  FallingBlock = 16;
+}
+
+enum BreakBlockStatus {
+  StartBreak = 0;
+  AbortBreak = 1;
+  FinishBreak = 2;
+}
+
+enum ConsumeStatus {
+  Start = 0;
+  Stop = 1;
+}
+
+message EntityPositionData {
+  Loc3f location = 1;
+  AxisAlignedBoundingBox boundingBox = 2;
+  BlockData below = 3;
+  bool isImmobile = 4;
+  bool isOnGround = 5;
+  bool allowFlying = 6;
+  bool isFlying = 7;
+  repeated BlockData collidedBlocks = 8;
+  repeated BlockData intersectedBlocks = 9;
+}
+
+message AttackData {
+  DamageCause cause = 1;
+  EntityPositionData attacker = 2;
+  EntityPositionData target = 3;
+}
+
+message Player {
+  DeviceOS os = 1;
+  string name = 2;
+}

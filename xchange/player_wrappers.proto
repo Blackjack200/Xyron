@@ -1,0 +1,70 @@
+syntax = 'proto3';
+
+package xchange;
+import "google/protobuf/empty.proto";
+import "player.proto";
+import "primitive_types.proto";
+
+message WildcardReportData {
+  oneof data{
+    PlayerActionData action_data = 1;
+    PlayerMoveData move_data = 2;
+    PlayerPlaceBlockData place_block_data = 3;
+    PlayerBreakBlockData break_block_data = 4;
+    PlayerEatFoodData eat_food_data = 5;
+    PlayerAttackData attack_data = 6;
+    PlayerAddEffectData add_effect_data = 7;
+    PlayerRemoveEffectData remove_effect_data = 8;
+    PlayerGameModeData game_mode_data = 9;
+    PlayerMotionData motion_data = 10;
+    PlayerInputModeData input_mode_data = 11;
+  }
+}
+
+message PlayerActionData {
+  EntityPositionData position = 1;
+  PlayerAction action = 2;
+}
+
+message PlayerMoveData {
+  EntityPositionData newPosition = 1;
+  bool teleport = 2;
+}
+
+message PlayerPlaceBlockData {
+  EntityPositionData position = 1;
+  BlockData placedBlock = 2;
+}
+
+message PlayerBreakBlockData {
+  EntityPositionData position = 1;
+  BlockData brokenBlock = 2;
+}
+
+message PlayerEatFoodData {
+  ConsumeStatus status = 2;
+}
+
+message PlayerAttackData {
+  AttackData data = 1;
+}
+
+message PlayerAddEffectData {
+  string effect = 1;
+}
+
+message PlayerRemoveEffectData {
+  string effect = 1;
+}
+
+message PlayerGameModeData {
+  GameMode gameMode = 1;
+}
+
+message PlayerMotionData {
+  Vec3f motion = 1;
+}
+
+message PlayerInputModeData {
+  InputMode inputMode = 1;
+}

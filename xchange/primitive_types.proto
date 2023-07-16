@@ -1,0 +1,83 @@
+syntax = 'proto3';
+
+package xchange;
+
+
+message Vec2f {
+  float x = 1;
+  float y = 2;
+}
+
+message Vec2i {
+  int32 x = 1;
+  int32 y = 2;
+}
+
+message Vec3f {
+  float x = 1;
+  float y = 2;
+  float z = 3;
+}
+
+message Vec3i {
+  int32 x = 1;
+  int32 y = 2;
+  int32 z = 3;
+}
+
+message Loc3f {
+  Vec3f position = 1;
+  Vec3f direction = 2;
+}
+
+message AxisAlignedBoundingBox{
+  Vec3f min = 1;
+  Vec3f max = 2;
+}
+
+message BlockData {
+  Vec3i position = 1;
+  string feature = 2; //registered in BlockFeatureRegistry
+  //BlockFeature feature = 2;
+}
+
+message BlockFeature {
+  Vec3f relativePosition = 1;
+  repeated AxisAlignedBoundingBox collisionBoxes = 2;
+  float friction = 3;
+  bool isSolid = 4;
+  bool isLiquid = 5;
+  bool isAir = 6;
+  bool isSlime = 7;
+  bool isClimbable = 8;
+}
+
+message BlockFeatureRegistry {
+  map<string, BlockFeature> features = 1;
+}
+
+message PotionEffectRegistry {
+  repeated string effects = 1;
+}
+
+message ItemData {
+  uint32 count = 1;
+  string vanillaName = 2;
+  string feature = 3; //registered in ItemFeatureRegistry
+  //ItemFeature feature = 2;
+}
+
+message ItemFeature {
+  bool isArmor = 1;
+  bool isBlockPlanterItem = 2;
+  bool isDamageable = 3;
+  bool isFood = 4;
+  bool isThrowable = 5;
+  bool isTool = 6;
+  bool isBow = 7;
+  bool isCrossBow = 8;
+}
+
+message ItemFeatureRegistry {
+  map<string, ItemFeatureRegistry> features = 1;
+}
