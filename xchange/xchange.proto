@@ -15,6 +15,12 @@ message TimestampedReportData {
   repeated WildcardReportData data = 2;
 }
 
+//TODO improve this
+message ServerExecution{
+  string type = 1;
+  string extraData = 2;
+}
+
 message PlayerReport{
   Player player = 1;
   //timestamp->report data
@@ -22,6 +28,7 @@ message PlayerReport{
 }
 
 message JudgementData{
+  repeated ServerExecution executions = 1;
   Judgement judgement = 2;
   string message = 3;
 }
