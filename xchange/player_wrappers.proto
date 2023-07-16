@@ -18,6 +18,7 @@ message WildcardReportData {
     PlayerGameModeData game_mode_data = 9;
     PlayerMotionData motion_data = 10;
     PlayerInputModeData input_mode_data = 11;
+    PlayerHeldItemChangeData held_item_change_data = 12;
   }
 }
 
@@ -67,4 +68,8 @@ message PlayerMotionData {
 
 message PlayerInputModeData {
   InputMode inputMode = 1;
+}
+
+message PlayerHeldItemChangeData {
+  ItemData item = 1;
 }
