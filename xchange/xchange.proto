@@ -21,7 +21,7 @@ message PlayerReport{
   map<int32, TimestampedReportData> data = 2;
 }
 
-message PlayerExecution{
+message JudgementData{
   Judgement judgement = 2;
   string message = 3;
 }
@@ -29,5 +29,5 @@ message PlayerExecution{
 service Anticheat {
   rpc AddPlayer(Player) returns (PlayerReceipt) {}
   rpc RemovePlayer(PlayerReceipt) returns (google.protobuf.Empty) {}
-  rpc Report(PlayerReport) returns (PlayerExecution){}
+  rpc Report(PlayerReport) returns (JudgementData){}
 }
