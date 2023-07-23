@@ -14,21 +14,21 @@ use Google\Protobuf\Internal\GPBUtil;
 class JudgementData extends \Google\Protobuf\Internal\Message
 {
     /**
-     * Generated from protobuf field <code>repeated .xchange.ServerExecution extraExecutions = 1;</code>
+     * Generated from protobuf field <code>string type = 1;</code>
      */
-    private $extraExecutions;
+    protected $type = '';
     /**
      * Generated from protobuf field <code>.xchange.Judgement judgement = 2;</code>
      */
     protected $judgement = 0;
     /**
-     * Generated from protobuf field <code>string type = 3;</code>
-     */
-    protected $type = '';
-    /**
-     * Generated from protobuf field <code>string message = 4;</code>
+     * Generated from protobuf field <code>string message = 3;</code>
      */
     protected $message = '';
+    /**
+     * Generated from protobuf field <code>repeated .xchange.ServerExecution extraExecutions = 4;</code>
+     */
+    private $extraExecutions;
 
     /**
      * Constructor.
@@ -36,10 +36,10 @@ class JudgementData extends \Google\Protobuf\Internal\Message
      * @param array $data {
      *     Optional. Data for populating the Message object.
      *
-     *     @type array<\prokits\xyron\ServerExecution>|\Google\Protobuf\Internal\RepeatedField $extraExecutions
-     *     @type int $judgement
      *     @type string $type
+     *     @type int $judgement
      *     @type string $message
+     *     @type array<\prokits\xyron\ServerExecution>|\Google\Protobuf\Internal\RepeatedField $extraExecutions
      * }
      */
     public function __construct($data = NULL) {
@@ -48,23 +48,23 @@ class JudgementData extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * Generated from protobuf field <code>repeated .xchange.ServerExecution extraExecutions = 1;</code>
-     * @return \Google\Protobuf\Internal\RepeatedField
+     * Generated from protobuf field <code>string type = 1;</code>
+     * @return string
      */
-    public function getExtraExecutions()
+    public function getType()
     {
-        return $this->extraExecutions;
+        return $this->type;
     }
 
     /**
-     * Generated from protobuf field <code>repeated .xchange.ServerExecution extraExecutions = 1;</code>
-     * @param array<\prokits\xyron\ServerExecution>|\Google\Protobuf\Internal\RepeatedField $var
+     * Generated from protobuf field <code>string type = 1;</code>
+     * @param string $var
      * @return $this
      */
-    public function setExtraExecutions($var)
+    public function setType($var)
     {
-        $arr = GPBUtil::checkRepeatedField($var, \Google\Protobuf\Internal\GPBType::MESSAGE, \prokits\xyron\ServerExecution::class);
-        $this->extraExecutions = $arr;
+        GPBUtil::checkString($var, True);
+        $this->type = $var;
 
         return $this;
     }
@@ -92,29 +92,7 @@ class JudgementData extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * Generated from protobuf field <code>string type = 3;</code>
-     * @return string
-     */
-    public function getType()
-    {
-        return $this->type;
-    }
-
-    /**
-     * Generated from protobuf field <code>string type = 3;</code>
-     * @param string $var
-     * @return $this
-     */
-    public function setType($var)
-    {
-        GPBUtil::checkString($var, True);
-        $this->type = $var;
-
-        return $this;
-    }
-
-    /**
-     * Generated from protobuf field <code>string message = 4;</code>
+     * Generated from protobuf field <code>string message = 3;</code>
      * @return string
      */
     public function getMessage()
@@ -123,7 +101,7 @@ class JudgementData extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * Generated from protobuf field <code>string message = 4;</code>
+     * Generated from protobuf field <code>string message = 3;</code>
      * @param string $var
      * @return $this
      */
@@ -131,6 +109,28 @@ class JudgementData extends \Google\Protobuf\Internal\Message
     {
         GPBUtil::checkString($var, True);
         $this->message = $var;
+
+        return $this;
+    }
+
+    /**
+     * Generated from protobuf field <code>repeated .xchange.ServerExecution extraExecutions = 4;</code>
+     * @return \Google\Protobuf\Internal\RepeatedField
+     */
+    public function getExtraExecutions()
+    {
+        return $this->extraExecutions;
+    }
+
+    /**
+     * Generated from protobuf field <code>repeated .xchange.ServerExecution extraExecutions = 4;</code>
+     * @param array<\prokits\xyron\ServerExecution>|\Google\Protobuf\Internal\RepeatedField $var
+     * @return $this
+     */
+    public function setExtraExecutions($var)
+    {
+        $arr = GPBUtil::checkRepeatedField($var, \Google\Protobuf\Internal\GPBType::MESSAGE, \prokits\xyron\ServerExecution::class);
+        $this->extraExecutions = $arr;
 
         return $this;
     }

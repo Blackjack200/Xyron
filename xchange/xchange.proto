@@ -10,6 +10,7 @@ package xchange;
 
 import "google/protobuf/empty.proto";
 import "player_wrappers.proto";
+import "player.proto";
 import "anticheat_types.proto";
 
 message PlayerReceipt {
@@ -28,7 +29,7 @@ message ServerExecution{
 }
 
 message AddPlayerRequest{
-  PlayerReceipt player = 1;
+  Player player = 1;
   //timestamp->report data
   map<int32, TimestampedReportData> data = 2;
 }
@@ -40,14 +41,18 @@ message PlayerReport{
 }
 
 message JudgementData{
-  repeated ServerExecution extraExecutions = 1;
+  string type = 1;
   Judgement judgement = 2;
-  string type = 3;
-  string message = 4;
+  string message = 3;
+  repeated ServerExecution extraExecutions = 4;
+}
+
+message ReportResponse{
+  repeated JudgementData judgements = 1;
 }
 
 service Anticheat {
   rpc AddPlayer(AddPlayerRequest) returns (PlayerReceipt) {}
   rpc RemovePlayer(PlayerReceipt) returns (google.protobuf.Empty) {}
-  rpc Report(PlayerReport) returns (JudgementData){}
+  rpc Report(PlayerReport) returns (ReportResponse){}
 }

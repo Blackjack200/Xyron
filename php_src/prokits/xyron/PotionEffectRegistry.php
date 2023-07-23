@@ -9,6 +9,10 @@ use Google\Protobuf\Internal\RepeatedField;
 use Google\Protobuf\Internal\GPBUtil;
 
 /**
+ *message BlockFeatureRegistry {
+ *map<string, BlockFeature> features = 1;
+ *}
+ *
  * Generated from protobuf message <code>xchange.PotionEffectRegistry</code>
  */
 class PotionEffectRegistry extends \Google\Protobuf\Internal\Message

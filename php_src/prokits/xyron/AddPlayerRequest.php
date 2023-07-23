@@ -14,7 +14,7 @@ use Google\Protobuf\Internal\GPBUtil;
 class AddPlayerRequest extends \Google\Protobuf\Internal\Message
 {
     /**
-     * Generated from protobuf field <code>.xchange.PlayerReceipt player = 1;</code>
+     * Generated from protobuf field <code>.xchange.Player player = 1;</code>
      */
     protected $player = null;
     /**
@@ -30,7 +30,7 @@ class AddPlayerRequest extends \Google\Protobuf\Internal\Message
      * @param array $data {
      *     Optional. Data for populating the Message object.
      *
-     *     @type \prokits\xyron\PlayerReceipt $player
+     *     @type \prokits\xyron\Player $player
      *     @type array|\Google\Protobuf\Internal\MapField $data
      *          timestamp->report data
      * }
@@ -41,8 +41,8 @@ class AddPlayerRequest extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * Generated from protobuf field <code>.xchange.PlayerReceipt player = 1;</code>
-     * @return \prokits\xyron\PlayerReceipt|null
+     * Generated from protobuf field <code>.xchange.Player player = 1;</code>
+     * @return \prokits\xyron\Player|null
      */
     public function getPlayer()
     {
@@ -60,13 +60,13 @@ class AddPlayerRequest extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * Generated from protobuf field <code>.xchange.PlayerReceipt player = 1;</code>
-     * @param \prokits\xyron\PlayerReceipt $var
+     * Generated from protobuf field <code>.xchange.Player player = 1;</code>
+     * @param \prokits\xyron\Player $var
      * @return $this
      */
     public function setPlayer($var)
     {
-        GPBUtil::checkMessage($var, \prokits\xyron\PlayerReceipt::class);
+        GPBUtil::checkMessage($var, \prokits\xyron\Player::class);
         $this->player = $var;
 
         return $this;

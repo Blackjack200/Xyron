@@ -16,7 +16,7 @@ class PrimitiveTypes
         }
         $pool->internalAddGeneratedFile(
             '
-Ò	
+Ÿ
 primitive_types.protoxchange"
 Vec2f	
 x (	
@@ -37,10 +37,10 @@ class PrimitiveTypes
 	direction (2.xchange.Vec3f"R
 AxisAlignedBoundingBox
 min (2.xchange.Vec3f
-max (2.xchange.Vec3f"F
+max (2.xchange.Vec3f"]
 	BlockData(
-relativePosition (2.xchange.Vec3i
-feature (	"±
+relativePosition (2.xchange.Vec3i&
+feature (2.xchange.BlockFeature"±
 BlockFeature7
 collisionBoxes (2.xchange.AxisAlignedBoundingBox
 friction (
@@ -48,18 +48,13 @@ class PrimitiveTypes
 isLiquid (
 isAir (
 isSlime (
-isClimbable ("ù
-BlockFeatureRegistry=
-features (2+.xchange.BlockFeatureRegistry.FeaturesEntryF
-FeaturesEntry
-key (	$
-value (2.xchange.BlockFeature:8"\'
+isClimbable ("\'
 PotionEffectRegistry
-effects (	"?
+effects (	"U
 ItemData
 count (
-vanillaName (	
-feature (	"®
+vanillaName (	%
+feature (2.xchange.ItemFeature"®
 ItemFeature
 isArmor (
 isBlockPlanterItem (
@@ -69,12 +64,7 @@ class PrimitiveTypes
 isTool (
 isBow (
 
-isCrossBow ("¢
-ItemFeatureRegistry<
-features (2*.xchange.ItemFeatureRegistry.FeaturesEntryM
-FeaturesEntry
-key (	+
-value (2.xchange.ItemFeatureRegistry:8B=
+isCrossBow (B=
 com.github.blackjack200.xyronZxyron/à prokits\\xyron–bproto3'
         , true);
 

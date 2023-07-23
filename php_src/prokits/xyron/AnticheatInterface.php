@@ -29,7 +29,7 @@ interface AnticheatInterface
      * Method <code>report</code>
      *
      * @param \prokits\xyron\PlayerReport $request
-     * @return \prokits\xyron\JudgementData
+     * @return \prokits\xyron\ReportResponse
      */
     public function report(\prokits\xyron\PlayerReport $request);
 

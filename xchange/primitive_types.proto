@@ -42,8 +42,8 @@ message AxisAlignedBoundingBox{
 
 message BlockData {
   Vec3i relativePosition = 1;
-  string feature = 2; //registered in BlockFeatureRegistry
-  //BlockFeature feature = 2;
+  //string feature = 2; //registered in BlockFeatureRegistry
+  BlockFeature feature = 2;
 }
 
 message BlockFeature {
@@ -55,11 +55,11 @@ message BlockFeature {
   bool isSlime = 7;
   bool isClimbable = 8;
 }
-
+/*
 message BlockFeatureRegistry {
   map<string, BlockFeature> features = 1;
 }
-
+*/
 message PotionEffectRegistry {
   repeated string effects = 1;
 }
@@ -67,8 +67,8 @@ message PotionEffectRegistry {
 message ItemData {
   uint32 count = 1;
   string vanillaName = 2;
-  string feature = 3; //registered in ItemFeatureRegistry
-  //ItemFeature feature = 2;
+  //string feature = 3; //registered in ItemFeatureRegistry
+  ItemFeature feature = 3;
 }
 
 message ItemFeature {
@@ -81,7 +81,8 @@ message ItemFeature {
   bool isBow = 7;
   bool isCrossBow = 8;
 }
-
+/*
 message ItemFeatureRegistry {
   map<string, ItemFeatureRegistry> features = 1;
 }
+*/

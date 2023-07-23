@@ -54,7 +54,7 @@ class AnticheatClient extends \Grpc\BaseStub {
       $metadata = [], $options = []) {
         return $this->_simpleRequest('/xchange.Anticheat/Report',
         $argument,
-        ['\prokits\xyron\JudgementData', 'decode'],
+        ['\prokits\xyron\ReportResponse', 'decode'],
         $metadata, $options);
     }
 

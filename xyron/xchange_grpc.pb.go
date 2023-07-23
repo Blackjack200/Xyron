@@ -25,7 +25,7 @@ const _ = grpc.SupportPackageIsVersion7
 type AnticheatClient interface {
 	AddPlayer(ctx context.Context, in *AddPlayerRequest, opts ...grpc.CallOption) (*PlayerReceipt, error)
 	RemovePlayer(ctx context.Context, in *PlayerReceipt, opts ...grpc.CallOption) (*emptypb.Empty, error)
-	Report(ctx context.Context, in *PlayerReport, opts ...grpc.CallOption) (*JudgementData, error)
+	Report(ctx context.Context, in *PlayerReport, opts ...grpc.CallOption) (*ReportResponse, error)
 }
 
 type anticheatClient struct {
@@ -54,8 +54,8 @@ func (c *anticheatClient) RemovePlayer(ctx context.Context, in *PlayerReceipt, o
 	return out, nil
 }
 
-func (c *anticheatClient) Report(ctx context.Context, in *PlayerReport, opts ...grpc.CallOption) (*JudgementData, error) {
-	out := new(JudgementData)
+func (c *anticheatClient) Report(ctx context.Context, in *PlayerReport, opts ...grpc.CallOption) (*ReportResponse, error) {
+	out := new(ReportResponse)
 	err := c.cc.Invoke(ctx, "/xchange.Anticheat/Report", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -69,7 +69,7 @@ func (c *anticheatClient) Report(ctx context.Context, in *PlayerReport, opts ...
 type AnticheatServer interface {
 	AddPlayer(context.Context, *AddPlayerRequest) (*PlayerReceipt, error)
 	RemovePlayer(context.Context, *PlayerReceipt) (*emptypb.Empty, error)
-	Report(context.Context, *PlayerReport) (*JudgementData, error)
+	Report(context.Context, *PlayerReport) (*ReportResponse, error)
 	mustEmbedUnimplementedAnticheatServer()
 }
 
@@ -83,7 +83,7 @@ func (UnimplementedAnticheatServer) AddPlayer(context.Context, *AddPlayerRequest
 func (UnimplementedAnticheatServer) RemovePlayer(context.Context, *PlayerReceipt) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method RemovePlayer not implemented")
 }
-func (UnimplementedAnticheatServer) Report(context.Context, *PlayerReport) (*JudgementData, error) {
+func (UnimplementedAnticheatServer) Report(context.Context, *PlayerReport) (*ReportResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Report not implemented")
 }
 func (UnimplementedAnticheatServer) mustEmbedUnimplementedAnticheatServer() {}

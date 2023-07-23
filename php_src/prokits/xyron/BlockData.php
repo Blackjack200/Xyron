@@ -18,11 +18,11 @@ class BlockData extends \Google\Protobuf\Internal\Message
      */
     protected $relativePosition = null;
     /**
-     *registered in BlockFeatureRegistry
+     *string feature = 2; //registered in BlockFeatureRegistry
      *
-     * Generated from protobuf field <code>string feature = 2;</code>
+     * Generated from protobuf field <code>.xchange.BlockFeature feature = 2;</code>
      */
-    protected $feature = '';
+    protected $feature = null;
 
     /**
      * Constructor.
@@ -31,8 +31,8 @@ class BlockData extends \Google\Protobuf\Internal\Message
      *     Optional. Data for populating the Message object.
      *
      *     @type \prokits\xyron\Vec3i $relativePosition
-     *     @type string $feature
-     *          registered in BlockFeatureRegistry
+     *     @type \prokits\xyron\BlockFeature $feature
+     *          string feature = 2; //registered in BlockFeatureRegistry
      * }
      */
     public function __construct($data = NULL) {
@@ -73,26 +73,36 @@ class BlockData extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     *registered in BlockFeatureRegistry
+     *string feature = 2; //registered in BlockFeatureRegistry
      *
-     * Generated from protobuf field <code>string feature = 2;</code>
-     * @return string
+     * Generated from protobuf field <code>.xchange.BlockFeature feature = 2;</code>
+     * @return \prokits\xyron\BlockFeature|null
      */
     public function getFeature()
     {
         return $this->feature;
     }
 
+    public function hasFeature()
+    {
+        return isset($this->feature);
+    }
+
+    public function clearFeature()
+    {
+        unset($this->feature);
+    }
+
     /**
-     *registered in BlockFeatureRegistry
+     *string feature = 2; //registered in BlockFeatureRegistry
      *
-     * Generated from protobuf field <code>string feature = 2;</code>
-     * @param string $var
+     * Generated from protobuf field <code>.xchange.BlockFeature feature = 2;</code>
+     * @param \prokits\xyron\BlockFeature $var
      * @return $this
      */
     public function setFeature($var)
     {
-        GPBUtil::checkString($var, True);
+        GPBUtil::checkMessage($var, \prokits\xyron\BlockFeature::class);
         $this->feature = $var;
 
         return $this;

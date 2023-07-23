@@ -33,6 +33,7 @@ class WildcardReportData extends \Google\Protobuf\Internal\Message
      *     @type \prokits\xyron\PlayerMotionData $motion_data
      *     @type \prokits\xyron\PlayerInputModeData $input_mode_data
      *     @type \prokits\xyron\PlayerHeldItemChangeData $held_item_change_data
+     *     @type \prokits\xyron\ServerTickData $server_tick_data
      * }
      */
     public function __construct($data = NULL) {
@@ -360,6 +361,33 @@ class WildcardReportData extends \Google\Protobuf\Internal\Message
     {
         GPBUtil::checkMessage($var, \prokits\xyron\PlayerHeldItemChangeData::class);
         $this->writeOneof(12, $var);
+
+        return $this;
+    }
+
+    /**
+     * Generated from protobuf field <code>.xchange.ServerTickData server_tick_data = 13;</code>
+     * @return \prokits\xyron\ServerTickData|null
+     */
+    public function getServerTickData()
+    {
+        return $this->readOneof(13);
+    }
+
+    public function hasServerTickData()
+    {
+        return $this->hasOneof(13);
+    }
+
+    /**
+     * Generated from protobuf field <code>.xchange.ServerTickData server_tick_data = 13;</code>
+     * @param \prokits\xyron\ServerTickData $var
+     * @return $this
+     */
+    public function setServerTickData($var)
+    {
+        GPBUtil::checkMessage($var, \prokits\xyron\ServerTickData::class);
+        $this->writeOneof(13, $var);
 
         return $this;
     }

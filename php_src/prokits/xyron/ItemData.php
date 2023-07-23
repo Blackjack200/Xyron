@@ -22,11 +22,11 @@ class ItemData extends \Google\Protobuf\Internal\Message
      */
     protected $vanillaName = '';
     /**
-     *registered in ItemFeatureRegistry
+     *string feature = 3; //registered in ItemFeatureRegistry
      *
-     * Generated from protobuf field <code>string feature = 3;</code>
+     * Generated from protobuf field <code>.xchange.ItemFeature feature = 3;</code>
      */
-    protected $feature = '';
+    protected $feature = null;
 
     /**
      * Constructor.
@@ -36,8 +36,8 @@ class ItemData extends \Google\Protobuf\Internal\Message
      *
      *     @type int $count
      *     @type string $vanillaName
-     *     @type string $feature
-     *          registered in ItemFeatureRegistry
+     *     @type \prokits\xyron\ItemFeature $feature
+     *          string feature = 3; //registered in ItemFeatureRegistry
      * }
      */
     public function __construct($data = NULL) {
@@ -90,26 +90,36 @@ class ItemData extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     *registered in ItemFeatureRegistry
+     *string feature = 3; //registered in ItemFeatureRegistry
      *
-     * Generated from protobuf field <code>string feature = 3;</code>
-     * @return string
+     * Generated from protobuf field <code>.xchange.ItemFeature feature = 3;</code>
+     * @return \prokits\xyron\ItemFeature|null
      */
     public function getFeature()
     {
         return $this->feature;
     }
 
+    public function hasFeature()
+    {
+        return isset($this->feature);
+    }
+
+    public function clearFeature()
+    {
+        unset($this->feature);
+    }
+
     /**
-     *registered in ItemFeatureRegistry
+     *string feature = 3; //registered in ItemFeatureRegistry
      *
-     * Generated from protobuf field <code>string feature = 3;</code>
-     * @param string $var
+     * Generated from protobuf field <code>.xchange.ItemFeature feature = 3;</code>
+     * @param \prokits\xyron\ItemFeature $var
      * @return $this
      */
     public function setFeature($var)
     {
-        GPBUtil::checkString($var, True);
+        GPBUtil::checkMessage($var, \prokits\xyron\ItemFeature::class);
         $this->feature = $var;
 
         return $this;
