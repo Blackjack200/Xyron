@@ -28,9 +28,10 @@ message PlayerReport{
 }
 
 message JudgementData{
-  repeated ServerExecution executions = 1;
+  repeated ServerExecution extraExecutions = 1;
   Judgement judgement = 2;
-  string message = 3;
+  string type = 3;
+  string message = 4;
 }
 
 service Anticheat {

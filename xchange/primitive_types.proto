@@ -36,13 +36,12 @@ message AxisAlignedBoundingBox{
 }
 
 message BlockData {
-  Vec3i position = 1;
+  Vec3f relativePosition = 1;
   string feature = 2; //registered in BlockFeatureRegistry
   //BlockFeature feature = 2;
 }
 
 message BlockFeature {
-  Vec3f relativePosition = 1;
   repeated AxisAlignedBoundingBox collisionBoxes = 2;
   float friction = 3;
   bool isSolid = 4;
