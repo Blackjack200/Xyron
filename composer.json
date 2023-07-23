@@ -1,0 +1,22 @@
+{
+  "name": "blackjack200/xyron",
+  "type": "library",
+  "autoload": {
+    "psr-4": {
+      "": [
+        "php_src"
+      ]
+    }
+  },
+  "authors": [
+    {
+      "name": "Blackjack200",
+      "email": "lx826444126@gmail.com"
+    }
+  ],
+  "require": {
+    "grpc/grpc": "^1.52.0",
+    "google/protobuf": "^3.23.4",
+    "ext-grpc": "*"
+  }
+}

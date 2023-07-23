@@ -1,5 +1,11 @@
 syntax = 'proto3';
 
+option go_package = "xyron/";
+option php_namespace = "prokits\\xyron";
+option java_package = "com.github.blackjack200.xyron";
+option java_generic_services = true;
+option php_generic_services = true;
+
 package xchange;
 
 enum Judgement {

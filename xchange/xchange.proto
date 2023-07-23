@@ -1,8 +1,14 @@
 syntax = 'proto3';
 
+option go_package = "xyron/";
+option php_namespace = "prokits\\xyron";
+option java_package = "com.github.blackjack200.xyron";
+option java_generic_services = true;
+option php_generic_services = true;
+
 package xchange;
+
 import "google/protobuf/empty.proto";
-import "player.proto";
 import "player_wrappers.proto";
 import "anticheat_types.proto";
 
@@ -21,8 +27,14 @@ message ServerExecution{
   string extraData = 2;
 }
 
+message AddPlayerRequest{
+  PlayerReceipt player = 1;
+  //timestamp->report data
+  map<int32, TimestampedReportData> data = 2;
+}
+
 message PlayerReport{
-  Player player = 1;
+  PlayerReceipt player = 1;
   //timestamp->report data
   map<int32, TimestampedReportData> data = 2;
 }
@@ -35,7 +47,7 @@ message JudgementData{
 }
 
 service Anticheat {
-  rpc AddPlayer(Player) returns (PlayerReceipt) {}
+  rpc AddPlayer(AddPlayerRequest) returns (PlayerReceipt) {}
   rpc RemovePlayer(PlayerReceipt) returns (google.protobuf.Empty) {}
   rpc Report(PlayerReport) returns (JudgementData){}
 }

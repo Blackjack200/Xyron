@@ -1,7 +1,12 @@
 syntax = 'proto3';
 
-package xchange;
+option go_package = "xyron/";
+option php_namespace = "prokits\\xyron";
+option java_package = "com.github.blackjack200.xyron";
+option java_generic_services = true;
+option php_generic_services = true;
 
+package xchange;
 
 message Vec2f {
   float x = 1;
@@ -36,7 +41,7 @@ message AxisAlignedBoundingBox{
 }
 
 message BlockData {
-  Vec3f relativePosition = 1;
+  Vec3i relativePosition = 1;
   string feature = 2; //registered in BlockFeatureRegistry
   //BlockFeature feature = 2;
 }
