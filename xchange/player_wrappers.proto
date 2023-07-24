@@ -19,8 +19,7 @@ message WildcardReportData {
     PlayerBreakBlockData break_block_data = 4;
     PlayerEatFoodData eat_food_data = 5;
     PlayerAttackData attack_data = 6;
-    PlayerAddEffectData add_effect_data = 7;
-    PlayerRemoveEffectData remove_effect_data = 8;
+    PlayerEffectData effect_data = 7;
     PlayerGameModeData game_mode_data = 9;
     PlayerMotionData motion_data = 10;
     PlayerInputModeData input_mode_data = 11;
@@ -57,13 +56,8 @@ message PlayerAttackData {
   AttackData data = 1;
 }
 
-message PlayerAddEffectData {
-  EffectFeature effect = 1;
-  string internalEffectId = 2;
-}
-
-message PlayerRemoveEffectData {
-  string internalEffectId = 1;
+message PlayerEffectData {
+  repeated EffectFeature effect = 1;
 }
 
 message PlayerGameModeData {

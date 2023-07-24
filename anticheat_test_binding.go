@@ -10,6 +10,7 @@ import (
 	"github.com/df-mc/dragonfly/server/block"
 	"github.com/df-mc/dragonfly/server/block/cube"
 	"github.com/df-mc/dragonfly/server/block/model"
+	"github.com/df-mc/dragonfly/server/entity/effect"
 	"github.com/df-mc/dragonfly/server/event"
 	"github.com/df-mc/dragonfly/server/player"
 	"github.com/df-mc/dragonfly/server/player/chat"
@@ -128,7 +129,7 @@ func main() {
 		hdrs = append(hdrs, &xyron.WildcardReportData{Data: &xyron.WildcardReportData_GameModeData{
 			GameModeData: &xyron.PlayerGameModeData{GameMode: ToXyronGameMode(p.GameMode())},
 		}})
-		//TODO effects
+		handleEffects(p, &hdrs)
 		go func() {
 			pp, _ := c.AddPlayer(context.TODO(), &xyron.AddPlayerRequest{
 				Player: &xyron.Player{
@@ -141,6 +142,54 @@ func main() {
 		}()
 	}) {
 	}
+}
+
+func handleEffects(p *player.Player, hdrs *[]*xyron.WildcardReportData) {
+	effects := getEffects(p)
+	*hdrs = append(*hdrs, &xyron.WildcardReportData{Data: &xyron.WildcardReportData_EffectData{
+		EffectData: &xyron.PlayerEffectData{Effect: effects},
+	}})
+}
+
+func getEffects(p *player.Player) []*xyron.EffectFeature {
+	var effects []*xyron.EffectFeature
+	if e, ok := p.Effect(effect.Speed{}); ok {
+		effects = append(effects, &xyron.EffectFeature{
+			Amplifier: int32(e.Level()),
+			IsSpeed:   true,
+		})
+	}
+	if e, ok := p.Effect(effect.Haste{}); ok {
+		effects = append(effects, &xyron.EffectFeature{
+			Amplifier: int32(e.Level()),
+			IsHaste:   true,
+		})
+	}
+	if e, ok := p.Effect(effect.SlowFalling{}); ok {
+		effects = append(effects, &xyron.EffectFeature{
+			Amplifier:     int32(e.Level()),
+			IsSlowFalling: true,
+		})
+	}
+	if e, ok := p.Effect(effect.Levitation{}); ok {
+		effects = append(effects, &xyron.EffectFeature{
+			Amplifier:    int32(e.Level()),
+			IsLevitation: true,
+		})
+	}
+	if e, ok := p.Effect(effect.Slowness{}); ok {
+		effects = append(effects, &xyron.EffectFeature{
+			Amplifier:  int32(e.Level()),
+			IsSlowness: true,
+		})
+	}
+	if e, ok := p.Effect(effect.JumpBoost{}); ok {
+		effects = append(effects, &xyron.EffectFeature{
+			Amplifier:   int32(e.Level()),
+			IsJumpBoost: true,
+		})
+	}
+	return effects
 }
 
 type playerHandler struct {
@@ -163,7 +212,7 @@ func newPlayerHandler(log *logrus.Logger, p *player.Player, pp *xyron.PlayerRece
 		c:          c,
 		closed:     atomic.Bool{},
 	}
-	hdr.ticker = time.NewTicker(time.Second)
+	hdr.ticker = time.NewTicker(time.Second / 5)
 	hdr.closed.Store(false)
 	go func() {
 		defer func() {
@@ -191,6 +240,9 @@ func newPlayerHandler(log *logrus.Logger, p *player.Player, pp *xyron.PlayerRece
 func (h *playerHandler) HandleTeleport(*event.Context, mgl64.Vec3) {}
 
 func (h *playerHandler) HandleMove(_ *event.Context, newPos mgl64.Vec3, yaw, pitch float64) {
+	h.buf.Add(getCurrentWorldTick(h.p.World()), &xyron.WildcardReportData{Data: &xyron.WildcardReportData_EffectData{
+		EffectData: &xyron.PlayerEffectData{Effect: getEffects(h.p)},
+	}})
 	h.buf.Add(getCurrentWorldTick(h.p.World()), &xyron.WildcardReportData{Data: &xyron.WildcardReportData_MoveData{
 		MoveData: &xyron.PlayerMoveData{
 			NewPosition: h.getXyronPositionData(newPos, cube.Rotation{yaw, pitch}.Vec3()),

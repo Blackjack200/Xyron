@@ -27,8 +27,7 @@ class WildcardReportData extends \Google\Protobuf\Internal\Message
      *     @type \prokits\xyron\PlayerBreakBlockData $break_block_data
      *     @type \prokits\xyron\PlayerEatFoodData $eat_food_data
      *     @type \prokits\xyron\PlayerAttackData $attack_data
-     *     @type \prokits\xyron\PlayerAddEffectData $add_effect_data
-     *     @type \prokits\xyron\PlayerRemoveEffectData $remove_effect_data
+     *     @type \prokits\xyron\PlayerEffectData $effect_data
      *     @type \prokits\xyron\PlayerGameModeData $game_mode_data
      *     @type \prokits\xyron\PlayerMotionData $motion_data
      *     @type \prokits\xyron\PlayerInputModeData $input_mode_data
@@ -204,55 +203,28 @@ class WildcardReportData extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * Generated from protobuf field <code>.xchange.PlayerAddEffectData add_effect_data = 7;</code>
-     * @return \prokits\xyron\PlayerAddEffectData|null
+     * Generated from protobuf field <code>.xchange.PlayerEffectData effect_data = 7;</code>
+     * @return \prokits\xyron\PlayerEffectData|null
      */
-    public function getAddEffectData()
+    public function getEffectData()
     {
         return $this->readOneof(7);
     }
 
-    public function hasAddEffectData()
+    public function hasEffectData()
     {
         return $this->hasOneof(7);
     }
 
     /**
-     * Generated from protobuf field <code>.xchange.PlayerAddEffectData add_effect_data = 7;</code>
-     * @param \prokits\xyron\PlayerAddEffectData $var
+     * Generated from protobuf field <code>.xchange.PlayerEffectData effect_data = 7;</code>
+     * @param \prokits\xyron\PlayerEffectData $var
      * @return $this
      */
-    public function setAddEffectData($var)
+    public function setEffectData($var)
     {
-        GPBUtil::checkMessage($var, \prokits\xyron\PlayerAddEffectData::class);
+        GPBUtil::checkMessage($var, \prokits\xyron\PlayerEffectData::class);
         $this->writeOneof(7, $var);
-
-        return $this;
-    }
-
-    /**
-     * Generated from protobuf field <code>.xchange.PlayerRemoveEffectData remove_effect_data = 8;</code>
-     * @return \prokits\xyron\PlayerRemoveEffectData|null
-     */
-    public function getRemoveEffectData()
-    {
-        return $this->readOneof(8);
-    }
-
-    public function hasRemoveEffectData()
-    {
-        return $this->hasOneof(8);
-    }
-
-    /**
-     * Generated from protobuf field <code>.xchange.PlayerRemoveEffectData remove_effect_data = 8;</code>
-     * @param \prokits\xyron\PlayerRemoveEffectData $var
-     * @return $this
-     */
-    public function setRemoveEffectData($var)
-    {
-        GPBUtil::checkMessage($var, \prokits\xyron\PlayerRemoveEffectData::class);
-        $this->writeOneof(8, $var);
 
         return $this;
     }

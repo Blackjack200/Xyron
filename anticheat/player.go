@@ -7,7 +7,7 @@ type InternalPlayer struct {
 	Input         xyron.InputMode
 	Name          string
 	GameMode      xyron.GameMode
-	effects       map[string]*xyron.EffectFeature
+	effects       []*xyron.EffectFeature
 	Motion        *BufferedData[*TimestampedData[*xyron.Vec3F]]
 	Location      *BufferedData[*xyron.EntityPositionData]
 	DeltaPosition *BufferedData[*xyron.Vec3F]
@@ -33,7 +33,6 @@ func NewInternalPlayer(os xyron.DeviceOS, name string) *InternalPlayer {
 		Os:            os,
 		Name:          name,
 		GameMode:      0,
-		effects:       make(map[string]*xyron.EffectFeature),
 		Motion:        NewBufferedData[*TimestampedData[*xyron.Vec3F]](nil),
 		Location:      NewBufferedData[*xyron.EntityPositionData](nil),
 		DeltaPosition: NewBufferedData[*xyron.Vec3F](nil),

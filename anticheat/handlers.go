@@ -35,10 +35,8 @@ func (s *SimpleAnticheat) handleData(p *InternalPlayer, tdata map[int64]*xyron.T
 				//TODO
 			case *xyron.WildcardReportData_AttackData:
 				//TODO
-			case *xyron.WildcardReportData_AddEffectData:
-				p.effects[data.AddEffectData.InternalEffectId] = data.AddEffectData.Effect
-			case *xyron.WildcardReportData_RemoveEffectData:
-				delete(p.effects, data.RemoveEffectData.InternalEffectId)
+			case *xyron.WildcardReportData_EffectData:
+				p.effects = data.EffectData.Effect
 			case *xyron.WildcardReportData_GameModeData:
 				p.GameMode = data.GameModeData.GameMode
 			case *xyron.WildcardReportData_MotionData:
@@ -90,14 +88,9 @@ type AttackDataHandler interface {
 	HandleAttackData(*InternalPlayer, *xyron.PlayerAttackData) *xyron.JudgementData
 }
 
-// AddEffectDataHandler handles *xyron.WildcardReportData_AddEffectData
-type AddEffectDataHandler interface {
-	HandleAddEffectData(*InternalPlayer, *xyron.PlayerAddEffectData) *xyron.JudgementData
-}
-
-// RemoveEffectDataHandler handles *xyron.WildcardReportData_RemoveEffectData
-type RemoveEffectDataHandler interface {
-	HandleRemoveEffectData(*InternalPlayer, *xyron.PlayerRemoveEffectData) *xyron.JudgementData
+// EffectDataHandler handles *xyron.WildcardReportData_EffectData
+type EffectDataHandler interface {
+	HandleEffectData(*InternalPlayer, *xyron.PlayerEffectData) *xyron.JudgementData
 }
 
 // GameModeDataHandler handles *xyron.WildcardReportData_GameModeData
@@ -157,14 +150,9 @@ func (s *SimpleAnticheat) callHandlers(p *InternalPlayer, c any, wdata *xyron.Wi
 			r = append(r, handler.HandleAttackData(p, data.AttackData))
 		}
 	}
-	if handler, ok := c.(AddEffectDataHandler); ok {
-		if data, ok := wdata.Data.(*xyron.WildcardReportData_AddEffectData); ok {
-			r = append(r, handler.HandleAddEffectData(p, data.AddEffectData))
-		}
-	}
-	if handler, ok := c.(RemoveEffectDataHandler); ok {
-		if data, ok := wdata.Data.(*xyron.WildcardReportData_RemoveEffectData); ok {
-			r = append(r, handler.HandleRemoveEffectData(p, data.RemoveEffectData))
+	if handler, ok := c.(EffectDataHandler); ok {
+		if data, ok := wdata.Data.(*xyron.WildcardReportData_EffectData); ok {
+			r = append(r, handler.HandleEffectData(p, data.EffectData))
 		}
 	}
 	if handler, ok := c.(GameModeDataHandler); ok {
