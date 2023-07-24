@@ -66,10 +66,10 @@ func NewEvaluator(max float64, minValidPossibility float64, maxPossibilityAmbigu
 func (e *Evaluator) Evaluate() xyron.Judgement {
 	possibility := e.Possibility()
 	if possibility <= e.MinValidPossibility {
-		return xyron.Judgement_NONE
+		return xyron.Judgement_DEBUG
 	}
 	if possibility <= e.MaxPossibilityAmbiguous {
 		return xyron.Judgement_AMBIGUOUS
 	}
-	return xyron.Judgement_BAN
+	return xyron.Judgement_TRIGGER
 }
