@@ -22,6 +22,9 @@ func (s *SimpleAnticheat) handleData(p *InternalPlayer, tdata map[int64]*xyron.T
 				//TODO
 			case *xyron.WildcardReportData_MoveData:
 				p.SetLocation(data.MoveData.NewPosition)
+				if data.MoveData.Teleport {
+					p.Volatile.Get().Teleported = true
+				}
 			case *xyron.WildcardReportData_PlaceBlockData:
 				//TODO
 			case *xyron.WildcardReportData_BreakBlockData:
@@ -31,9 +34,9 @@ func (s *SimpleAnticheat) handleData(p *InternalPlayer, tdata map[int64]*xyron.T
 			case *xyron.WildcardReportData_AttackData:
 				//TODO
 			case *xyron.WildcardReportData_AddEffectData:
-				p.Effects[data.AddEffectData.Effect] = struct{}{}
+				p.Effects[data.AddEffectData.InternalEffectId] = data.AddEffectData.Effect
 			case *xyron.WildcardReportData_RemoveEffectData:
-				delete(p.Effects, data.RemoveEffectData.Effect)
+				delete(p.Effects, data.RemoveEffectData.InternalEffectId)
 			case *xyron.WildcardReportData_GameModeData:
 				p.GameMode = data.GameModeData.GameMode
 			case *xyron.WildcardReportData_MotionData:
