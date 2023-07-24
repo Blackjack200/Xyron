@@ -14,11 +14,7 @@ use Google\Protobuf\Internal\GPBUtil;
 class TimestampedReportData extends \Google\Protobuf\Internal\Message
 {
     /**
-     * Generated from protobuf field <code>int32 timestamp = 1;</code>
-     */
-    protected $timestamp = 0;
-    /**
-     * Generated from protobuf field <code>repeated .xchange.WildcardReportData data = 2;</code>
+     * Generated from protobuf field <code>repeated .xchange.WildcardReportData data = 1;</code>
      */
     private $data;
 
@@ -28,7 +24,6 @@ class TimestampedReportData extends \Google\Protobuf\Internal\Message
      * @param array $data {
      *     Optional. Data for populating the Message object.
      *
-     *     @type int $timestamp
      *     @type array<\prokits\xyron\WildcardReportData>|\Google\Protobuf\Internal\RepeatedField $data
      * }
      */
@@ -38,29 +33,7 @@ class TimestampedReportData extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * Generated from protobuf field <code>int32 timestamp = 1;</code>
-     * @return int
-     */
-    public function getTimestamp()
-    {
-        return $this->timestamp;
-    }
-
-    /**
-     * Generated from protobuf field <code>int32 timestamp = 1;</code>
-     * @param int $var
-     * @return $this
-     */
-    public function setTimestamp($var)
-    {
-        GPBUtil::checkInt32($var);
-        $this->timestamp = $var;
-
-        return $this;
-    }
-
-    /**
-     * Generated from protobuf field <code>repeated .xchange.WildcardReportData data = 2;</code>
+     * Generated from protobuf field <code>repeated .xchange.WildcardReportData data = 1;</code>
      * @return \Google\Protobuf\Internal\RepeatedField
      */
     public function getData()
@@ -69,7 +42,7 @@ class TimestampedReportData extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * Generated from protobuf field <code>repeated .xchange.WildcardReportData data = 2;</code>
+     * Generated from protobuf field <code>repeated .xchange.WildcardReportData data = 1;</code>
      * @param array<\prokits\xyron\WildcardReportData>|\Google\Protobuf\Internal\RepeatedField $var
      * @return $this
      */

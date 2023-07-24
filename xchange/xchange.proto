@@ -18,8 +18,7 @@ message PlayerReceipt {
 }
 
 message TimestampedReportData {
-  int32 timestamp = 1;
-  repeated WildcardReportData data = 2;
+  repeated WildcardReportData data = 1;
 }
 
 //TODO improve this
@@ -31,13 +30,13 @@ message ServerExecution{
 message AddPlayerRequest{
   Player player = 1;
   //timestamp->report data
-  map<int32, TimestampedReportData> data = 2;
+  map<int64, TimestampedReportData> data = 2;
 }
 
 message PlayerReport{
   PlayerReceipt player = 1;
   //timestamp->report data
-  map<int32, TimestampedReportData> data = 2;
+  map<int64, TimestampedReportData> data = 2;
 }
 
 message JudgementData{

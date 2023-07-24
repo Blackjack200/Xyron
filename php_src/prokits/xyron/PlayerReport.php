@@ -20,7 +20,7 @@ class PlayerReport extends \Google\Protobuf\Internal\Message
     /**
      *timestamp->report data
      *
-     * Generated from protobuf field <code>map<int32, .xchange.TimestampedReportData> data = 2;</code>
+     * Generated from protobuf field <code>map<int64, .xchange.TimestampedReportData> data = 2;</code>
      */
     private $data;
 
@@ -75,7 +75,7 @@ class PlayerReport extends \Google\Protobuf\Internal\Message
     /**
      *timestamp->report data
      *
-     * Generated from protobuf field <code>map<int32, .xchange.TimestampedReportData> data = 2;</code>
+     * Generated from protobuf field <code>map<int64, .xchange.TimestampedReportData> data = 2;</code>
      * @return \Google\Protobuf\Internal\MapField
      */
     public function getData()
@@ -86,13 +86,13 @@ class PlayerReport extends \Google\Protobuf\Internal\Message
     /**
      *timestamp->report data
      *
-     * Generated from protobuf field <code>map<int32, .xchange.TimestampedReportData> data = 2;</code>
+     * Generated from protobuf field <code>map<int64, .xchange.TimestampedReportData> data = 2;</code>
      * @param array|\Google\Protobuf\Internal\MapField $var
      * @return $this
      */
     public function setData($var)
     {
-        $arr = GPBUtil::checkMapField($var, \Google\Protobuf\Internal\GPBType::INT32, \Google\Protobuf\Internal\GPBType::MESSAGE, \prokits\xyron\TimestampedReportData::class);
+        $arr = GPBUtil::checkMapField($var, \Google\Protobuf\Internal\GPBType::INT64, \Google\Protobuf\Internal\GPBType::MESSAGE, \prokits\xyron\TimestampedReportData::class);
         $this->data = $arr;
 
         return $this;
