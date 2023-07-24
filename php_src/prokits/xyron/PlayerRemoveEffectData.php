@@ -14,9 +14,9 @@ use Google\Protobuf\Internal\GPBUtil;
 class PlayerRemoveEffectData extends \Google\Protobuf\Internal\Message
 {
     /**
-     * Generated from protobuf field <code>string effect = 1;</code>
+     * Generated from protobuf field <code>string internalEffectId = 1;</code>
      */
-    protected $effect = '';
+    protected $internalEffectId = '';
 
     /**
      * Constructor.
@@ -24,7 +24,7 @@ class PlayerRemoveEffectData extends \Google\Protobuf\Internal\Message
      * @param array $data {
      *     Optional. Data for populating the Message object.
      *
-     *     @type string $effect
+     *     @type string $internalEffectId
      * }
      */
     public function __construct($data = NULL) {
@@ -33,23 +33,23 @@ class PlayerRemoveEffectData extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * Generated from protobuf field <code>string effect = 1;</code>
+     * Generated from protobuf field <code>string internalEffectId = 1;</code>
      * @return string
      */
-    public function getEffect()
+    public function getInternalEffectId()
     {
-        return $this->effect;
+        return $this->internalEffectId;
     }
 
     /**
-     * Generated from protobuf field <code>string effect = 1;</code>
+     * Generated from protobuf field <code>string internalEffectId = 1;</code>
      * @param string $var
      * @return $this
      */
-    public function setEffect($var)
+    public function setInternalEffectId($var)
     {
         GPBUtil::checkString($var, True);
-        $this->effect = $var;
+        $this->internalEffectId = $var;
 
         return $this;
     }

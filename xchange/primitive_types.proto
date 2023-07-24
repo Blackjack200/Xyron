@@ -87,3 +87,12 @@ message ItemFeatureRegistry {
   map<string, ItemFeatureRegistry> features = 1;
 }
 */
+
+message EffectFeature {
+  int32 amplifier = 1;
+  bool isSpeed = 2;
+  bool isHaste = 3;
+  bool isSlowFalling = 4;
+  bool isSlowness = 5;
+  bool isJumpBoost = 6;
+}

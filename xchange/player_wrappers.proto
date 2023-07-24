@@ -58,11 +58,12 @@ message PlayerAttackData {
 }
 
 message PlayerAddEffectData {
-  string effect = 1;
+  EffectFeature effect = 1;
+  string internalEffectId = 2;
 }
 
 message PlayerRemoveEffectData {
-  string effect = 1;
+  string internalEffectId = 1;
 }
 
 message PlayerGameModeData {

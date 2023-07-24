@@ -14,9 +14,13 @@ use Google\Protobuf\Internal\GPBUtil;
 class PlayerAddEffectData extends \Google\Protobuf\Internal\Message
 {
     /**
-     * Generated from protobuf field <code>string effect = 1;</code>
+     * Generated from protobuf field <code>.xchange.EffectFeature effect = 1;</code>
      */
-    protected $effect = '';
+    protected $effect = null;
+    /**
+     * Generated from protobuf field <code>string internalEffectId = 2;</code>
+     */
+    protected $internalEffectId = '';
 
     /**
      * Constructor.
@@ -24,7 +28,8 @@ class PlayerAddEffectData extends \Google\Protobuf\Internal\Message
      * @param array $data {
      *     Optional. Data for populating the Message object.
      *
-     *     @type string $effect
+     *     @type \prokits\xyron\EffectFeature $effect
+     *     @type string $internalEffectId
      * }
      */
     public function __construct($data = NULL) {
@@ -33,23 +38,55 @@ class PlayerAddEffectData extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * Generated from protobuf field <code>string effect = 1;</code>
-     * @return string
+     * Generated from protobuf field <code>.xchange.EffectFeature effect = 1;</code>
+     * @return \prokits\xyron\EffectFeature|null
      */
     public function getEffect()
     {
         return $this->effect;
     }
 
+    public function hasEffect()
+    {
+        return isset($this->effect);
+    }
+
+    public function clearEffect()
+    {
+        unset($this->effect);
+    }
+
     /**
-     * Generated from protobuf field <code>string effect = 1;</code>
-     * @param string $var
+     * Generated from protobuf field <code>.xchange.EffectFeature effect = 1;</code>
+     * @param \prokits\xyron\EffectFeature $var
      * @return $this
      */
     public function setEffect($var)
     {
-        GPBUtil::checkString($var, True);
+        GPBUtil::checkMessage($var, \prokits\xyron\EffectFeature::class);
         $this->effect = $var;
+
+        return $this;
+    }
+
+    /**
+     * Generated from protobuf field <code>string internalEffectId = 2;</code>
+     * @return string
+     */
+    public function getInternalEffectId()
+    {
+        return $this->internalEffectId;
+    }
+
+    /**
+     * Generated from protobuf field <code>string internalEffectId = 2;</code>
+     * @param string $var
+     * @return $this
+     */
+    public function setInternalEffectId($var)
+    {
+        GPBUtil::checkString($var, True);
+        $this->internalEffectId = $var;
 
         return $this;
     }

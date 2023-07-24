@@ -16,7 +16,7 @@ class PrimitiveTypes
         }
         $pool->internalAddGeneratedFile(
             '
-Ë
+Ô
 primitive_types.protoxchange"
 Vec2f	
 x (	
@@ -65,7 +65,15 @@ class PrimitiveTypes
 isTool (
 isBow (
 
-isCrossBow (B=
+isCrossBow ("Ñ
+EffectFeature
+	amplifier (
+isSpeed (
+isHaste (
+isSlowFalling (
+
+isSlowness (
+isJumpBoost (B=
 com.github.blackjack200.xyronZxyron/à prokits\\xyron–bproto3'
         , true);
 
