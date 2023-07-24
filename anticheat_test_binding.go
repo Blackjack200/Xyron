@@ -20,6 +20,9 @@ import (
 	"google.golang.org/grpc"
 	"google.golang.org/protobuf/types/known/emptypb"
 	"os"
+	"reflect"
+	"sync"
+	"unsafe"
 )
 
 type WrappedAnticheatClient struct {
@@ -36,6 +39,27 @@ func (w *WrappedAnticheatClient) RemovePlayer(ctx context.Context, in *xyron.Pla
 
 func (w *WrappedAnticheatClient) Report(ctx context.Context, in *xyron.PlayerReport, opts ...grpc.CallOption) (*xyron.ReportResponse, error) {
 	return w.server.Report(ctx, in)
+}
+
+func getField(s interface{}, n string) reflect.Value {
+	return reflect.ValueOf(s).Elem().FieldByName(n)
+}
+
+func getUnexportedField(s interface{}, n string) interface{} {
+	field := getField(s, n)
+	return reflect.NewAt(field.Type(), unsafe.Pointer(field.UnsafeAddr())).Elem().Interface()
+}
+
+func getCurrentWorldTick(w *world.World) int64 {
+	set := getUnexportedField(w, "set").(*world.Settings)
+	set.Lock()
+	defer set.Unlock()
+	return set.CurrentTick
+}
+
+type BufferedDataQueue struct {
+	mu *sync.Mutex
+	m  map[int64][]*xyron.WildcardReportData
 }
 
 func main() {
@@ -56,6 +80,7 @@ func main() {
 	srv.CloseOnProgramEnd()
 
 	srv.Listen()
+
 	for srv.Accept(func(p *player.Player) {
 		p.SetGameMode(world.GameModeSurvival)
 		var hdrs []*xyron.WildcardReportData
