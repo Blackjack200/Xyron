@@ -41,6 +41,10 @@ class BlockFeature extends \Google\Protobuf\Internal\Message
      * Generated from protobuf field <code>bool isClimbable = 8;</code>
      */
     protected $isClimbable = false;
+    /**
+     * Generated from protobuf field <code>bool isIce = 9;</code>
+     */
+    protected $isIce = false;
 
     /**
      * Constructor.
@@ -55,6 +59,7 @@ class BlockFeature extends \Google\Protobuf\Internal\Message
      *     @type bool $isAir
      *     @type bool $isSlime
      *     @type bool $isClimbable
+     *     @type bool $isIce
      * }
      */
     public function __construct($data = NULL) {
@@ -212,6 +217,28 @@ class BlockFeature extends \Google\Protobuf\Internal\Message
     {
         GPBUtil::checkBool($var);
         $this->isClimbable = $var;
+
+        return $this;
+    }
+
+    /**
+     * Generated from protobuf field <code>bool isIce = 9;</code>
+     * @return bool
+     */
+    public function getIsIce()
+    {
+        return $this->isIce;
+    }
+
+    /**
+     * Generated from protobuf field <code>bool isIce = 9;</code>
+     * @param bool $var
+     * @return $this
+     */
+    public function setIsIce($var)
+    {
+        GPBUtil::checkBool($var);
+        $this->isIce = $var;
 
         return $this;
     }

@@ -337,7 +337,7 @@ func (x *JudgementData) GetJudgement() Judgement {
 	if x != nil {
 		return x.Judgement
 	}
-	return Judgement_NONE
+	return Judgement_DEBUG
 }
 
 func (x *JudgementData) GetMessage() string {
