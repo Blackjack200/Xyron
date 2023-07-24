@@ -1,5 +1,3 @@
 package implementation
 
-var Available = []any{
-	&AirJump{},
-}
+var Available []any

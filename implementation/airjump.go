@@ -6,17 +6,32 @@ import (
 	"github.com/blackjack200/xyron/xyron"
 )
 
-type AirJump struct{}
+type AirJump struct {
+	*anticheat.Evaluator
+	UnstableRate float64
+}
 
 var _ = anticheat.ActionDataHandler(&AirJump{})
 
+func init() {
+	Available = append(Available, &AirJump{
+		anticheat.NewEvaluator(8, 0.3, 0.8),
+		0.9999,
+	})
+}
+
 func (a *AirJump) HandleActionData(p *anticheat.InternalPlayer, data *xyron.PlayerActionData) *xyron.JudgementData {
-	if data.Action == xyron.PlayerAction_Jump && !p.OnGround.Current() && !p.OnGround.Previous() {
-		return &xyron.JudgementData{
-			Type:      "AirJump",
-			Judgement: xyron.Judgement_AMBIGUOUS,
-			Message:   fmt.Sprintf("onGround: cur:%v prev:%v", p.OnGround.Current(), p.OnGround.Previous()),
-		}
+	measured := 0.0
+	if data.Action == xyron.PlayerAction_Jump &&
+		!p.OnGround.Current() &&
+		!p.OnGround.Previous() &&
+		p.InAirTick >= 10 {
+		measured = 1
 	}
-	return nil
+	a.HandleUnstableRate(measured, 0, a.UnstableRate)
+	return &xyron.JudgementData{
+		Type:      "AirJump",
+		Judgement: a.Evaluate(),
+		Message:   fmt.Sprintf("p: %v inAirTick:%v", a.PossibilityString(), p.InAirTick),
+	}
 }

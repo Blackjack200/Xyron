@@ -22,6 +22,8 @@ import (
 	"os"
 	"reflect"
 	"sync"
+	"sync/atomic"
+	"time"
 	"unsafe"
 )
 
@@ -62,6 +64,44 @@ type BufferedDataQueue struct {
 	m  map[int64][]*xyron.WildcardReportData
 }
 
+func NewBufferedDataQueue() *BufferedDataQueue {
+	return &BufferedDataQueue{
+		mu: &sync.Mutex{},
+		m:  make(map[int64][]*xyron.WildcardReportData, 128),
+	}
+}
+
+func (b *BufferedDataQueue) Add(tick int64, wdata *xyron.WildcardReportData) {
+	b.mu.Lock()
+	defer b.mu.Unlock()
+	if _, ok := b.m[tick]; !ok {
+		b.m[tick] = nil
+	}
+	b.m[tick] = append(b.m[tick], wdata)
+}
+
+func (b *BufferedDataQueue) Flush(ctx context.Context, c xyron.AnticheatClient, p *xyron.PlayerReceipt, tick int64) (*xyron.ReportResponse, error) {
+	b.mu.Lock()
+	var needSend []int64
+	for k, _ := range b.m {
+		if k <= tick {
+			needSend = append(needSend, k)
+		}
+	}
+	sorted := anticheat.ComparableSlice[int64](needSend)
+	sorted.Sort()
+	needSendMap := make(map[int64]*xyron.TimestampedReportData, len(needSend))
+	for _, v := range sorted {
+		needSendMap[v] = &xyron.TimestampedReportData{Data: b.m[v]}
+		delete(b.m, v)
+	}
+	b.mu.Unlock()
+	return c.Report(ctx, &xyron.PlayerReport{
+		Player: p,
+		Data:   needSendMap,
+	})
+}
+
 func main() {
 	log := logrus.New()
 	log.Formatter = &logrus.TextFormatter{ForceColors: true}
@@ -88,62 +128,88 @@ func main() {
 			GameModeData: &xyron.PlayerGameModeData{GameMode: ToXyronGameMode(p.GameMode())},
 		}})
 		//p.Effects()[0].Type()
-
-		pp, _ := c.AddPlayer(context.TODO(), &xyron.AddPlayerRequest{
-			Player: &xyron.Player{
-				//TODO Os
-				Name: p.Name(),
-			},
-			Data: map[int32]*xyron.TimestampedReportData{0: {
-				Timestamp: 0,
-				Data:      hdrs,
-			}},
-		})
-		p.Handle(&playerHandler{
-			NopHandler: player.NopHandler{},
-			p:          p,
-			pp:         pp,
-			c:          c,
-		})
+		go func() {
+			pp, _ := c.AddPlayer(context.TODO(), &xyron.AddPlayerRequest{
+				Player: &xyron.Player{
+					//TODO Os
+					Name: p.Name(),
+				},
+				Data: map[int64]*xyron.TimestampedReportData{0: {Data: hdrs}},
+			})
+			p.Handle(newPlayerHandler(log, p, pp, c))
+		}()
 	}) {
 	}
 }
 
 type playerHandler struct {
 	player.NopHandler
-	p  *player.Player
-	pp *xyron.PlayerReceipt
-	c  xyron.AnticheatClient
+	log    *logrus.Logger
+	p      *player.Player
+	buf    *BufferedDataQueue
+	pp     *xyron.PlayerReceipt
+	c      xyron.AnticheatClient
+	closed atomic.Bool
+	ticker *time.Ticker
 }
 
-func (h *playerHandler) HandleMove(*event.Context, mgl64.Vec3, float64, float64) {
-	//move during a tick, we need a proper send queue and report data to anticheat directly
+func newPlayerHandler(log *logrus.Logger, p *player.Player, pp *xyron.PlayerReceipt, c xyron.AnticheatClient) *playerHandler {
+	hdr := &playerHandler{
+		NopHandler: player.NopHandler{},
+		p:          p,
+		buf:        NewBufferedDataQueue(),
+		pp:         pp,
+		c:          c,
+		closed:     atomic.Bool{},
+	}
+	hdr.ticker = time.NewTicker(time.Second)
+	hdr.closed.Store(false)
+	go func() {
+		defer func() {
+			if r := recover(); r != nil {
+				hdr.log.Error(r)
+			}
+		}()
+		for !hdr.closed.Load() {
+			select {
+			case _ = <-hdr.ticker.C:
+				if !hdr.closed.Load() {
+					if jdjm, err := hdr.buf.Flush(context.TODO(), hdr.c, hdr.pp, getCurrentWorldTick(hdr.p.World())); err != nil {
+						hdr.p.Messagef("judgement error: %v", err)
+					} else {
+						for _, j := range jdjm.Judgements {
+							hdr.p.Messagef("judgement: %v: %v message:%v", j.Type, j.Judgement.String(), j.Message)
+						}
+					}
+				}
+			}
+		}
+	}()
+	return hdr
 }
+func (h *playerHandler) HandleTeleport(*event.Context, mgl64.Vec3) {}
 
-func (h *playerHandler) HandleQuit() {
-	h.c.RemovePlayer(context.TODO(), h.pp)
+func (h *playerHandler) HandleMove(_ *event.Context, newPos mgl64.Vec3, yaw, pitch float64) {
+	h.buf.Add(getCurrentWorldTick(h.p.World()), &xyron.WildcardReportData{Data: &xyron.WildcardReportData_MoveData{
+		MoveData: &xyron.PlayerMoveData{
+			NewPosition: h.getXyronPositionData(newPos, cube.Rotation{yaw, pitch}.Vec3()),
+			Teleport:    true,
+		},
+	}})
 }
 
 func (h *playerHandler) HandleJump() {
-	bbox := h.p.Type().BBox(h.p)
-	rp, _ := h.c.Report(context.TODO(), &xyron.PlayerReport{
-		Player: h.pp,
-		Data: map[int32]*xyron.TimestampedReportData{
-			0: {
-				Timestamp: 0,
-				Data: []*xyron.WildcardReportData{
-					{Data: &xyron.WildcardReportData_ActionData{ActionData: &xyron.PlayerActionData{
-						Position: h.getXyronPositionData(bbox),
-						Action:   xyron.PlayerAction_Jump,
-					}}},
-				},
-			},
+	h.buf.Add(getCurrentWorldTick(h.p.World()), &xyron.WildcardReportData{Data: &xyron.WildcardReportData_ActionData{
+		ActionData: &xyron.PlayerActionData{
+			Position: h.getXyronPositionData(h.p.Position(), h.p.Rotation().Vec3()),
+			Action:   xyron.PlayerAction_Jump,
 		},
-	})
+	}})
+}
 
-	for _, j := range rp.Judgements {
-		h.p.Messagef("judgement: %v: %v message:%v\n", j.Type, j.Judgement.String(), j.Message)
-	}
+func (h *playerHandler) HandleQuit() {
+	h.closed.Store(true)
+	go h.c.RemovePlayer(context.TODO(), h.pp)
 }
 
 func getColliedBlocks(p *player.Player) []*xyron.BlockData {
@@ -244,20 +310,21 @@ func ToXyronBlockData(blk world.Block, pos cube.Pos, bboxs []*xyron.AxisAlignedB
 			IsSolid:        solid,
 			IsLiquid:       wtr || lava,
 			IsAir:          air,
-			IsSlime:        false,
-			IsClimbable:    cl,
+			//dragonfly has no slime block
+			IsSlime:     false,
+			IsClimbable: cl,
 		},
 	}
 	return bd, true
 }
 
-func (h *playerHandler) getXyronPositionData(bbox cube.BBox) *xyron.EntityPositionData {
+func (h *playerHandler) getXyronPositionData(pos, rot mgl64.Vec3) *xyron.EntityPositionData {
 	return &xyron.EntityPositionData{
 		Location: &xyron.Loc3F{
-			Position:  ToXyronVec3(h.p.Position()),
-			Direction: ToXyronVec3(h.p.Rotation().Vec3()),
+			Position:  ToXyronVec3(pos),
+			Direction: ToXyronVec3(rot),
 		},
-		BoundingBox:       ToXyronBBox(bbox),
+		BoundingBox:       ToXyronBBox(h.p.Type().BBox(h.p)),
 		Below:             nil,
 		IsImmobile:        h.p.Immobile(),
 		IsOnGround:        h.p.OnGround(),

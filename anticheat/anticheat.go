@@ -54,6 +54,7 @@ func (s *SimpleAnticheat) Report(_ context.Context, r *xyron.PlayerReport) (*xyr
 		p = pp
 	}
 	s.mu.Unlock()
+	log.Printf("RP:%v", r.Player.InternalId)
 	jdjm := s.handleData(p, r.Data)
 	return &xyron.ReportResponse{Judgements: jdjm}, nil
 }

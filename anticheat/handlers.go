@@ -2,13 +2,13 @@ package anticheat
 
 import "github.com/blackjack200/xyron/xyron"
 
-func (s *SimpleAnticheat) handleData(p *InternalPlayer, tdata map[int32]*xyron.TimestampedReportData) (r []*xyron.JudgementData) {
+func (s *SimpleAnticheat) handleData(p *InternalPlayer, tdata map[int64]*xyron.TimestampedReportData) (r []*xyron.JudgementData) {
 	checks := s.checks
-	var keys []int32
+	var keys []int64
 	for timestamp, _ := range tdata {
 		keys = append(keys, timestamp)
 	}
-	sorted := ComparableSlice[int32](keys)
+	sorted := ComparableSlice[int64](keys)
 	sorted.Sort()
 	for _, timestamp := range sorted {
 		for _, wdata := range tdata[timestamp].Data {
