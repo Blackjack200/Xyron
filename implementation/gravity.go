@@ -88,7 +88,7 @@ func (g *Gravity) predictDeltaY(p *anticheat.InternalPlayer, data *xyron.PlayerM
 	} else {
 		predictedDeltaY = 0.0
 	}
-	predictedDeltaY += 0.9800000190734863
+	predictedDeltaY *= 0.9800000190734863
 
 	//Cobweb https://github.com/Blackjack200/minecraft_client_1_16_2/blob/master/net/minecraft/world/entity/Entity.java#L516
 	//https://github.com/Blackjack200/minecraft_client_1_16_2/blob/c7f87b96efaeb477d9604354aa23ada0eb637ec6/net/minecraft/world/level/block/WebBlock.java#L17C1
