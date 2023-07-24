@@ -12,22 +12,22 @@ use UnexpectedValueException;
 class Judgement
 {
     /**
-     * Generated from protobuf enum <code>NONE = 0;</code>
+     * Generated from protobuf enum <code>DEBUG = 0;</code>
      */
-    const NONE = 0;
+    const DEBUG = 0;
     /**
      * Generated from protobuf enum <code>AMBIGUOUS = 1;</code>
      */
     const AMBIGUOUS = 1;
     /**
-     * Generated from protobuf enum <code>BAN = 2;</code>
+     * Generated from protobuf enum <code>TRIGGER = 2;</code>
      */
-    const BAN = 2;
+    const TRIGGER = 2;
 
     private static $valueToName = [
-        self::NONE => 'NONE',
+        self::DEBUG => 'DEBUG',
         self::AMBIGUOUS => 'AMBIGUOUS',
-        self::BAN => 'BAN',
+        self::TRIGGER => 'TRIGGER',
     ];
 
     public static function name($value)

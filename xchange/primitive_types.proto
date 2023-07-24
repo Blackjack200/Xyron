@@ -54,6 +54,7 @@ message BlockFeature {
   bool isAir = 6;
   bool isSlime = 7;
   bool isClimbable = 8;
+  bool isIce = 9;
 }
 /*
 message BlockFeatureRegistry {

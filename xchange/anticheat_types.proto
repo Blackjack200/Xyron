@@ -9,7 +9,7 @@ option php_generic_services = true;
 package xchange;
 
 enum Judgement {
-  NONE = 0;
+  DEBUG = 0;
   AMBIGUOUS = 1;
-  BAN = 2;
+  TRIGGER = 2;
 }
