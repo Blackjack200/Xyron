@@ -19,6 +19,7 @@ import (
 	"github.com/sirupsen/logrus"
 	"google.golang.org/grpc"
 	"google.golang.org/protobuf/types/known/emptypb"
+	"math"
 	"os"
 	"reflect"
 	"sync"
@@ -127,7 +128,7 @@ func main() {
 		hdrs = append(hdrs, &xyron.WildcardReportData{Data: &xyron.WildcardReportData_GameModeData{
 			GameModeData: &xyron.PlayerGameModeData{GameMode: ToXyronGameMode(p.GameMode())},
 		}})
-		//p.Effects()[0].Type()
+		//TODO effects
 		go func() {
 			pp, _ := c.AddPlayer(context.TODO(), &xyron.AddPlayerRequest{
 				Player: &xyron.Player{
@@ -213,7 +214,7 @@ func (h *playerHandler) HandleQuit() {
 }
 
 func getColliedBlocks(p *player.Player) []*xyron.BlockData {
-	box := p.Type().BBox(p).Translate(p.Position().Add(mgl64.Vec3{0, -0.5, 0}))
+	box := p.Type().BBox(p).Translate(p.Position().Add(mgl64.Vec3{0, -0.5000001, 0}))
 
 	b := box.Grow(1)
 
@@ -227,13 +228,9 @@ func getColliedBlocks(p *player.Player) []*xyron.BlockData {
 				pos := cube.Pos{x, y, z}
 				boxList := p.World().Block(pos).Model().BBox(pos, p.World())
 				blk := p.World().Block(pos)
-				var bboxs []*xyron.AxisAlignedBoundingBox
-				for _, bbox := range blk.Model().BBox(pos, p.World()) {
-					bboxs = append(bboxs, ToXyronBBox(bbox))
-				}
 				for _, bb := range boxList {
 					if bb.GrowVec3(mgl64.Vec3{0, 0.05}).Translate(pos.Vec3()).IntersectsWith(box) {
-						bd, done := ToXyronBlockData(blk, pos, bboxs)
+						bd, done := ToXyronBlockData(p.World(), blk, pos)
 						if done {
 							blocks = append(blocks, bd)
 						}
@@ -289,7 +286,11 @@ func ToXyronGameMode(g world.GameMode) xyron.GameMode {
 	}
 }
 
-func ToXyronBlockData(blk world.Block, pos cube.Pos, bboxs []*xyron.AxisAlignedBoundingBox) (*xyron.BlockData, bool) {
+func ToXyronBlockData(w *world.World, blk world.Block, pos cube.Pos) (*xyron.BlockData, bool) {
+	var bboxs []*xyron.AxisAlignedBoundingBox
+	for _, bbox := range blk.Model().BBox(pos, w) {
+		bboxs = append(bboxs, ToXyronBBox(bbox))
+	}
 	fric := float32(0.0)
 	if f, ok := blk.(block.Frictional); ok {
 		fric = float32(f.Friction())
@@ -299,8 +300,15 @@ func ToXyronBlockData(blk world.Block, pos cube.Pos, bboxs []*xyron.AxisAlignedB
 	_, wtr := blk.(block.Water)
 	_, lava := blk.(block.Lava)
 	_, cl := blk.(block.Ladder)
+	_, ice := blk.(block.PackedIce)
+	_, ice2 := blk.(block.BlueIce)
 	if air {
-		return nil, false
+		return &xyron.BlockData{
+			RelativePosition: ToXyronCubePos(pos),
+			Feature: &xyron.BlockFeature{
+				IsAir: true,
+			},
+		}, false
 	}
 	bd := &xyron.BlockData{
 		RelativePosition: ToXyronCubePos(pos),
@@ -313,25 +321,34 @@ func ToXyronBlockData(blk world.Block, pos cube.Pos, bboxs []*xyron.AxisAlignedB
 			//dragonfly has no slime block
 			IsSlime:     false,
 			IsClimbable: cl,
+			IsIce:       ice || ice2,
+			//dragonfly has no cobweb
+			IsCobweb: false,
+			//dragonfly has no sweet berry
+			IsSweetBerry: false,
 		},
 	}
 	return bd, true
 }
 
 func (h *playerHandler) getXyronPositionData(pos, rot mgl64.Vec3) *xyron.EntityPositionData {
+	xpos := cube.PosFromVec3(pos)
+	xpos[1] = int(math.Floor(h.p.Type().BBox(h.p).Min()[1] - 0.50001))
+	b, _ := ToXyronBlockData(h.p.World(), h.p.World().Block(xpos), xpos)
 	return &xyron.EntityPositionData{
 		Location: &xyron.Loc3F{
 			Position:  ToXyronVec3(pos),
 			Direction: ToXyronVec3(rot),
 		},
-		BoundingBox:       ToXyronBBox(h.p.Type().BBox(h.p)),
-		Below:             nil,
-		IsImmobile:        h.p.Immobile(),
-		IsOnGround:        h.p.OnGround(),
-		AllowFlying:       h.p.GameMode().AllowsFlying(),
-		IsFlying:          h.p.Flying(),
-		CollidedBlocks:    getColliedBlocks(h.p),
-		IntersectedBlocks: getIntersectedBlocks(h.p),
+		BoundingBox:             ToXyronBBox(h.p.Type().BBox(h.p)),
+		BelowThatAffectMovement: b,
+		IsImmobile:              h.p.Immobile(),
+		IsOnGround:              h.p.OnGround(),
+		AllowFlying:             h.p.GameMode().AllowsFlying(),
+		IsFlying:                h.p.Flying(),
+		HaveGravity:             true,
+		CollidedBlocks:          getColliedBlocks(h.p),
+		IntersectedBlocks:       getIntersectedBlocks(h.p),
 	}
 }
 

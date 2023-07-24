@@ -45,6 +45,14 @@ class BlockFeature extends \Google\Protobuf\Internal\Message
      * Generated from protobuf field <code>bool isIce = 9;</code>
      */
     protected $isIce = false;
+    /**
+     * Generated from protobuf field <code>bool isCobweb = 10;</code>
+     */
+    protected $isCobweb = false;
+    /**
+     * Generated from protobuf field <code>bool isSweetBerry = 11;</code>
+     */
+    protected $isSweetBerry = false;
 
     /**
      * Constructor.
@@ -60,6 +68,8 @@ class BlockFeature extends \Google\Protobuf\Internal\Message
      *     @type bool $isSlime
      *     @type bool $isClimbable
      *     @type bool $isIce
+     *     @type bool $isCobweb
+     *     @type bool $isSweetBerry
      * }
      */
     public function __construct($data = NULL) {
@@ -239,6 +249,50 @@ class BlockFeature extends \Google\Protobuf\Internal\Message
     {
         GPBUtil::checkBool($var);
         $this->isIce = $var;
+
+        return $this;
+    }
+
+    /**
+     * Generated from protobuf field <code>bool isCobweb = 10;</code>
+     * @return bool
+     */
+    public function getIsCobweb()
+    {
+        return $this->isCobweb;
+    }
+
+    /**
+     * Generated from protobuf field <code>bool isCobweb = 10;</code>
+     * @param bool $var
+     * @return $this
+     */
+    public function setIsCobweb($var)
+    {
+        GPBUtil::checkBool($var);
+        $this->isCobweb = $var;
+
+        return $this;
+    }
+
+    /**
+     * Generated from protobuf field <code>bool isSweetBerry = 11;</code>
+     * @return bool
+     */
+    public function getIsSweetBerry()
+    {
+        return $this->isSweetBerry;
+    }
+
+    /**
+     * Generated from protobuf field <code>bool isSweetBerry = 11;</code>
+     * @param bool $var
+     * @return $this
+     */
+    public function setIsSweetBerry($var)
+    {
+        GPBUtil::checkBool($var);
+        $this->isSweetBerry = $var;
 
         return $this;
     }

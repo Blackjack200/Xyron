@@ -11,6 +11,7 @@ func (s *SimpleAnticheat) handleData(p *InternalPlayer, tdata map[int64]*xyron.T
 	sorted := ComparableSlice[int64](keys)
 	sorted.Sort()
 	for _, timestamp := range sorted {
+		p.currentTimestamp = timestamp
 		for _, wdata := range tdata[timestamp].Data {
 			switch data := wdata.Data.(type) {
 			case *xyron.WildcardReportData_ActionData:
@@ -23,6 +24,7 @@ func (s *SimpleAnticheat) handleData(p *InternalPlayer, tdata map[int64]*xyron.T
 			case *xyron.WildcardReportData_MoveData:
 				p.SetLocation(data.MoveData.NewPosition)
 				if data.MoveData.Teleport {
+					p.Teleport.Set(p.currentTimestamp)
 					p.Volatile.Get().Teleported = true
 				}
 			case *xyron.WildcardReportData_PlaceBlockData:
@@ -34,13 +36,13 @@ func (s *SimpleAnticheat) handleData(p *InternalPlayer, tdata map[int64]*xyron.T
 			case *xyron.WildcardReportData_AttackData:
 				//TODO
 			case *xyron.WildcardReportData_AddEffectData:
-				p.Effects[data.AddEffectData.InternalEffectId] = data.AddEffectData.Effect
+				p.effects[data.AddEffectData.InternalEffectId] = data.AddEffectData.Effect
 			case *xyron.WildcardReportData_RemoveEffectData:
-				delete(p.Effects, data.RemoveEffectData.InternalEffectId)
+				delete(p.effects, data.RemoveEffectData.InternalEffectId)
 			case *xyron.WildcardReportData_GameModeData:
 				p.GameMode = data.GameModeData.GameMode
 			case *xyron.WildcardReportData_MotionData:
-				p.Motion.Set(data.MotionData.Motion)
+				p.Motion.Set(NewTimestampedData(timestamp, data.MotionData.Motion))
 				//TODO
 			case *xyron.WildcardReportData_InputModeData:
 				p.Input = data.InputModeData.InputMode

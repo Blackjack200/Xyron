@@ -90,13 +90,14 @@ enum ConsumeStatus {
 message EntityPositionData {
   Loc3f location = 1;
   AxisAlignedBoundingBox boundingBox = 2;
-  BlockData below = 3;
+  BlockData belowThatAffectMovement = 3;
   bool isImmobile = 4;
   bool isOnGround = 5;
   bool allowFlying = 6;
   bool isFlying = 7;
-  repeated BlockData collidedBlocks = 8;
-  repeated BlockData intersectedBlocks = 9;
+  bool haveGravity = 8;
+  repeated BlockData collidedBlocks = 9;
+  repeated BlockData intersectedBlocks = 10;
 }
 
 message AttackData {

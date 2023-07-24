@@ -29,6 +29,14 @@ func (b *ViolationBuffer) HandleMax(measured, expectedMax float64) {
 	}
 }
 
+func (b *ViolationBuffer) HandleMaxRate(measured, expectedMax, rate float64) {
+	if measured > expectedMax {
+		b.buf++
+	} else {
+		b.buf *= rate
+	}
+}
+
 func (b *ViolationBuffer) Add() {
 	b.buf++
 }

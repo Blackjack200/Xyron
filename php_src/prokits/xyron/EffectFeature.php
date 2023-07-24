@@ -30,11 +30,15 @@ class EffectFeature extends \Google\Protobuf\Internal\Message
      */
     protected $isSlowFalling = false;
     /**
-     * Generated from protobuf field <code>bool isSlowness = 5;</code>
+     * Generated from protobuf field <code>bool isLevitation = 5;</code>
+     */
+    protected $isLevitation = false;
+    /**
+     * Generated from protobuf field <code>bool isSlowness = 6;</code>
      */
     protected $isSlowness = false;
     /**
-     * Generated from protobuf field <code>bool isJumpBoost = 6;</code>
+     * Generated from protobuf field <code>bool isJumpBoost = 7;</code>
      */
     protected $isJumpBoost = false;
 
@@ -48,6 +52,7 @@ class EffectFeature extends \Google\Protobuf\Internal\Message
      *     @type bool $isSpeed
      *     @type bool $isHaste
      *     @type bool $isSlowFalling
+     *     @type bool $isLevitation
      *     @type bool $isSlowness
      *     @type bool $isJumpBoost
      * }
@@ -146,7 +151,29 @@ class EffectFeature extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * Generated from protobuf field <code>bool isSlowness = 5;</code>
+     * Generated from protobuf field <code>bool isLevitation = 5;</code>
+     * @return bool
+     */
+    public function getIsLevitation()
+    {
+        return $this->isLevitation;
+    }
+
+    /**
+     * Generated from protobuf field <code>bool isLevitation = 5;</code>
+     * @param bool $var
+     * @return $this
+     */
+    public function setIsLevitation($var)
+    {
+        GPBUtil::checkBool($var);
+        $this->isLevitation = $var;
+
+        return $this;
+    }
+
+    /**
+     * Generated from protobuf field <code>bool isSlowness = 6;</code>
      * @return bool
      */
     public function getIsSlowness()
@@ -155,7 +182,7 @@ class EffectFeature extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * Generated from protobuf field <code>bool isSlowness = 5;</code>
+     * Generated from protobuf field <code>bool isSlowness = 6;</code>
      * @param bool $var
      * @return $this
      */
@@ -168,7 +195,7 @@ class EffectFeature extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * Generated from protobuf field <code>bool isJumpBoost = 6;</code>
+     * Generated from protobuf field <code>bool isJumpBoost = 7;</code>
      * @return bool
      */
     public function getIsJumpBoost()
@@ -177,7 +204,7 @@ class EffectFeature extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * Generated from protobuf field <code>bool isJumpBoost = 6;</code>
+     * Generated from protobuf field <code>bool isJumpBoost = 7;</code>
      * @param bool $var
      * @return $this
      */

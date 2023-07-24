@@ -55,6 +55,8 @@ message BlockFeature {
   bool isSlime = 7;
   bool isClimbable = 8;
   bool isIce = 9;
+  bool isCobweb = 10;
+  bool isSweetBerry = 11;
 }
 /*
 message BlockFeatureRegistry {
@@ -93,6 +95,7 @@ message EffectFeature {
   bool isSpeed = 2;
   bool isHaste = 3;
   bool isSlowFalling = 4;
-  bool isSlowness = 5;
-  bool isJumpBoost = 6;
+  bool isLevitation = 5;
+  bool isSlowness = 6;
+  bool isJumpBoost = 7;
 }

@@ -22,9 +22,9 @@ class EntityPositionData extends \Google\Protobuf\Internal\Message
      */
     protected $boundingBox = null;
     /**
-     * Generated from protobuf field <code>.xchange.BlockData below = 3;</code>
+     * Generated from protobuf field <code>.xchange.BlockData belowThatAffectMovement = 3;</code>
      */
-    protected $below = null;
+    protected $belowThatAffectMovement = null;
     /**
      * Generated from protobuf field <code>bool isImmobile = 4;</code>
      */
@@ -42,11 +42,15 @@ class EntityPositionData extends \Google\Protobuf\Internal\Message
      */
     protected $isFlying = false;
     /**
-     * Generated from protobuf field <code>repeated .xchange.BlockData collidedBlocks = 8;</code>
+     * Generated from protobuf field <code>bool haveGravity = 8;</code>
+     */
+    protected $haveGravity = false;
+    /**
+     * Generated from protobuf field <code>repeated .xchange.BlockData collidedBlocks = 9;</code>
      */
     private $collidedBlocks;
     /**
-     * Generated from protobuf field <code>repeated .xchange.BlockData intersectedBlocks = 9;</code>
+     * Generated from protobuf field <code>repeated .xchange.BlockData intersectedBlocks = 10;</code>
      */
     private $intersectedBlocks;
 
@@ -58,11 +62,12 @@ class EntityPositionData extends \Google\Protobuf\Internal\Message
      *
      *     @type \prokits\xyron\Loc3f $location
      *     @type \prokits\xyron\AxisAlignedBoundingBox $boundingBox
-     *     @type \prokits\xyron\BlockData $below
+     *     @type \prokits\xyron\BlockData $belowThatAffectMovement
      *     @type bool $isImmobile
      *     @type bool $isOnGround
      *     @type bool $allowFlying
      *     @type bool $isFlying
+     *     @type bool $haveGravity
      *     @type array<\prokits\xyron\BlockData>|\Google\Protobuf\Internal\RepeatedField $collidedBlocks
      *     @type array<\prokits\xyron\BlockData>|\Google\Protobuf\Internal\RepeatedField $intersectedBlocks
      * }
@@ -137,33 +142,33 @@ class EntityPositionData extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * Generated from protobuf field <code>.xchange.BlockData below = 3;</code>
+     * Generated from protobuf field <code>.xchange.BlockData belowThatAffectMovement = 3;</code>
      * @return \prokits\xyron\BlockData|null
      */
-    public function getBelow()
+    public function getBelowThatAffectMovement()
     {
-        return $this->below;
+        return $this->belowThatAffectMovement;
     }
 
-    public function hasBelow()
+    public function hasBelowThatAffectMovement()
     {
-        return isset($this->below);
+        return isset($this->belowThatAffectMovement);
     }
 
-    public function clearBelow()
+    public function clearBelowThatAffectMovement()
     {
-        unset($this->below);
+        unset($this->belowThatAffectMovement);
     }
 
     /**
-     * Generated from protobuf field <code>.xchange.BlockData below = 3;</code>
+     * Generated from protobuf field <code>.xchange.BlockData belowThatAffectMovement = 3;</code>
      * @param \prokits\xyron\BlockData $var
      * @return $this
      */
-    public function setBelow($var)
+    public function setBelowThatAffectMovement($var)
     {
         GPBUtil::checkMessage($var, \prokits\xyron\BlockData::class);
-        $this->below = $var;
+        $this->belowThatAffectMovement = $var;
 
         return $this;
     }
@@ -257,7 +262,29 @@ class EntityPositionData extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * Generated from protobuf field <code>repeated .xchange.BlockData collidedBlocks = 8;</code>
+     * Generated from protobuf field <code>bool haveGravity = 8;</code>
+     * @return bool
+     */
+    public function getHaveGravity()
+    {
+        return $this->haveGravity;
+    }
+
+    /**
+     * Generated from protobuf field <code>bool haveGravity = 8;</code>
+     * @param bool $var
+     * @return $this
+     */
+    public function setHaveGravity($var)
+    {
+        GPBUtil::checkBool($var);
+        $this->haveGravity = $var;
+
+        return $this;
+    }
+
+    /**
+     * Generated from protobuf field <code>repeated .xchange.BlockData collidedBlocks = 9;</code>
      * @return \Google\Protobuf\Internal\RepeatedField
      */
     public function getCollidedBlocks()
@@ -266,7 +293,7 @@ class EntityPositionData extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * Generated from protobuf field <code>repeated .xchange.BlockData collidedBlocks = 8;</code>
+     * Generated from protobuf field <code>repeated .xchange.BlockData collidedBlocks = 9;</code>
      * @param array<\prokits\xyron\BlockData>|\Google\Protobuf\Internal\RepeatedField $var
      * @return $this
      */
@@ -279,7 +306,7 @@ class EntityPositionData extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * Generated from protobuf field <code>repeated .xchange.BlockData intersectedBlocks = 9;</code>
+     * Generated from protobuf field <code>repeated .xchange.BlockData intersectedBlocks = 10;</code>
      * @return \Google\Protobuf\Internal\RepeatedField
      */
     public function getIntersectedBlocks()
@@ -288,7 +315,7 @@ class EntityPositionData extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * Generated from protobuf field <code>repeated .xchange.BlockData intersectedBlocks = 9;</code>
+     * Generated from protobuf field <code>repeated .xchange.BlockData intersectedBlocks = 10;</code>
      * @param array<\prokits\xyron\BlockData>|\Google\Protobuf\Internal\RepeatedField $var
      * @return $this
      */

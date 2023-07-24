@@ -32,6 +32,6 @@ func (a *AirJump) HandleActionData(p *anticheat.InternalPlayer, data *xyron.Play
 	return &xyron.JudgementData{
 		Type:      "AirJump",
 		Judgement: a.Evaluate(),
-		Message:   fmt.Sprintf("p: %v inAirTick:%v", a.PossibilityString(), p.InAirTick),
+		Message:   fmt.Sprintf("p:%v inAirTick:%v", a.PossibilityString(), p.InAirTick),
 	}
 }
