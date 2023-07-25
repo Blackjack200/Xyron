@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"github.com/blackjack200/xyron/xyron"
+	"github.com/sirupsen/logrus"
 	"google.golang.org/protobuf/types/known/emptypb"
 	"log"
 	"sync"
@@ -12,13 +13,15 @@ import (
 type SimpleAnticheat struct {
 	xyron.AnticheatServer
 	mu      *sync.Mutex
+	log     *logrus.Logger
 	players map[string]*InternalPlayer
 	checks  func() []any
 }
 
-func NewSimpleAnticheatServer(checks func() []any) *SimpleAnticheat {
+func NewSimpleAnticheatServer(log *logrus.Logger, checks func() []any) *SimpleAnticheat {
 	return &SimpleAnticheat{
 		mu:      &sync.Mutex{},
+		log:     log,
 		players: make(map[string]*InternalPlayer),
 		checks:  checks,
 	}
@@ -31,7 +34,7 @@ func (s *SimpleAnticheat) AddPlayer(_ context.Context, req *xyron.AddPlayerReque
 		return &xyron.PlayerReceipt{InternalId: req.Player.Name}, nil
 	}
 	log.Printf("AP:%v", req.Player.Name)
-	ip := NewInternalPlayer(s.checks(), req.Player.Os, req.Player.Name)
+	ip := NewInternalPlayer(s.log, s.checks(), req.Player.Os, req.Player.Name)
 	s.players[req.Player.Name] = ip
 	s.handleData(ip, req.Data)
 	return &xyron.PlayerReceipt{InternalId: req.Player.Name}, nil

@@ -27,8 +27,7 @@ func (a *AirJump) HandleActionData(p *anticheat.InternalPlayer, data *xyron.Play
 	measured := 0.0
 	if data.Action == xyron.PlayerAction_Jump &&
 		!p.OnGround.Current() &&
-		!p.OnGround.Previous() &&
-		p.InAirTick >= 10 {
+		p.InAirTick >= 15 {
 		measured = 1
 	}
 	a.HandleUnstableRate(measured, 0, a.UnstableRate)

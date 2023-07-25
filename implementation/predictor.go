@@ -4,47 +4,97 @@ import (
 	"github.com/blackjack200/xyron/anticheat"
 	"github.com/blackjack200/xyron/xyron"
 	"github.com/go-gl/mathgl/mgl64"
+	"github.com/sirupsen/logrus"
 	"math"
 )
 
+//FIXME the entire of predictor not work properly
+
 type predictor struct {
-	p *anticheat.InternalPlayer
+	log *logrus.Logger
 }
 
-const defaultFlyingSpeed = 0.02
-const defaultSpeed = 0.10000000149011612
+// predictDelta https://github.com/Blackjack200/minecraft_client_1_16_2/blob/master/net/minecraft/world/entity/LivingEntity.java#L1891-1911
+func (pred *predictor) predictNextTickDeltaMovement(
+	p *anticheat.InternalPlayer,
+	deltaMovement mgl64.Vec3,
+) (mgl64.Vec3, bool) {
+	if p.Location.Current() == nil {
+		return mgl64.Vec3{}, false
+	}
+	//without collides, deltaPosition is deltaMovement
+	gravity := 0.08
+	isFalling := deltaMovement.Y() <= 0.0
+	if !isFalling && p.HasEffect(func(f *xyron.EffectFeature) bool {
+		return f.IsSlowFalling
+	}) {
+		gravity = 0.01
+	}
+	/*
+		fluidState := p.InLiquid
+		if p.InLiquid.Current() {
 
-func (p *predictor) calculateFrictionInfluencedSpeed(friction float64) float64 {
-	if p.p.OnGround.Previous() {
-		if p.p.HasEffect(func(f *xyron.EffectFeature) bool {
-			return f.IsSpeed
-		}) {
-			//TODO defaultSpeed may change
-			return defaultSpeed * (0.21600002 / (friction * friction * friction))
 		}
+	*/
+
+	friction := float64(p.Location.Current().BelowThatAffectMovement.Feature.Friction)
+	horizontalSpeedFriction := 0.91
+	if p.OnGround.Current() {
+		horizontalSpeedFriction *= friction
 	}
-	//TODO flyingSpeed may change
-	return defaultFlyingSpeed
+
+	predictedDeltaMovement := pred.handleRelativeFrictionAndCalculateMovement(p, deltaMovement, friction)
+	predictedDeltaY := predictedDeltaMovement.Y()
+
+	if e, ok := p.GetEffect(func(f *xyron.EffectFeature) bool {
+		return f.IsLevitation
+	}); ok {
+		predictedDeltaY += (0.05*(float64(e.Amplifier+1)) - predictedDeltaMovement.Y()) * 0.2
+	} else if p.Location.Current().HaveGravity {
+		predictedDeltaY -= gravity
+		//TODO WTF https://github.com/Blackjack200/minecraft_client_1_16_2/blob/master/net/minecraft/world/entity/LivingEntity.java#L1905
+	}
+
+	return mgl64.Vec3{
+		horizontalSpeedFriction * predictedDeltaMovement.X(),
+		predictedDeltaY * 0.98,
+		horizontalSpeedFriction * predictedDeltaMovement.Z(),
+	}, true
 }
 
-func clamp(num, min, max float64) float64 {
-	if num < min {
-		return min
+// handleRelativeFrictionAndCalculateMovement https://github.com/Blackjack200/minecraft_client_1_16_2/blob/master/net/minecraft/world/entity/LivingEntity.java#L1930
+// also https://github.com/Blackjack200/minecraft_client_1_16_2/blob/master/net/minecraft/world/entity/Entity.java#L1034
+func (pred *predictor) handleRelativeFrictionAndCalculateMovement(
+	p *anticheat.InternalPlayer,
+	deltaMovement mgl64.Vec3,
+	friction float64,
+) (newDeltaMovement mgl64.Vec3) {
+	newDeltaMovement = pred.moveRelative(
+		pred.getFrictionInfluencedSpeed(p, friction),
+		deltaMovement,
+		toVec3(p.Location.Current().Location.Direction),
+	)
+	newDeltaMovement = pred.handleOnClimbable(p, newDeltaMovement)
+	newDeltaMovement = pred.moveSelf(p, newDeltaMovement)
+	//TODO
+	/*if ((this.horizontalCollision || this.jumping) && this.onClimbable()) {
+		dck2 = new Vec3(dck2.x, 0.2, dck2.z);
+	}*/
+	//if ((p.horizontalCollision || this.jumping) && (this.onClimbable() || this.getFeetBlockState().is(Blocks.POWDER_SNOW) && PowderSnowBlock.canEntityWalkOnPowderSnow(this))) {
+	if p.OnClimbable.Current() {
+		newDeltaMovement[1] = 0.2
 	}
-	if num > max {
-		return max
-	}
-	return num
+	return
 }
 
-func (p *predictor) handleOnClimbable(dck mgl64.Vec3) mgl64.Vec3 {
-	if p.p.OnClimbable.Previous() {
-		dx := clamp(dck.X(), -0.15000000596046448, 0.15000000596046448)
-		dz := clamp(dck.Z(), -0.15000000596046448, 0.15000000596046448)
+func (pred *predictor) handleOnClimbable(p *anticheat.InternalPlayer, dck mgl64.Vec3) mgl64.Vec3 {
+	if p.OnClimbable.Current() {
+		dx := mgl64.Clamp(dck.X(), -0.15000000596046448, 0.15000000596046448)
+		dz := mgl64.Clamp(dck.Z(), -0.15000000596046448, 0.15000000596046448)
 
 		dy := math.Max(dck.Y(), -0.15000000596046448)
 		//TODO !SCAFFOLDING || this.isSuppressingSlidingDownLadder()
-		if dy < 0.0 && p.p.Sneaking.Previous() {
+		if dy < 0.0 && p.Sneaking.Current() {
 			dy = 0.0
 		}
 		return mgl64.Vec3{dx, dy, dz}
@@ -52,82 +102,82 @@ func (p *predictor) handleOnClimbable(dck mgl64.Vec3) mgl64.Vec3 {
 	return dck
 }
 
-// getInputVector https://github.com/Blackjack200/minecraft_client_1_16_2/blob/master/net/minecraft/world/entity/Entity.java#L1039
-func (p *predictor) getInputVector(dck mgl64.Vec3, frictionSpeed, yRot float64) mgl64.Vec3 {
-	double4 := dck.LenSqr()
-	if double4 < 1.0e-7 {
-		return mgl64.Vec3{0, 0, 0}
-	}
-	dck2 := dck
-	if double4 > 1.0 {
-		dck2 = dck.Normalize()
-	}
-	dck2 = dck2.Mul(frictionSpeed)
-	float4 := math.Sin(yRot * 0.017453292)
-	float5 := math.Cos(yRot * 0.017453292)
-	return mgl64.Vec3{dck2.X()*float5 - dck2.Z()*float4, dck2.Y(), dck2.Z()*float5 + dck2.X()*float4}
-}
-
-// handleRelativeFrictionAndCalculateMovement https://github.com/Blackjack200/minecraft_client_1_16_2/blob/master/net/minecraft/world/entity/LivingEntity.java#L1930
-// also https://github.com/Blackjack200/minecraft_client_1_16_2/blob/master/net/minecraft/world/entity/Entity.java#L1034
-func (p *predictor) handleRelativeFrictionAndCalculateMovement(dck mgl64.Vec3, f float64) mgl64.Vec3 {
-	dck2 := p.getInputVector(dck, p.calculateFrictionInfluencedSpeed(f), math.Asin(float64(-p.p.Location.Previous().Location.Direction.Y)))
-	dck2 = p.handleOnClimbable(dck2)
-	//TODO
-	/*if ((this.horizontalCollision || this.jumping) && this.onClimbable()) {
-		dck2 = new Vec3(dck2.x, 0.2, dck2.z);
-	}*/
-	if p.p.OnClimbable.Previous() {
-		dck2[1] = 0.2
-	}
-	return dck2
-}
-
-func (p *predictor) calculateGravity() float64 {
-	gravity := 0.08
-	if !p.p.OnGround.Current() && p.p.HasEffect(func(f *xyron.EffectFeature) bool {
-		return f.IsSlowFalling
-	}) {
-		gravity = 0.01
-	}
-	return gravity
-}
-
-// predictDelta https://github.com/Blackjack200/minecraft_client_1_16_2/blob/master/net/minecraft/world/entity/LivingEntity.java#L1891-1911
-func (p *predictor) predictDelta(data *xyron.PlayerMoveData, prevDelta mgl64.Vec3) mgl64.Vec3 {
-	friction := float64(p.p.Location.Previous().BelowThatAffectMovement.Feature.Friction)
-	horizontalSpeed := 0.91
-	if p.p.OnGround.Previous() {
-		horizontalSpeed *= friction
-	}
-	nextTickDelta := p.handleRelativeFrictionAndCalculateMovement(prevDelta, friction)
-	nextTickDeltaY := nextTickDelta.Y()
-	if e, ok := p.p.GetEffect(func(f *xyron.EffectFeature) bool {
-		return f.IsLevitation
-	}); ok {
-		nextTickDeltaY += (0.05*(float64(e.Amplifier+1)) - nextTickDelta.Y()) * 0.2
-		//TODO wrong HaveGravity used
-	} else if data.NewPosition.HaveGravity {
-		nextTickDeltaY -= p.calculateGravity()
-		//TODO WTF https://github.com/Blackjack200/minecraft_client_1_16_2/blob/master/net/minecraft/world/entity/LivingEntity.java#L1905
-	} else {
-		nextTickDeltaY = 0.0
-	}
-	nextTickDeltaY *= 0.9800000190734863
-
+// moveSelf see Entity.move
+func (pred *predictor) moveSelf(p *anticheat.InternalPlayer, deltaMovement mgl64.Vec3) mgl64.Vec3 {
 	//Cobweb https://github.com/Blackjack200/minecraft_client_1_16_2/blob/master/net/minecraft/world/entity/Entity.java#L516
 	//https://github.com/Blackjack200/minecraft_client_1_16_2/blob/c7f87b96efaeb477d9604354aa23ada0eb637ec6/net/minecraft/world/level/block/WebBlock.java#L17C1
-	if p.p.InCobweb.Previous() {
-		nextTickDeltaY *= 0.05000000074505806
+	if p.InCobweb.Current() {
+		deltaMovement[0] *= 0.25
+		deltaMovement[1] *= 0.05
+		deltaMovement[2] *= 0.25
 	}
 
 	//SweetBerry https://github.com/Blackjack200/minecraft_client_1_16_2/blob/c7f87b96efaeb477d9604354aa23ada0eb637ec6/net/minecraft/world/level/block/SweetBerryBushBlock.java#L73
-	if p.p.InCobweb.Previous() {
-		nextTickDeltaY *= 0.75
+	if p.InSweetBerry.Current() {
+		deltaMovement[0] *= 0.8
+		deltaMovement[1] *= 0.75
+		deltaMovement[2] *= 0.8
 	}
-	return mgl64.Vec3{
-		horizontalSpeed * nextTickDelta.X(),
-		nextTickDeltaY,
-		horizontalSpeed * nextTickDelta.Z(),
+	return deltaMovement
+}
+
+const defaultFlyingSpeed = 0.02
+const defaultAbilitiesFlyingSpeed = 0.2
+const defaultAttributeSpeed = 0.7
+
+// getFrictionInfluencedSpeed see LivingEntity.getFrictionInfluencedSpeed
+func (pred *predictor) getFrictionInfluencedSpeed(p *anticheat.InternalPlayer, friction float64) float64 {
+	if p.OnGround.Current() {
+		//TODO defaultSpeed may change
+		return pred.getSpeed(p) * (0.21600002 / (friction * friction * friction))
 	}
+	//TODO flyingSpeed may change
+	return pred.getFlyingSpeed(p)
+}
+
+func (pred *predictor) getSpeed(p *anticheat.InternalPlayer) float64 {
+	speed := defaultAttributeSpeed
+	if e, ok := p.GetEffect(func(f *xyron.EffectFeature) bool {
+		return f.IsSpeed
+	}); ok {
+		//modifier
+		speed += 0.2 * float64(e.Amplifier)
+	}
+	return speed
+}
+
+// getFlyingSpeed see Player.getFlyingSpeed
+func (pred *predictor) getFlyingSpeed(p *anticheat.InternalPlayer) float64 {
+	if p.Location.Current().IsFlying {
+		if p.Sprinting.Current() {
+			return defaultAbilitiesFlyingSpeed * 2
+		}
+		return defaultAbilitiesFlyingSpeed
+	}
+	if p.Sprinting.Current() {
+		return 0.025999999
+	}
+	return 0.02
+}
+
+func (pred *predictor) moveRelative(friction float64, deltaMovement mgl64.Vec3, direction mgl64.Vec3) mgl64.Vec3 {
+	yRot := ToRotation(direction).Pitch()
+	inputDelta := pred.getInputVector(deltaMovement, friction, yRot)
+	return deltaMovement.Add(inputDelta)
+}
+
+// getInputVector https://github.com/Blackjack200/minecraft_client_1_16_2/blob/master/net/minecraft/world/entity/Entity.java#L1039
+func (pred *predictor) getInputVector(dck mgl64.Vec3, frictionSpeed, yRot float64) mgl64.Vec3 {
+	lenSqr := dck.LenSqr()
+	if lenSqr < 1.0e-7 {
+		return mgl64.Vec3{0, 0, 0}
+	}
+	dck2 := dck
+	if lenSqr > 1.0 {
+		dck2 = dck.Normalize()
+	}
+	dck2 = dck2.Mul(frictionSpeed)
+	float4 := math.Sin(mgl64.DegToRad(yRot))
+	float5 := math.Cos(mgl64.DegToRad(yRot))
+	return mgl64.Vec3{dck2.X()*float5 - dck2.Z()*float4, dck2.Y(), dck2.Z()*float5 + dck2.X()*float4}
 }

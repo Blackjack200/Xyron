@@ -1,17 +1,22 @@
 package anticheat
 
-import "github.com/blackjack200/xyron/xyron"
+import (
+	"github.com/blackjack200/xyron/xyron"
+	"github.com/go-gl/mathgl/mgl64"
+	"github.com/sirupsen/logrus"
+)
 
 type InternalPlayer struct {
+	log           *logrus.Logger
 	checks        []any
 	Os            xyron.DeviceOS
 	Input         xyron.InputMode
 	Name          string
 	GameMode      xyron.GameMode
 	effects       []*xyron.EffectFeature
-	Motion        *BufferedData[*TimestampedData[*xyron.Vec3F]]
+	Motion        *BufferedData[*TimestampedData[mgl64.Vec3]]
 	Location      *BufferedData[*xyron.EntityPositionData]
-	DeltaPosition *BufferedData[*xyron.Vec3F]
+	DeltaPosition *BufferedData[mgl64.Vec3]
 	Volatile      *TickedData[*VolatileData]
 
 	Sprinting *BufferedData[bool]
@@ -33,15 +38,16 @@ type InternalPlayer struct {
 	Teleport *BufferedData[int64]
 }
 
-func NewInternalPlayer(checks []any, os xyron.DeviceOS, name string) *InternalPlayer {
+func NewInternalPlayer(log *logrus.Logger, checks []any, os xyron.DeviceOS, name string) *InternalPlayer {
 	return &InternalPlayer{
+		log:           log,
 		checks:        checks,
 		Os:            os,
 		Name:          name,
 		GameMode:      0,
-		Motion:        NewBufferedData[*TimestampedData[*xyron.Vec3F]](nil),
+		Motion:        NewBufferedData[*TimestampedData[mgl64.Vec3]](nil),
 		Location:      NewBufferedData[*xyron.EntityPositionData](nil),
-		DeltaPosition: NewBufferedData[*xyron.Vec3F](nil),
+		DeltaPosition: NewBufferedData[mgl64.Vec3](mgl64.Vec3{}),
 		Volatile:      NewTickedData(&VolatileData{}),
 		Sprinting:     NewBufferedData(false),
 		Sneaking:      NewBufferedData(false),
@@ -61,13 +67,9 @@ func (p *InternalPlayer) GetVolatile() *VolatileData {
 func (p *InternalPlayer) SetLocation(pos *xyron.EntityPositionData) {
 	p.Location.Set(pos)
 	if p.Location.Previous() != nil {
-		prev := p.Location.Previous().Location.Position
-		cur := pos.Location.Position
-		p.DeltaPosition.Set(&xyron.Vec3F{
-			X: cur.X - prev.X,
-			Y: cur.Y - prev.Y,
-			Z: cur.Z - prev.Z,
-		})
+		prev := toVec3(p.Location.Previous().Location.Position)
+		cur := toVec3(pos.Location.Position)
+		p.DeltaPosition.Set(cur.Sub(prev))
 	}
 	if pos != nil {
 		check := func(checkFeature func(*xyron.BlockFeature) bool) func([]*xyron.BlockData) bool {

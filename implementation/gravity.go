@@ -33,26 +33,21 @@ func (g *Gravity) HandleMoveData(p *anticheat.InternalPlayer, data *xyron.Player
 	if p.Motion.Current() != nil {
 		return nil
 	}
-	if p.DeltaPosition.Previous() == nil ||
-		p.DeltaPosition.Current() == nil {
-		return nil
-	}
 	if p.Location.Previous() == nil ||
 		tickSinceTeleport < 15 ||
 		//TODO better high jump support
 		p.InAirTick < 15 ||
-		p.OnGround.Current() ||
-		p.OnGround.Previous() {
+		p.OnGround.Current() {
 		return nil
 	}
-	if p.Location.Previous().IsFlying {
+	if p.Location.Current().IsFlying {
 		return nil
 	}
-	motion := p.Motion.Previous()
+	motion := p.Motion.Current()
 	if motion != nil {
 		maxTick := int64(10)
 		//TODO improve big motion support
-		if toVec3(motion.Get()).Len() >= 1.5 {
+		if motion.Get().Len() >= 1.5 {
 			maxTick = 35
 		}
 		tickSinceMotion := p.CurrentTimestamp() - motion.Timestamp()
@@ -61,17 +56,20 @@ func (g *Gravity) HandleMoveData(p *anticheat.InternalPlayer, data *xyron.Player
 		}
 	}
 
-	prevDeltaY := toVec3(p.DeltaPosition.Previous()).Y()
-	deltaY := toVec3(p.DeltaPosition.Current()).Y()
+	oldOldPos := toVec3(p.Location.Previous().Location.Position)
+	oldPos := toVec3(p.Location.Current().Location.Position)
+	newPos := toVec3(data.NewPosition.Location.Position)
+	prevDeltaY := oldPos.Sub(oldOldPos).Y()
+	measuredDeltaY := newPos.Sub(oldPos).Y()
 	predictedDeltaY := g.predictDeltaY(p, data, prevDeltaY)
 
-	equalness := 1 - math.Min(deltaY/predictedDeltaY, predictedDeltaY/deltaY)
+	equalness := 1 - math.Min(measuredDeltaY/predictedDeltaY, predictedDeltaY/measuredDeltaY)
 
 	g.HandleMaxRate(equalness, g.PredictionLatitude, g.UnstableRate)
 	return &xyron.JudgementData{
 		Type:      "Gravity",
 		Judgement: g.Evaluate(),
-		Message:   fmt.Sprintf("p:%v pred-dy:%.5f dy:%.5f eq:%.5f", g.PossibilityString(), predictedDeltaY, deltaY, equalness),
+		Message:   fmt.Sprintf("p:%v pred-dy:%.5f dy:%.5f eq:%.5f", g.PossibilityString(), predictedDeltaY, prevDeltaY, equalness),
 	}
 }
 
@@ -82,14 +80,8 @@ func (g *Gravity) predictDeltaY(p *anticheat.InternalPlayer, data *xyron.PlayerM
 		return f.IsLevitation
 	}); ok {
 		predictedDeltaY += (0.05*(float64(e.Amplifier+1)) - prevDeltaY) * 0.2
-		//TODO wrong HaveGravity used
-	} else if data.NewPosition.HaveGravity {
+	} else if p.Location.Current().HaveGravity {
 		predictedDeltaY -= calculateGravity(p)
-		//TODO WTF https://github.com/Blackjack200/minecraft_client_1_16_2/blob/master/net/minecraft/world/entity/LivingEntity.java#L1905
-	} else if p.Location.Previous().Location.Position.Y > 0.0 {
-		predictedDeltaY = -0.1
-	} else {
-		predictedDeltaY = 0.0
 	}
 	predictedDeltaY *= 0.9800000190734863
 

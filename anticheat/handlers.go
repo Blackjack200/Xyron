@@ -13,6 +13,9 @@ func (s *SimpleAnticheat) handleData(p *InternalPlayer, tdata map[int64]*xyron.T
 	for _, timestamp := range sorted {
 		p.currentTimestamp = timestamp
 		for _, wdata := range tdata[timestamp].Data {
+			for _, c := range checks {
+				r = append(r, s.callHandlers(p, c, wdata)...)
+			}
 			switch data := wdata.Data.(type) {
 			case *xyron.WildcardReportData_ActionData:
 				p.SetLocation(data.ActionData.Position)
@@ -48,7 +51,7 @@ func (s *SimpleAnticheat) handleData(p *InternalPlayer, tdata map[int64]*xyron.T
 			case *xyron.WildcardReportData_GameModeData:
 				p.GameMode = data.GameModeData.GameMode
 			case *xyron.WildcardReportData_MotionData:
-				p.Motion.Set(NewTimestampedData(timestamp, data.MotionData.Motion))
+				p.Motion.Set(NewTimestampedData(timestamp, toVec3(data.MotionData.Motion)))
 				//TODO
 			case *xyron.WildcardReportData_InputModeData:
 				p.Input = data.InputModeData.InputMode
@@ -56,9 +59,6 @@ func (s *SimpleAnticheat) handleData(p *InternalPlayer, tdata map[int64]*xyron.T
 			//TODO
 			case *xyron.WildcardReportData_ServerTickData:
 				//the end of the tick, useless for now but we can make sure everything is OK?
-			}
-			for _, c := range checks {
-				r = append(r, s.callHandlers(p, c, wdata)...)
 			}
 		}
 		p.Tick()

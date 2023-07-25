@@ -6,6 +6,7 @@ import (
 	"github.com/blackjack200/xyron/anticheat"
 	"github.com/blackjack200/xyron/implementation"
 	"github.com/blackjack200/xyron/xyron"
+	"github.com/sirupsen/logrus"
 	"google.golang.org/grpc"
 	"log"
 	"net"
@@ -19,7 +20,7 @@ func main() {
 	}
 	log.Print("Listen")
 	s := grpc.NewServer()
-	t := anticheat.NewSimpleAnticheatServer(implementation.Available)
+	t := anticheat.NewSimpleAnticheatServer(logrus.New(), implementation.Available)
 	xyron.RegisterAnticheatServer(s, t)
 	if err := s.Serve(lis); err != nil {
 		panic(err)

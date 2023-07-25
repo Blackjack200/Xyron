@@ -109,7 +109,7 @@ func main() {
 	log.Formatter = &logrus.TextFormatter{ForceColors: true}
 	log.Level = logrus.DebugLevel
 
-	c := &WrappedAnticheatClient{anticheat.NewSimpleAnticheatServer(implementation.Available)}
+	c := &WrappedAnticheatClient{anticheat.NewSimpleAnticheatServer(log, implementation.Available)}
 
 	chat.Global.Subscribe(chat.StdoutSubscriber{})
 
@@ -204,6 +204,7 @@ type playerHandler struct {
 
 func newPlayerHandler(log *logrus.Logger, p *player.Player, pp *xyron.PlayerReceipt, c xyron.AnticheatClient) *playerHandler {
 	p.SetGameMode(world.GameModeSurvival)
+	p.SetGameMode(world.GameModeCreative)
 
 	hdr := &playerHandler{
 		log:        log,
@@ -217,11 +218,6 @@ func newPlayerHandler(log *logrus.Logger, p *player.Player, pp *xyron.PlayerRece
 	hdr.ticker = time.NewTicker(time.Second / 2)
 	hdr.closed.Store(false)
 	go func() {
-		defer func() {
-			if r := recover(); r != nil {
-				hdr.log.Error(r)
-			}
-		}()
 		for !hdr.closed.Load() {
 			select {
 			case _ = <-hdr.ticker.C:
