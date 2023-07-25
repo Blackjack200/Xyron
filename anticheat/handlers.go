@@ -3,7 +3,7 @@ package anticheat
 import "github.com/blackjack200/xyron/xyron"
 
 func (s *SimpleAnticheat) handleData(p *InternalPlayer, tdata map[int64]*xyron.TimestampedReportData) (r []*xyron.JudgementData) {
-	checks := s.checks
+	checks := p.checks
 	var keys []int64
 	for timestamp, _ := range tdata {
 		keys = append(keys, timestamp)
@@ -19,6 +19,14 @@ func (s *SimpleAnticheat) handleData(p *InternalPlayer, tdata map[int64]*xyron.T
 				switch data.ActionData.Action {
 				case xyron.PlayerAction_Jump:
 					p.Volatile.Get().Jumped = true
+				case xyron.PlayerAction_StartSprint:
+					p.Sprinting.Set(true)
+				case xyron.PlayerAction_StopSprint:
+					p.Sprinting.Set(false)
+				case xyron.PlayerAction_StartSneak:
+					p.Sneaking.Set(true)
+				case xyron.PlayerAction_StopSneak:
+					p.Sneaking.Set(false)
 				}
 				//TODO
 			case *xyron.WildcardReportData_MoveData:

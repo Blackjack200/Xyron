@@ -5,7 +5,9 @@ import (
 	"github.com/go-gl/mathgl/mgl64"
 )
 
-var Available []any
+var Available = func() []any {
+	return nil
+}
 
 func toVec3(pos *xyron.Vec3F) mgl64.Vec3 {
 	return mgl64.Vec3{

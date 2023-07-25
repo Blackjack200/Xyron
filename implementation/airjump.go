@@ -14,10 +14,13 @@ type AirJump struct {
 var _ = anticheat.ActionDataHandler(&AirJump{})
 
 func init() {
-	Available = append(Available, &AirJump{
-		anticheat.NewEvaluator(8, 0.3, 0.8),
-		0.9999,
-	})
+	oldA := Available
+	Available = func() []any {
+		return append(oldA(), &AirJump{
+			anticheat.NewEvaluator(8, 0.3, 0.8),
+			0.9999,
+		})
+	}
 }
 
 func (a *AirJump) HandleActionData(p *anticheat.InternalPlayer, data *xyron.PlayerActionData) *xyron.JudgementData {

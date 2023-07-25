@@ -124,7 +124,6 @@ func main() {
 	srv.Listen()
 
 	for srv.Accept(func(p *player.Player) {
-		p.SetGameMode(world.GameModeSurvival)
 		var hdrs []*xyron.WildcardReportData
 		hdrs = append(hdrs, &xyron.WildcardReportData{Data: &xyron.WildcardReportData_GameModeData{
 			GameModeData: &xyron.PlayerGameModeData{GameMode: ToXyronGameMode(p.GameMode())},
@@ -204,7 +203,10 @@ type playerHandler struct {
 }
 
 func newPlayerHandler(log *logrus.Logger, p *player.Player, pp *xyron.PlayerReceipt, c xyron.AnticheatClient) *playerHandler {
+	p.SetGameMode(world.GameModeSurvival)
+
 	hdr := &playerHandler{
+		log:        log,
 		NopHandler: player.NopHandler{},
 		p:          p,
 		buf:        NewBufferedDataQueue(),
@@ -212,7 +214,7 @@ func newPlayerHandler(log *logrus.Logger, p *player.Player, pp *xyron.PlayerRece
 		c:          c,
 		closed:     atomic.Bool{},
 	}
-	hdr.ticker = time.NewTicker(time.Second / 5)
+	hdr.ticker = time.NewTicker(time.Second / 2)
 	hdr.closed.Store(false)
 	go func() {
 		defer func() {
@@ -229,6 +231,10 @@ func newPlayerHandler(log *logrus.Logger, p *player.Player, pp *xyron.PlayerRece
 					} else {
 						for _, j := range jdjm.Judgements {
 							hdr.p.Messagef("judgement: %v: %v message:%v", j.Type, j.Judgement.String(), j.Message)
+							if j.Judgement == xyron.Judgement_TRIGGER {
+								hdr.p.Disconnect("judgement: %v: %v message:%v", j.Type, j.Judgement.String(), j.Message)
+								go hdr.c.RemovePlayer(context.TODO(), hdr.pp)
+							}
 						}
 					}
 				}
@@ -237,16 +243,54 @@ func newPlayerHandler(log *logrus.Logger, p *player.Player, pp *xyron.PlayerRece
 	}()
 	return hdr
 }
-func (h *playerHandler) HandleTeleport(*event.Context, mgl64.Vec3) {}
+
+func (h *playerHandler) HandleToggleSprint(ctx *event.Context, after bool) {
+	action := xyron.PlayerAction_StartSprint
+	if !after {
+		action = xyron.PlayerAction_StopSprint
+	}
+	h.buf.Add(getCurrentWorldTick(h.p.World()), &xyron.WildcardReportData{Data: &xyron.WildcardReportData_ActionData{
+		ActionData: &xyron.PlayerActionData{
+			Position: h.getXyronPositionData(h.p.Position(), h.p.Rotation().Vec3()),
+			Action:   action,
+		},
+	}})
+}
+
+func (h *playerHandler) HandleToggleSneak(ctx *event.Context, after bool) {
+	action := xyron.PlayerAction_StartSneak
+	if !after {
+		action = xyron.PlayerAction_StopSneak
+	}
+	h.buf.Add(getCurrentWorldTick(h.p.World()), &xyron.WildcardReportData{Data: &xyron.WildcardReportData_ActionData{
+		ActionData: &xyron.PlayerActionData{
+			Position: h.getXyronPositionData(h.p.Position(), h.p.Rotation().Vec3()),
+			Action:   action,
+		},
+	}})
+}
+
+func (h *playerHandler) HandleTeleport(_ *event.Context, newPos mgl64.Vec3) {
+	h.buf.Add(getCurrentWorldTick(h.p.World()), &xyron.WildcardReportData{Data: &xyron.WildcardReportData_EffectData{
+		EffectData: &xyron.PlayerEffectData{Effect: getEffects(h.p)},
+	}})
+	h.buf.Add(getCurrentWorldTick(h.p.World()), &xyron.WildcardReportData{Data: &xyron.WildcardReportData_MoveData{
+		MoveData: &xyron.PlayerMoveData{
+			NewPosition: h.getXyronPositionData(newPos, h.p.Rotation().Vec3()),
+			Teleport:    true,
+		},
+	}})
+}
 
 func (h *playerHandler) HandleMove(_ *event.Context, newPos mgl64.Vec3, yaw, pitch float64) {
+	h.p.SetFood(20)
 	h.buf.Add(getCurrentWorldTick(h.p.World()), &xyron.WildcardReportData{Data: &xyron.WildcardReportData_EffectData{
 		EffectData: &xyron.PlayerEffectData{Effect: getEffects(h.p)},
 	}})
 	h.buf.Add(getCurrentWorldTick(h.p.World()), &xyron.WildcardReportData{Data: &xyron.WildcardReportData_MoveData{
 		MoveData: &xyron.PlayerMoveData{
 			NewPosition: h.getXyronPositionData(newPos, cube.Rotation{yaw, pitch}.Vec3()),
-			Teleport:    true,
+			Teleport:    false,
 		},
 	}})
 }

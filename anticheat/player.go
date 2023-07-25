@@ -3,6 +3,7 @@ package anticheat
 import "github.com/blackjack200/xyron/xyron"
 
 type InternalPlayer struct {
+	checks        []any
 	Os            xyron.DeviceOS
 	Input         xyron.InputMode
 	Name          string
@@ -13,10 +14,14 @@ type InternalPlayer struct {
 	DeltaPosition *BufferedData[*xyron.Vec3F]
 	Volatile      *TickedData[*VolatileData]
 
+	Sprinting *BufferedData[bool]
+	Sneaking  *BufferedData[bool]
+
 	OnGround     *BufferedData[bool]
 	OnIce        *BufferedData[bool]
 	InCobweb     *BufferedData[bool]
 	InSweetBerry *BufferedData[bool]
+	OnClimbable  *BufferedData[bool]
 
 	InAirTick        uint32
 	OnGroundTick     uint32
@@ -28,8 +33,9 @@ type InternalPlayer struct {
 	Teleport *BufferedData[int64]
 }
 
-func NewInternalPlayer(os xyron.DeviceOS, name string) *InternalPlayer {
+func NewInternalPlayer(checks []any, os xyron.DeviceOS, name string) *InternalPlayer {
 	return &InternalPlayer{
+		checks:        checks,
 		Os:            os,
 		Name:          name,
 		GameMode:      0,
@@ -37,10 +43,13 @@ func NewInternalPlayer(os xyron.DeviceOS, name string) *InternalPlayer {
 		Location:      NewBufferedData[*xyron.EntityPositionData](nil),
 		DeltaPosition: NewBufferedData[*xyron.Vec3F](nil),
 		Volatile:      NewTickedData(&VolatileData{}),
+		Sprinting:     NewBufferedData(false),
+		Sneaking:      NewBufferedData(false),
 		OnGround:      NewBufferedData(true),
 		OnIce:         NewBufferedData(false),
 		InCobweb:      NewBufferedData(false),
 		InSweetBerry:  NewBufferedData(false),
+		OnClimbable:   NewBufferedData(false),
 		Teleport:      NewBufferedData[int64](0),
 	}
 }
@@ -83,10 +92,14 @@ func (p *InternalPlayer) SetLocation(pos *xyron.EntityPositionData) {
 		checkSweetBerry := check(func(f *xyron.BlockFeature) bool {
 			return f.IsSweetBerry
 		})
+		checkClimbable := check(func(f *xyron.BlockFeature) bool {
+			return f.IsClimbable
+		})
 		p.OnGround.Set(checkSolid(pos.CollidedBlocks) || checkSolid(pos.IntersectedBlocks))
 		p.OnIce.Set(checkIce(pos.CollidedBlocks) || checkIce(pos.IntersectedBlocks))
 		p.InCobweb.Set(checkCobweb(pos.CollidedBlocks) || checkCobweb(pos.IntersectedBlocks))
 		p.InSweetBerry.Set(checkSweetBerry(pos.CollidedBlocks) || checkSweetBerry(pos.IntersectedBlocks))
+		p.OnClimbable.Set(checkClimbable(pos.CollidedBlocks) || checkClimbable(pos.IntersectedBlocks))
 	}
 }
 
@@ -100,7 +113,7 @@ func (p *InternalPlayer) CurrentTimestamp() int64 {
 }
 
 func (p *InternalPlayer) Tick() {
-	p.Volatile.Reset()
+	p.Volatile.Set(&VolatileData{})
 	p.Motion.Set(nil)
 	if !p.OnGround.Current() {
 		p.InAirTick++

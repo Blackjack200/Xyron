@@ -9,67 +9,70 @@ import (
 
 type Gravity struct {
 	*anticheat.Evaluator
-	MaxEqualness float64
-	UnstableRate float64
+	PredictionLatitude float64
+	UnstableRate       float64
 }
 
 var _ anticheat.MoveDataHandler = &Gravity{}
 
 func init() {
-	Available = append(Available, &Gravity{
-		anticheat.NewEvaluator(20, 0.6, 0.9),
-		0.05,
-		0.9999999999999999,
-	})
+	oldA := Available
+	Available = func() []any {
+		return append(oldA(), &Gravity{
+			anticheat.NewEvaluator(80, 0.75, 0.96),
+			0.005,
+			0.997,
+		})
+	}
 }
 
 const epsilon = 0.001
 
 func (g *Gravity) HandleMoveData(p *anticheat.InternalPlayer, data *xyron.PlayerMoveData) *xyron.JudgementData {
 	tickSinceTeleport := p.CurrentTimestamp() - p.Teleport.Current()
-	if p.Motion.Current() == nil {
+	if p.Motion.Current() != nil {
 		return nil
 	}
-	if p.GetVolatile().Teleported ||
-		p.DeltaPosition.Previous() == nil ||
-		p.DeltaPosition.Current() == nil ||
-		p.Location.Previous() == nil ||
+	if p.DeltaPosition.Previous() == nil ||
+		p.DeltaPosition.Current() == nil {
+		return nil
+	}
+	if p.Location.Previous() == nil ||
 		tickSinceTeleport < 15 ||
 		//TODO better high jump support
 		p.InAirTick < 15 ||
-		p.Location.Previous().Location.Position.Y < -10 ||
 		p.OnGround.Current() ||
 		p.OnGround.Previous() {
 		return nil
 	}
-	motion := p.Motion.Current()
-	maxTick := int64(10)
-	//TODO improve big motion support
-	if toVec3(motion.Get()).Len() >= 1.5 {
-		maxTick = 35
-	}
-	tickSinceMotion := p.CurrentTimestamp() - motion.Timestamp()
-	if tickSinceMotion < maxTick {
+	if p.Location.Previous().IsFlying {
 		return nil
+	}
+	motion := p.Motion.Previous()
+	if motion != nil {
+		maxTick := int64(10)
+		//TODO improve big motion support
+		if toVec3(motion.Get()).Len() >= 1.5 {
+			maxTick = 35
+		}
+		tickSinceMotion := p.CurrentTimestamp() - motion.Timestamp()
+		if tickSinceMotion < maxTick {
+			return nil
+		}
 	}
 
 	prevDeltaY := toVec3(p.DeltaPosition.Previous()).Y()
 	deltaY := toVec3(p.DeltaPosition.Current()).Y()
-
 	predictedDeltaY := g.predictDeltaY(p, data, prevDeltaY)
 
-	equalness := math.Abs(predictedDeltaY - deltaY)
+	equalness := 1 - math.Min(deltaY/predictedDeltaY, predictedDeltaY/deltaY)
 
-	if equalness > g.MaxEqualness {
-		g.HandleMaxRate(equalness, g.MaxEqualness, g.UnstableRate)
-		return &xyron.JudgementData{
-			Type:      "Gravity",
-			Judgement: g.Evaluate(),
-			Message:   fmt.Sprintf("p:%v pred-dy:%.5f dy:%.5f eq:%.5f", g.PossibilityString(), predictedDeltaY, deltaY, equalness),
-		}
+	g.HandleMaxRate(equalness, g.PredictionLatitude, g.UnstableRate)
+	return &xyron.JudgementData{
+		Type:      "Gravity",
+		Judgement: g.Evaluate(),
+		Message:   fmt.Sprintf("p:%v pred-dy:%.5f dy:%.5f eq:%.5f", g.PossibilityString(), predictedDeltaY, deltaY, equalness),
 	}
-
-	return nil
 }
 
 // predictDeltaY https://github.com/Blackjack200/minecraft_client_1_16_2/blob/master/net/minecraft/world/entity/LivingEntity.java#L1891-1911

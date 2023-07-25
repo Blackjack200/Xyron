@@ -13,10 +13,10 @@ type SimpleAnticheat struct {
 	xyron.AnticheatServer
 	mu      *sync.Mutex
 	players map[string]*InternalPlayer
-	checks  []any
+	checks  func() []any
 }
 
-func NewSimpleAnticheatServer(checks []any) *SimpleAnticheat {
+func NewSimpleAnticheatServer(checks func() []any) *SimpleAnticheat {
 	return &SimpleAnticheat{
 		mu:      &sync.Mutex{},
 		players: make(map[string]*InternalPlayer),
@@ -31,7 +31,7 @@ func (s *SimpleAnticheat) AddPlayer(_ context.Context, req *xyron.AddPlayerReque
 		return &xyron.PlayerReceipt{InternalId: req.Player.Name}, nil
 	}
 	log.Printf("AP:%v", req.Player.Name)
-	ip := NewInternalPlayer(req.Player.Os, req.Player.Name)
+	ip := NewInternalPlayer(s.checks(), req.Player.Os, req.Player.Name)
 	s.players[req.Player.Name] = ip
 	s.handleData(ip, req.Data)
 	return &xyron.PlayerReceipt{InternalId: req.Player.Name}, nil
@@ -54,7 +54,7 @@ func (s *SimpleAnticheat) Report(_ context.Context, r *xyron.PlayerReport) (*xyr
 		p = pp
 	}
 	s.mu.Unlock()
-	log.Printf("RP:%v", r.Player.InternalId)
+	//log.Printf("RP:%v", r.Player.InternalId)
 	jdjm := s.handleData(p, r.Data)
 	return &xyron.ReportResponse{Judgements: jdjm}, nil
 }
