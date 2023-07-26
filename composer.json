@@ -1,6 +1,7 @@
 {
   "name": "blackjack200/xyron",
   "type": "library",
+  "license": "MIT",
   "autoload": {
     "psr-4": {
       "": [
