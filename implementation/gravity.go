@@ -40,6 +40,11 @@ func (g *Gravity) HandleMoveData(p *anticheat.InternalPlayer, data *xyron.Player
 		p.OnGround.Current() {
 		return nil
 	}
+	newOnGround, _, _, _, _ := p.CheckGroundState(data.NewPosition)
+	//sometimes when player land and death, false positives appear
+	if newOnGround {
+		return nil
+	}
 	if p.Location.Current().IsFlying {
 		return nil
 	}

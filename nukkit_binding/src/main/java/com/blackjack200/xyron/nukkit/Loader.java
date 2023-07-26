@@ -4,32 +4,34 @@ import cn.nukkit.AdventureSettings;
 import cn.nukkit.Player;
 import cn.nukkit.Server;
 import cn.nukkit.block.Block;
-import cn.nukkit.block.BlockID;
-import cn.nukkit.block.BlockLiquid;
 import cn.nukkit.event.EventHandler;
 import cn.nukkit.event.Listener;
+import cn.nukkit.event.block.BlockBreakEvent;
+import cn.nukkit.event.block.BlockPlaceEvent;
+import cn.nukkit.event.entity.EntityDamageByEntityEvent;
+import cn.nukkit.event.entity.EntityMotionEvent;
 import cn.nukkit.event.entity.EntityTeleportEvent;
 import cn.nukkit.event.player.*;
+import cn.nukkit.level.Level;
+import cn.nukkit.level.Position;
 import cn.nukkit.math.AxisAlignedBB;
 import cn.nukkit.math.Vector3;
 import cn.nukkit.plugin.PluginBase;
-import cn.nukkit.potion.Effect;
 import com.github.blackjack200.xyron.*;
 import com.google.common.collect.Lists;
-import com.google.protobuf.Empty;
 import io.grpc.ManagedChannelBuilder;
 import lombok.val;
 import lombok.var;
 
-import java.util.*;
-import java.util.function.Consumer;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class Loader extends PluginBase implements Listener {
     private AnticheatGrpc.AnticheatFutureStub client;
-    private final BufferedDataFlushPool<Xchange.ReportResponse> reportPool = new BufferedDataFlushPool<>();
-    private final BufferedDataFlushPool<Xchange.PlayerReceipt> addPool = new BufferedDataFlushPool<>();
-    private final BufferedDataFlushPool<Empty> removePool = new BufferedDataFlushPool<>();
+    private final BufferedDataFlushPool pool = new BufferedDataFlushPool();
     private final Map<Player, XyronData> data = new HashMap<>(32);
 
     @Override
@@ -42,71 +44,92 @@ public class Loader extends PluginBase implements Listener {
 
         this.getServer().getPluginManager().registerEvents(this, this);
         this.getServer().getScheduler().scheduleRepeatingTask(this, () -> {
-            this.data.forEach((p, x) -> this.reportPool.add(
-                    x.getQueue().flush(this.client, x.getReceipt(), this.getServer().getTick(), p.getPing() / 1000D),
-                    (resp) -> {
-                        if (!p.isOnline()) {
-                            //the player has been quit
-                            return;
-                        }
-                        for (val j : resp.getJudgementsList()) {
-                            val formattedString = String.format("judgement: %s: %s message:%s",
-                                    j.getType(),
-                                    j.getJudgement(),
-                                    j.getMessage()
-                            );
-                            switch (j.getJudgement().getNumber()) {
-                                case AnticheatTypes.Judgement.DEBUG_VALUE:
-                                case AnticheatTypes.Judgement.AMBIGUOUS_VALUE:
-                                    p.sendMessage(formattedString);
-                                    break;
-                                case AnticheatTypes.Judgement.TRIGGER_VALUE:
-                                    p.kick(formattedString, false);
-                                    break;
+            this.data.forEach((p, x) -> {
+                x.getQueue().add(getTick(), Convert.wildcard(
+                        getEffectData(p)
+                ));
+                this.pool.add(
+                        x.getQueue().flush(this.client, x.getReceipt(), this.getServer().getTick(), p.getPing() / 1000D),
+                        (resp) -> {
+                            if (!p.isOnline()) {
+                                //the player has been quit
+                                return;
                             }
+                            this.handleJudgements(p, resp.getJudgementsList());
                         }
-                    }
-            ));
-            this.addPool.poll();
-            this.reportPool.poll();
-            this.removePool.poll();
+                );
+            });
+            this.pool.poll();
         }, 10);
+        val req = Xchange.AddPlayerRequest.newBuilder()
+                .setPlayer(PlayerOuterClass.Player.newBuilder()
+                        .setOsValue(PlayerOuterClass.DeviceOS.Android_VALUE)
+                        .setName("IPlayfordev")
+                );
+        req.putData(0L, Xchange.TimestampedReportData.newBuilder()
+                .addData(PlayerWrappers.WildcardReportData.newBuilder().setGameModeData(
+                        PlayerWrappers.PlayerGameModeData.newBuilder()
+                                .setGameModeValue(PlayerOuterClass.GameMode.Survival_VALUE)
+                )).build()
+        );
     }
 
     @Override
     public void onDisable() {
         this.getLogger().info("Anticheat closing...");
-        this.addPool.shutdown();
-        this.reportPool.shutdown();
-        this.removePool.shutdown();
+        this.pool.shutdown();
         this.getLogger().info("Anticheat closed");
     }
 
-    private PlayerOuterClass.DeviceOS convertDeviceOS(int os) {
-        var c = PlayerOuterClass.DeviceOS.forNumber(os);
-        if (c == null) {
-            c = PlayerOuterClass.DeviceOS.Android;
+    private void handleJudgements(Player p, List<Xchange.JudgementData> judgementsList) {
+        for (val j : judgementsList) {
+            val formattedString = String.format("judgement: %s: %s message:%s",
+                    j.getType(),
+                    j.getJudgement(),
+                    j.getMessage()
+            );
+            switch (j.getJudgement().getNumber()) {
+                case AnticheatTypes.Judgement.DEBUG_VALUE:
+                case AnticheatTypes.Judgement.AMBIGUOUS_VALUE:
+                    p.sendMessage(formattedString);
+                    break;
+                case AnticheatTypes.Judgement.TRIGGER_VALUE:
+                    p.kick(formattedString, false);
+                    break;
+            }
         }
-        return c;
     }
 
     @EventHandler
     public void onPlayerInit(PlayerLocallyInitializedEvent ev) {
         val player = ev.getPlayer();
         player.setCheckMovement(false);
+
         val req = Xchange.AddPlayerRequest.newBuilder()
                 .setPlayer(PlayerOuterClass.Player.newBuilder()
-                        .setOs(convertDeviceOS(player.getLoginChainData().getDeviceOS()))
+                        .setOs(Convert.deviceOS(player.getLoginChainData().getDeviceOS()))
                         .setName(player.getName())
                 );
         req.putData(0L, Xchange.TimestampedReportData.newBuilder()
-                .addData(PlayerWrappers.WildcardReportData.newBuilder().setGameModeData(
+                .addData(Convert.wildcard(
                         PlayerWrappers.PlayerGameModeData.newBuilder()
-                                .setGameModeValue(PlayerOuterClass.GameMode.Survival_VALUE)
+                                .setGameMode(Convert.gameMode(player.getGamemode()))
+                                .build()
+                ))
+                .addData(Convert.wildcard(
+                        PlayerWrappers.PlayerInputModeData.newBuilder()
+                                .setInputMode(Convert.inputMode(
+                                        player.getLoginChainData().getCurrentInputMode()
+                                ))
+                                .build()
+                ))
+                .addData(Convert.wildcard(
+                        getEffectData(player)
                 ))
                 .build()
         );
-        this.addPool.add(this.client.addPlayer(req.build()), (receipt) -> {
+
+        this.pool.add(this.client.addPlayer(req.build()), (receipt) -> {
             if (!player.isOnline()) {
                 return;
             }
@@ -122,73 +145,91 @@ public class Loader extends PluginBase implements Listener {
     public void onPlayerQuit(PlayerQuitEvent ev) {
         val data = this.data.get(ev.getPlayer());
         if (data != null) {
-            this.removePool.add(this.client.removePlayer(data.getReceipt()), (e) -> {
+            this.pool.add(this.client.removePlayer(data.getReceipt()), (e) -> {
             });
         }
         this.data.remove(ev.getPlayer());
     }
 
-    private PrimitiveTypes.Vec3f toVec3f(Vector3 vec3) {
-        return PrimitiveTypes.Vec3f.newBuilder()
-                .setX((float) vec3.getX())
-                .setY((float) vec3.getY())
-                .setZ((float) vec3.getZ())
-                .build();
+    @EventHandler
+    public void onPlayerGameModeChange(PlayerGameModeChangeEvent ev) {
+        val player = ev.getPlayer();
+        val data = this.data.get(player);
+        if (data != null) {
+            data.getQueue().add(getTick(), Convert.wildcard(
+                    PlayerWrappers.PlayerGameModeData.newBuilder()
+                            .setGameMode(Convert.gameMode(player.getGamemode()))
+                            .build()
+            ));
+        }
     }
 
-    private PrimitiveTypes.Vec3i toVec3i(Vector3 vec3) {
-        return PrimitiveTypes.Vec3i.newBuilder()
-                .setX((int) vec3.getX())
-                .setY((int) vec3.getY())
-                .setZ((int) vec3.getZ())
-                .build();
+
+    /* Player Action Data Start */
+    private void handleAction(Player player, PlayerOuterClass.PlayerAction action) {
+        val data = this.data.get(player);
+        if (data != null) {
+            data.getQueue().add(getTick(), Convert.wildcard(
+                    getActionData(player, action)
+            ));
+        }
     }
 
-    private Vector3 toVec3f(PrimitiveTypes.Vec3f v3f) {
-        return new Vector3(v3f.getX(), v3f.getY(), v3f.getZ());
+    @EventHandler
+    public void onPlayerToggleSprint(PlayerToggleSprintEvent ev) {
+        val player = ev.getPlayer();
+        val action = ev.isSprinting() ?
+                PlayerOuterClass.PlayerAction.StartSprint :
+                PlayerOuterClass.PlayerAction.StopSprint;
+        this.handleAction(player, action);
     }
 
-    private PrimitiveTypes.AxisAlignedBoundingBox toBB(AxisAlignedBB aabb) {
-        return PrimitiveTypes.AxisAlignedBoundingBox.newBuilder()
-                .setMin(toVec3f(new Vector3(aabb.getMinX(), aabb.getMinY(), aabb.getMinZ())))
-                .setMax(toVec3f(new Vector3(aabb.getMaxX(), aabb.getMaxY(), aabb.getMaxZ())))
-                .build();
+    @EventHandler
+    public void onPlayerToggleSneak(PlayerToggleSneakEvent ev) {
+        val player = ev.getPlayer();
+        val action = ev.isSneaking() ?
+                PlayerOuterClass.PlayerAction.StartSneak :
+                PlayerOuterClass.PlayerAction.StopSneak;
+        this.handleAction(player, action);
     }
 
-    private PrimitiveTypes.BlockData toBlock(Block blk) {
-        return PrimitiveTypes.BlockData.newBuilder()
-                .setPosition(toVec3i(blk))
-                .setFeature(PrimitiveTypes.BlockFeature.newBuilder()
-                        .addAllCollisionBoxes(Lists.newArrayList(toBB(blk.getCollisionBoundingBox())))
-                        .setFriction((float) blk.getFrictionFactor())
-                        .setIsSolid(blk.isSolid())
-                        .setIsLiquid(blk instanceof BlockLiquid)
-                        .setIsAir(blk.getId() == BlockID.AIR)
-                        .setIsSlime(blk.getId() == BlockID.SLIME_BLOCK)
-                        .setIsClimbable(blk.canBeClimbed())
-                        .setIsIce(blk.getId() == BlockID.ICE)
-                        .setIsCobweb(blk.getId() == BlockID.COBWEB)
-                        //no sweet berry in Nukkit
-                        .setIsSweetBerry(false)
-                        .build())
-                .build();
+    @EventHandler
+    public void onPlayerToggleFlight(PlayerToggleFlightEvent ev) {
+        val player = ev.getPlayer();
+        val action = ev.isFlying() ?
+                PlayerOuterClass.PlayerAction.StartSprintFlying :
+                PlayerOuterClass.PlayerAction.StopSprintFlying;
+        this.handleAction(player, action);
     }
 
+    @EventHandler
+    public void onPlayerToggleGlide(PlayerToggleGlideEvent ev) {
+        val player = ev.getPlayer();
+        val action = ev.isGliding() ?
+                PlayerOuterClass.PlayerAction.StartGliding :
+                PlayerOuterClass.PlayerAction.StopGliding;
+        this.handleAction(player, action);
+    }
+
+    @EventHandler
+    public void onPlayerToggleGlide(PlayerToggleSwimEvent ev) {
+        val player = ev.getPlayer();
+        val action = ev.isSwimming() ?
+                PlayerOuterClass.PlayerAction.StartSwimming :
+                PlayerOuterClass.PlayerAction.StopSwimming;
+        this.handleAction(player, action);
+    }
+    /* Player Action Data End */
+
+    /* Player Move Data Start */
     @EventHandler
     public void onPlayerMove(PlayerMoveEvent ev) {
         val player = ev.getPlayer();
         val data = this.data.get(player);
         if (data != null) {
-            data.getQueue().add(getTick(),
-                    PlayerWrappers.WildcardReportData.newBuilder().setEffectData(
-                            getEffectData(player)
-                    ).build()
-            );
-            data.getQueue().add(getTick(),
-                    PlayerWrappers.WildcardReportData.newBuilder().setMoveData(
-                            getMovementData(player, ev.getTo(), false)
-                    ).build()
-            );
+            data.getQueue().add(getTick(), Convert.wildcard(
+                    getMovementData(player, ev.getTo(), false)
+            ));
         }
     }
 
@@ -198,46 +239,76 @@ public class Loader extends PluginBase implements Listener {
             val player = (Player) ev.getEntity();
             val data = this.data.get(player);
             if (data != null) {
-                data.getQueue().add(getTick(),
-                        PlayerWrappers.WildcardReportData.newBuilder().setMoveData(
-                                getMovementData(player, ev.getTo(), true)
-                        ).build()
-                );
+                data.getQueue().add(getTick(), Convert.wildcard(
+                        getMovementData(player, ev.getTo(), true)
+                ));
             }
         }
     }
 
+    /* Player Move Data End */
+    /* PlaceBlock, BreakBlock Start */
+
     @EventHandler
-    public void onPlayerToggleSprint(PlayerToggleSprintEvent ev) {
+    public void onBlockPlace(BlockPlaceEvent ev) {
         val player = ev.getPlayer();
         val data = this.data.get(player);
         if (data != null) {
-            data.getQueue().add(getTick(),
-                    PlayerWrappers.WildcardReportData.newBuilder().setActionData(
-                            getActionData(player,
-                                    ev.isSprinting() ?
-                                            PlayerOuterClass.PlayerAction.StartSprint :
-                                            PlayerOuterClass.PlayerAction.StopSprint
-                            )
-                    ).build()
-            );
+            data.getQueue().add(getTick(), Convert.wildcard(
+                    PlayerWrappers.PlayerPlaceBlockData.newBuilder()
+                            .setPlacedBlock(Convert.block(ev.getBlock()))
+                            .setPosition(getPositionData(player))
+                            .build()
+            ));
         }
     }
 
     @EventHandler
-    public void onPlayerToggleSneak(PlayerToggleSneakEvent ev) {
+    public void onBlockBreak(BlockBreakEvent ev) {
         val player = ev.getPlayer();
         val data = this.data.get(player);
         if (data != null) {
-            data.getQueue().add(getTick(),
-                    PlayerWrappers.WildcardReportData.newBuilder().setActionData(
-                            getActionData(player,
-                                    ev.isSneaking() ?
-                                            PlayerOuterClass.PlayerAction.StartSneak :
-                                            PlayerOuterClass.PlayerAction.StopSneak
-                            )
-                    ).build()
-            );
+            data.getQueue().add(getTick(), Convert.wildcard(
+                    PlayerWrappers.PlayerBreakBlockData.newBuilder()
+                            .setBrokenBlock(Convert.block(ev.getBlock()))
+                            .setPosition(getPositionData(player))
+                            .build()
+            ));
+        }
+    }
+    /* PlaceBlock, BreakBlock End */
+
+    @EventHandler
+    public void onPlayerConsume(PlayerItemConsumeEvent ev) {
+        val player = ev.getPlayer();
+        val data = this.data.get(player);
+        if (data != null) {
+            data.getQueue().add(getTick(), Convert.wildcard(
+                    PlayerWrappers.PlayerEatFoodData.newBuilder()
+                            //FIXME
+                            .setStatus(PlayerOuterClass.ConsumeStatus.Stop)
+                            .build()
+            ));
+        }
+    }
+
+    @EventHandler
+    public void onPlayerConsume(EntityDamageByEntityEvent ev) {
+        if (ev.getEntity() instanceof Player && ev.getDamager() instanceof Player) {
+            val player = (Player) ev.getEntity();
+            val damager = (Player) ev.getDamager();
+            val data = this.data.get(player);
+            if (data != null) {
+                data.getQueue().add(getTick(), Convert.wildcard(
+                        PlayerWrappers.PlayerAttackData.newBuilder()
+                                .setData(PlayerOuterClass.AttackData.newBuilder()
+                                        .setCause(Convert.damageCause(ev.getCause()))
+                                        .setAttacker(getPositionData(damager))
+                                        .setTarget(getPositionData(player))
+                                )
+                                .build()
+                ));
+            }
         }
     }
 
@@ -246,11 +317,25 @@ public class Loader extends PluginBase implements Listener {
         val player = ev.getPlayer();
         val data = this.data.get(player);
         if (data != null) {
-            data.getQueue().add(getTick(),
-                    PlayerWrappers.WildcardReportData.newBuilder().setActionData(
-                            getActionData(player, PlayerOuterClass.PlayerAction.Jump)
-                    ).build()
-            );
+            data.getQueue().add(getTick(), Convert.wildcard(
+                    getActionData(player, PlayerOuterClass.PlayerAction.Jump)
+            ));
+        }
+    }
+
+    @EventHandler
+    public void onPlayerMotion(EntityMotionEvent ev) {
+        if (ev.getEntity() instanceof Player) {
+            val player = (Player) ev.getEntity();
+            val data = this.data.get(player);
+            if (data != null) {
+                data.getQueue().add(getTick(), Convert.wildcard(
+                        PlayerWrappers.PlayerMotionData.newBuilder()
+                                .setMotion(Convert.vec3f(ev.getMotion()))
+                                .setPosition(getPositionData(player))
+                                .build()
+                ));
+            }
         }
     }
 
@@ -259,11 +344,9 @@ public class Loader extends PluginBase implements Listener {
         val player = ev.getEntity();
         val data = this.data.get(player);
         if (data != null) {
-            data.getQueue().add(getTick(),
-                    PlayerWrappers.WildcardReportData.newBuilder().setLifeData(
-                            getLifeData(false)
-                    ).build()
-            );
+            data.getQueue().add(getTick(), Convert.wildcard(
+                    getLifeData(false)
+            ));
         }
     }
 
@@ -272,11 +355,9 @@ public class Loader extends PluginBase implements Listener {
         val player = ev.getPlayer();
         val data = this.data.get(player);
         if (data != null) {
-            data.getQueue().add(getTick(),
-                    PlayerWrappers.WildcardReportData.newBuilder().setLifeData(
-                            getLifeData(true)
-                    ).build()
-            );
+            data.getQueue().add(getTick(), Convert.wildcard(
+                    getLifeData(true)
+            ));
         }
     }
 
@@ -304,16 +385,71 @@ public class Loader extends PluginBase implements Listener {
         return getPositionData(player, player.getPosition());
     }
 
+
+    private List<Block> getIntersectedBlock(Level level, AxisAlignedBB bb) {
+        List<Block> list = Lists.newLinkedList();
+
+        int minX = (int) Math.floor(bb.getMinX() - 1);
+        int minY = (int) Math.floor(bb.getMinY() - 1);
+        int minZ = (int) Math.floor(bb.getMinZ() - 1);
+        int maxX = (int) Math.floor(bb.getMaxX() + 1);
+        int maxY = (int) Math.floor(bb.getMaxY() + 1);
+        int maxZ = (int) Math.floor(bb.getMaxZ() + 1);
+
+        for (int x = minX; x <= maxX; ++x) {
+            for (int y = minY; y <= maxY; ++y) {
+                for (int z = minZ; z <= maxZ; ++z) {
+                    var block = level.getBlock(x, y, z);
+                    if (block.getCollisionBoundingBox().intersectsWith(bb)) {
+                        list.add(block);
+                    }
+                }
+            }
+        }
+        return list;
+    }
+
+    private boolean wouldCollideVertically(Player player, Vector3 newPos) {
+        AxisAlignedBB bb = player.getBoundingBox().clone();
+
+        double xLen = bb.getMaxX() - bb.getMinX();
+        double yLen = bb.getMaxY() - bb.getMinY();
+        double zLen = bb.getMaxZ() - bb.getMinZ();
+
+        Position oldPos = player.getPosition();
+        double dx = newPos.getX() - oldPos.getX();
+        double dy = newPos.getY() - oldPos.getY();
+        double dz = newPos.getZ() - oldPos.getZ();
+
+        if (Math.abs(dx) <= xLen && Math.abs(dy) <= yLen && Math.abs(dz) <= zLen) {
+            bb = bb.addCoord(dx, dy, dz);
+            return player.getLevel().getCollisionBlocks(bb, true).length == 1;
+        } else {
+            return false;
+        }
+    }
+
     private PlayerOuterClass.EntityPositionData getPositionData(Player player, Vector3 newPos) {
-        var bb = player.getBoundingBox().clone();
+        var newPosBB = player.getBoundingBox().clone();
         val delta = newPos.subtract(player.getPosition());
-        bb = bb.getOffsetBoundingBox(delta.getX(), delta.getY(), delta.getZ());
-        bb.setMinY(bb.getMinY() - 0.75);
-        var collision = Arrays.asList(player.getLevel().getCollisionBlocks(bb));
+        newPosBB = newPosBB.getOffsetBoundingBox(delta.getX(), delta.getY(), delta.getZ());
+        newPosBB.setMinY(newPosBB.getMinY() - 0.50001);
+
+        var below = player.getLevel().getBlock(new Vector3(newPos.x, newPosBB.getMinY(), newPos.z));
+
+        var collision = Arrays.stream(player.getLevel().getCollisionBlocks(newPosBB))
+                .map(Convert::block)
+                .collect(Collectors.toList());
+
+        var intersected = this.getIntersectedBlock(player.getLevel(), newPosBB)
+                .stream()
+                .map(Convert::block)
+                .collect(Collectors.toList());
+
         return PlayerOuterClass.EntityPositionData.newBuilder()
-                .setPosition(toVec3f(player.getPosition()))
-                .setDirection(toVec3f(player.getDirectionVector()))
-                .setBoundingBox(toBB(player.getBoundingBox()))
+                .setPosition(Convert.vec3f(player.getPosition()))
+                .setDirection(Convert.vec3f(player.getDirectionVector()))
+                .setBoundingBox(Convert.boundingBox(player.getBoundingBox()))
                 .setIsImmobile(player.isImmobile())
                 .setIsOnGround(player.isOnGround())
                 .setAllowFlying(player.getAdventureSettings().get(AdventureSettings.Type.ALLOW_FLIGHT))
@@ -321,15 +457,10 @@ public class Loader extends PluginBase implements Listener {
                 //TODO improve this
                 .setHaveGravity(true)
                 .setMovementSpeed(player.getMovementSpeed())
-                //TODO improve this
-                .setWouldCollideVertically(player.isCollidedVertically)
-                //TODO .setBelowThatAffectMovement(player.block)
-                .addAllCollidedBlocks(
-                        collision.stream()
-                                .map(this::toBlock)
-                                .collect(Collectors.toList())
-                )
-                //TODO .addIntersectedBlocks()
+                .setWouldCollideVertically(this.wouldCollideVertically(player, newPos))
+                .setBelowThatAffectMovement(Convert.block(below))
+                .addAllCollidedBlocks(collision)
+                .addAllIntersectedBlocks(intersected)
                 .build();
     }
 
@@ -338,27 +469,6 @@ public class Loader extends PluginBase implements Listener {
     }
 
     private PlayerWrappers.PlayerEffectData getEffectData(Player player) {
-        return PlayerWrappers.PlayerEffectData.newBuilder().addAllEffect(getEffects(player)).build();
-    }
-
-    private List<PrimitiveTypes.EffectFeature> getEffects(Player player) {
-        val l = new ArrayList<PrimitiveTypes.EffectFeature>(16);
-        internalEff(l, player, Effect.SPEED, (e) -> e.setIsSpeed(true));
-        internalEff(l, player, Effect.HASTE, (e) -> e.setIsHaste(true));
-        internalEff(l, player, Effect.SLOW_FALLING, (e) -> e.setIsSlowFalling(true));
-        internalEff(l, player, Effect.LEVITATION, (e) -> e.setIsLevitation(true));
-        internalEff(l, player, Effect.SLOWNESS, (e) -> e.setIsSlowness(true));
-        internalEff(l, player, Effect.JUMP_BOOST, (e) -> e.setIsJumpBoost(true));
-        return l;
-    }
-
-    private void internalEff(List<PrimitiveTypes.EffectFeature> list, Player player, int effectId, Consumer<PrimitiveTypes.EffectFeature.Builder> c) {
-        val eff = player.getEffect(effectId);
-        if (eff != null) {
-            val ef = PrimitiveTypes.EffectFeature.newBuilder()
-                    .setAmplifier(eff.getAmplifier());
-            c.accept(ef);
-            list.add(ef.build());
-        }
+        return PlayerWrappers.PlayerEffectData.newBuilder().addAllEffect(Convert.effects(player.getEffects())).build();
     }
 }
