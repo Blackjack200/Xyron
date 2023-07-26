@@ -32,6 +32,7 @@ class WildcardReportData extends \Google\Protobuf\Internal\Message
      *     @type \prokits\xyron\PlayerMotionData $motion_data
      *     @type \prokits\xyron\PlayerInputModeData $input_mode_data
      *     @type \prokits\xyron\PlayerHeldItemChangeData $held_item_change_data
+     *     @type \prokits\xyron\PlayerLifeData $life_data
      * }
      */
     public function __construct($data = NULL) {
@@ -332,6 +333,33 @@ class WildcardReportData extends \Google\Protobuf\Internal\Message
     {
         GPBUtil::checkMessage($var, \prokits\xyron\PlayerHeldItemChangeData::class);
         $this->writeOneof(12, $var);
+
+        return $this;
+    }
+
+    /**
+     * Generated from protobuf field <code>.xchange.PlayerLifeData life_data = 13;</code>
+     * @return \prokits\xyron\PlayerLifeData|null
+     */
+    public function getLifeData()
+    {
+        return $this->readOneof(13);
+    }
+
+    public function hasLifeData()
+    {
+        return $this->hasOneof(13);
+    }
+
+    /**
+     * Generated from protobuf field <code>.xchange.PlayerLifeData life_data = 13;</code>
+     * @param \prokits\xyron\PlayerLifeData $var
+     * @return $this
+     */
+    public function setLifeData($var)
+    {
+        GPBUtil::checkMessage($var, \prokits\xyron\PlayerLifeData::class);
+        $this->writeOneof(13, $var);
 
         return $this;
     }

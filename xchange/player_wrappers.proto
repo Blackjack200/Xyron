@@ -24,6 +24,7 @@ message WildcardReportData {
     PlayerMotionData motion_data = 10;
     PlayerInputModeData input_mode_data = 11;
     PlayerHeldItemChangeData held_item_change_data = 12;
+    PlayerLifeData life_data = 13;
   }
 }
 
@@ -64,7 +65,8 @@ message PlayerGameModeData {
 }
 
 message PlayerMotionData {
-  Vec3f motion = 1;
+  EntityPositionData position = 1;
+  Vec3f motion = 2;
 }
 
 message PlayerInputModeData {
@@ -73,4 +75,8 @@ message PlayerInputModeData {
 
 message PlayerHeldItemChangeData {
   ItemData item = 1;
+}
+
+message PlayerLifeData {
+  bool alive = 1;
 }

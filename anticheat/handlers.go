@@ -10,6 +10,8 @@ func (s *SimpleAnticheat) handleData(p *InternalPlayer, tdata map[int64]*xyron.T
 	}
 	sorted := ComparableSlice[int64](keys)
 	sorted.Sort()
+	p.handleDataMutex.Lock()
+	defer p.handleDataMutex.Unlock()
 	for _, timestamp := range sorted {
 		p.currentTimestamp = timestamp
 		for _, wdata := range tdata[timestamp].Data {
@@ -55,6 +57,8 @@ func (s *SimpleAnticheat) handleData(p *InternalPlayer, tdata map[int64]*xyron.T
 				//TODO
 			case *xyron.WildcardReportData_InputModeData:
 				p.Input = data.InputModeData.InputMode
+			case *xyron.WildcardReportData_LifeData:
+				p.Alive.Set(data.LifeData.Alive)
 			case *xyron.WildcardReportData_HeldItemChangeData:
 				//TODO
 			}

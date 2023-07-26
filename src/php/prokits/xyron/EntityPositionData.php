@@ -50,15 +50,19 @@ class EntityPositionData extends \Google\Protobuf\Internal\Message
      */
     protected $movementSpeed = 0.0;
     /**
-     * Generated from protobuf field <code>.xchange.BlockData belowThatAffectMovement = 10;</code>
+     * Generated from protobuf field <code>bool wouldCollideVertically = 10;</code>
+     */
+    protected $wouldCollideVertically = false;
+    /**
+     * Generated from protobuf field <code>.xchange.BlockData belowThatAffectMovement = 11;</code>
      */
     protected $belowThatAffectMovement = null;
     /**
-     * Generated from protobuf field <code>repeated .xchange.BlockData collidedBlocks = 11;</code>
+     * Generated from protobuf field <code>repeated .xchange.BlockData collidedBlocks = 12;</code>
      */
     private $collidedBlocks;
     /**
-     * Generated from protobuf field <code>repeated .xchange.BlockData intersectedBlocks = 12;</code>
+     * Generated from protobuf field <code>repeated .xchange.BlockData intersectedBlocks = 13;</code>
      */
     private $intersectedBlocks;
 
@@ -77,6 +81,7 @@ class EntityPositionData extends \Google\Protobuf\Internal\Message
      *     @type bool $isFlying
      *     @type bool $haveGravity
      *     @type float $movementSpeed
+     *     @type bool $wouldCollideVertically
      *     @type \prokits\xyron\BlockData $belowThatAffectMovement
      *     @type array<\prokits\xyron\BlockData>|\Google\Protobuf\Internal\RepeatedField $collidedBlocks
      *     @type array<\prokits\xyron\BlockData>|\Google\Protobuf\Internal\RepeatedField $intersectedBlocks
@@ -316,7 +321,29 @@ class EntityPositionData extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * Generated from protobuf field <code>.xchange.BlockData belowThatAffectMovement = 10;</code>
+     * Generated from protobuf field <code>bool wouldCollideVertically = 10;</code>
+     * @return bool
+     */
+    public function getWouldCollideVertically()
+    {
+        return $this->wouldCollideVertically;
+    }
+
+    /**
+     * Generated from protobuf field <code>bool wouldCollideVertically = 10;</code>
+     * @param bool $var
+     * @return $this
+     */
+    public function setWouldCollideVertically($var)
+    {
+        GPBUtil::checkBool($var);
+        $this->wouldCollideVertically = $var;
+
+        return $this;
+    }
+
+    /**
+     * Generated from protobuf field <code>.xchange.BlockData belowThatAffectMovement = 11;</code>
      * @return \prokits\xyron\BlockData|null
      */
     public function getBelowThatAffectMovement()
@@ -335,7 +362,7 @@ class EntityPositionData extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * Generated from protobuf field <code>.xchange.BlockData belowThatAffectMovement = 10;</code>
+     * Generated from protobuf field <code>.xchange.BlockData belowThatAffectMovement = 11;</code>
      * @param \prokits\xyron\BlockData $var
      * @return $this
      */
@@ -348,7 +375,7 @@ class EntityPositionData extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * Generated from protobuf field <code>repeated .xchange.BlockData collidedBlocks = 11;</code>
+     * Generated from protobuf field <code>repeated .xchange.BlockData collidedBlocks = 12;</code>
      * @return \Google\Protobuf\Internal\RepeatedField
      */
     public function getCollidedBlocks()
@@ -357,7 +384,7 @@ class EntityPositionData extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * Generated from protobuf field <code>repeated .xchange.BlockData collidedBlocks = 11;</code>
+     * Generated from protobuf field <code>repeated .xchange.BlockData collidedBlocks = 12;</code>
      * @param array<\prokits\xyron\BlockData>|\Google\Protobuf\Internal\RepeatedField $var
      * @return $this
      */
@@ -370,7 +397,7 @@ class EntityPositionData extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * Generated from protobuf field <code>repeated .xchange.BlockData intersectedBlocks = 12;</code>
+     * Generated from protobuf field <code>repeated .xchange.BlockData intersectedBlocks = 13;</code>
      * @return \Google\Protobuf\Internal\RepeatedField
      */
     public function getIntersectedBlocks()
@@ -379,7 +406,7 @@ class EntityPositionData extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * Generated from protobuf field <code>repeated .xchange.BlockData intersectedBlocks = 12;</code>
+     * Generated from protobuf field <code>repeated .xchange.BlockData intersectedBlocks = 13;</code>
      * @param array<\prokits\xyron\BlockData>|\Google\Protobuf\Internal\RepeatedField $var
      * @return $this
      */

@@ -99,9 +99,10 @@ message EntityPositionData {
   bool isFlying = 7;
   bool haveGravity = 8;
   double movementSpeed = 9;
-  BlockData belowThatAffectMovement = 10;
-  repeated BlockData collidedBlocks = 11;
-  repeated BlockData intersectedBlocks = 12;
+  bool wouldCollideVertically = 10;
+  BlockData belowThatAffectMovement = 11;
+  repeated BlockData collidedBlocks = 12;
+  repeated BlockData intersectedBlocks = 13;
 }
 
 message AttackData {

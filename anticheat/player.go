@@ -4,20 +4,23 @@ import (
 	"github.com/blackjack200/xyron/xyron"
 	"github.com/go-gl/mathgl/mgl64"
 	"github.com/sirupsen/logrus"
+	"sync"
 )
 
 type InternalPlayer struct {
-	log           *logrus.Logger
-	checks        []any
-	Os            xyron.DeviceOS
-	Input         xyron.InputMode
-	Name          string
-	GameMode      xyron.GameMode
-	effects       []*xyron.EffectFeature
-	Motion        *BufferedData[*TimestampedData[mgl64.Vec3]]
-	Location      *BufferedData[*xyron.EntityPositionData]
-	DeltaPosition *BufferedData[mgl64.Vec3]
-	Volatile      *TickedData[*VolatileData]
+	handleDataMutex *sync.Mutex
+	log             *logrus.Logger
+	checks          []any
+	Os              xyron.DeviceOS
+	Input           xyron.InputMode
+	Name            string
+	GameMode        xyron.GameMode
+	Alive           *BufferedData[bool]
+	effects         []*xyron.EffectFeature
+	Motion          *BufferedData[*TimestampedData[mgl64.Vec3]]
+	Location        *BufferedData[*xyron.EntityPositionData]
+	DeltaPosition   *BufferedData[mgl64.Vec3]
+	Volatile        *TickedData[*VolatileData]
 
 	Sprinting *BufferedData[bool]
 	Sneaking  *BufferedData[bool]
@@ -40,23 +43,25 @@ type InternalPlayer struct {
 
 func NewInternalPlayer(log *logrus.Logger, checks []any, os xyron.DeviceOS, name string) *InternalPlayer {
 	return &InternalPlayer{
-		log:           log,
-		checks:        checks,
-		Os:            os,
-		Name:          name,
-		GameMode:      0,
-		Motion:        NewBufferedData[*TimestampedData[mgl64.Vec3]](nil),
-		Location:      NewBufferedData[*xyron.EntityPositionData](nil),
-		DeltaPosition: NewBufferedData[mgl64.Vec3](mgl64.Vec3{}),
-		Volatile:      NewTickedData(&VolatileData{}),
-		Sprinting:     NewBufferedData(false),
-		Sneaking:      NewBufferedData(false),
-		OnGround:      NewBufferedData(true),
-		OnIce:         NewBufferedData(false),
-		InCobweb:      NewBufferedData(false),
-		InSweetBerry:  NewBufferedData(false),
-		OnClimbable:   NewBufferedData(false),
-		Teleport:      NewBufferedData[int64](0),
+		handleDataMutex: &sync.Mutex{},
+		log:             log,
+		checks:          checks,
+		Os:              os,
+		Name:            name,
+		GameMode:        0,
+		Alive:           NewBufferedData(true),
+		Motion:          NewBufferedData[*TimestampedData[mgl64.Vec3]](nil),
+		Location:        NewBufferedData[*xyron.EntityPositionData](nil),
+		DeltaPosition:   NewBufferedData[mgl64.Vec3](mgl64.Vec3{}),
+		Volatile:        NewTickedData(&VolatileData{}),
+		Sprinting:       NewBufferedData(false),
+		Sneaking:        NewBufferedData(false),
+		OnGround:        NewBufferedData(true),
+		OnIce:           NewBufferedData(false),
+		InCobweb:        NewBufferedData(false),
+		InSweetBerry:    NewBufferedData(false),
+		OnClimbable:     NewBufferedData(false),
+		Teleport:        NewBufferedData[int64](0),
 	}
 }
 

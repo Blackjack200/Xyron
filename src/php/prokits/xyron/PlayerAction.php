@@ -59,6 +59,14 @@ class PlayerAction
      * Generated from protobuf enum <code>StopSwimming = 11;</code>
      */
     const StopSwimming = 11;
+    /**
+     * Generated from protobuf enum <code>OpenInventory = 12;</code>
+     */
+    const OpenInventory = 12;
+    /**
+     * Generated from protobuf enum <code>CloseInventory = 13;</code>
+     */
+    const CloseInventory = 13;
 
     private static $valueToName = [
         self::Jump => 'Jump',
@@ -73,6 +81,8 @@ class PlayerAction
         self::StopGliding => 'StopGliding',
         self::StartSwimming => 'StartSwimming',
         self::StopSwimming => 'StopSwimming',
+        self::OpenInventory => 'OpenInventory',
+        self::CloseInventory => 'CloseInventory',
     ];
 
     public static function name($value)

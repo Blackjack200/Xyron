@@ -302,6 +302,22 @@ func (h *playerHandler) HandleJump() {
 	}})
 }
 
+func (h *playerHandler) HandleDeath(world.DamageSource, *bool) {
+	h.buf.Add(getCurrentWorldTick(h.p.World()), &xyron.WildcardReportData{Data: &xyron.WildcardReportData_LifeData{
+		LifeData: &xyron.PlayerLifeData{
+			Alive: false,
+		},
+	}})
+}
+
+func (h *playerHandler) HandleRespawn(*mgl64.Vec3, **world.World) {
+	h.buf.Add(getCurrentWorldTick(h.p.World()), &xyron.WildcardReportData{Data: &xyron.WildcardReportData_LifeData{
+		LifeData: &xyron.PlayerLifeData{
+			Alive: true,
+		},
+	}})
+}
+
 func (h *playerHandler) HandleQuit() {
 	h.closed.Store(true)
 	go h.c.RemovePlayer(context.TODO(), h.pp)
