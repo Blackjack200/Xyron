@@ -25,11 +25,19 @@ The `src/main/proto` directory contains the protobuf files used for data exchang
 components of the Xyron anticheat system. These files define the data structures and communication protocols that
 facilitate seamless integration and interaction between various parts of the system.
 
-### 4. `src/main/java`, `src/main/php`, `xyron`
+### 4. `java_protobuf`, `src/main/php`, `xyron`
 
 These directories store the generated code for Golang, derived from the protobuf files. The code in these directories is
 used to implement specific functionalities of the Xyron anticheat system. The code is automatically generated based on
 the defined data structures and communication protocols in the `src/main/proto` directory.
+
+### 5. `nukkit_binding`
+
+Nukkit frontend.
+
+### 6. `anticheat_test_binding.go`
+
+Dragonfly frontend.
 
 ## Getting Started
 
