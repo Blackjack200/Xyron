@@ -24,7 +24,6 @@ message WildcardReportData {
     PlayerMotionData motion_data = 10;
     PlayerInputModeData input_mode_data = 11;
     PlayerHeldItemChangeData held_item_change_data = 12;
-    ServerTickData server_tick_data = 13;
   }
 }
 
@@ -74,7 +73,4 @@ message PlayerInputModeData {
 
 message PlayerHeldItemChangeData {
   ItemData item = 1;
-}
-
-message ServerTickData {
 }

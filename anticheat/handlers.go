@@ -56,9 +56,7 @@ func (s *SimpleAnticheat) handleData(p *InternalPlayer, tdata map[int64]*xyron.T
 			case *xyron.WildcardReportData_InputModeData:
 				p.Input = data.InputModeData.InputMode
 			case *xyron.WildcardReportData_HeldItemChangeData:
-			//TODO
-			case *xyron.WildcardReportData_ServerTickData:
-				//the end of the tick, useless for now but we can make sure everything is OK?
+				//TODO
 			}
 		}
 		p.Tick()
@@ -121,11 +119,6 @@ type HeldItemChangeDataHandler interface {
 	HandleHeldItemChangeData(*InternalPlayer, *xyron.PlayerHeldItemChangeData) *xyron.JudgementData
 }
 
-// ServerTickDataHandler handles *xyron.WildcardReportData_ServerTickData
-type ServerTickDataHandler interface {
-	HandleServerTickData(*InternalPlayer, *xyron.ServerTickData) *xyron.JudgementData
-}
-
 func (s *SimpleAnticheat) callHandlers(p *InternalPlayer, c any, wdata *xyron.WildcardReportData) []*xyron.JudgementData {
 	var r []*xyron.JudgementData
 	if handler, ok := c.(ActionDataHandler); ok {
@@ -181,11 +174,6 @@ func (s *SimpleAnticheat) callHandlers(p *InternalPlayer, c any, wdata *xyron.Wi
 	if handler, ok := c.(HeldItemChangeDataHandler); ok {
 		if data, ok := wdata.Data.(*xyron.WildcardReportData_HeldItemChangeData); ok {
 			r = append(r, handler.HandleHeldItemChangeData(p, data.HeldItemChangeData))
-		}
-	}
-	if handler, ok := c.(ServerTickDataHandler); ok {
-		if data, ok := wdata.Data.(*xyron.WildcardReportData_ServerTickData); ok {
-			r = append(r, handler.HandleServerTickData(p, data.ServerTickData))
 		}
 	}
 

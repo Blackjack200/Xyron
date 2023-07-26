@@ -25,8 +25,10 @@ func init() {
 
 func (a *AirJump) HandleActionData(p *anticheat.InternalPlayer, data *xyron.PlayerActionData) *xyron.JudgementData {
 	measured := 0.0
+	newOnGround, _, _, _, _ := p.CheckGroundState(data.Position)
 	if data.Action == xyron.PlayerAction_Jump &&
 		!p.OnGround.Current() &&
+		!newOnGround &&
 		p.InAirTick >= 15 {
 		measured = 1
 	}

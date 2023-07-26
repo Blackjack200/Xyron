@@ -18,9 +18,13 @@ class PlayerReport extends \Google\Protobuf\Internal\Message
      */
     protected $player = null;
     /**
+     * Generated from protobuf field <code>double latency = 2;</code>
+     */
+    protected $latency = 0.0;
+    /**
      *timestamp->report data
      *
-     * Generated from protobuf field <code>map<int64, .xchange.TimestampedReportData> data = 2;</code>
+     * Generated from protobuf field <code>map<int64, .xchange.TimestampedReportData> data = 3;</code>
      */
     private $data;
 
@@ -31,6 +35,7 @@ class PlayerReport extends \Google\Protobuf\Internal\Message
      *     Optional. Data for populating the Message object.
      *
      *     @type \prokits\xyron\PlayerReceipt $player
+     *     @type float $latency
      *     @type array|\Google\Protobuf\Internal\MapField $data
      *          timestamp->report data
      * }
@@ -73,9 +78,31 @@ class PlayerReport extends \Google\Protobuf\Internal\Message
     }
 
     /**
+     * Generated from protobuf field <code>double latency = 2;</code>
+     * @return float
+     */
+    public function getLatency()
+    {
+        return $this->latency;
+    }
+
+    /**
+     * Generated from protobuf field <code>double latency = 2;</code>
+     * @param float $var
+     * @return $this
+     */
+    public function setLatency($var)
+    {
+        GPBUtil::checkDouble($var);
+        $this->latency = $var;
+
+        return $this;
+    }
+
+    /**
      *timestamp->report data
      *
-     * Generated from protobuf field <code>map<int64, .xchange.TimestampedReportData> data = 2;</code>
+     * Generated from protobuf field <code>map<int64, .xchange.TimestampedReportData> data = 3;</code>
      * @return \Google\Protobuf\Internal\MapField
      */
     public function getData()
@@ -86,7 +113,7 @@ class PlayerReport extends \Google\Protobuf\Internal\Message
     /**
      *timestamp->report data
      *
-     * Generated from protobuf field <code>map<int64, .xchange.TimestampedReportData> data = 2;</code>
+     * Generated from protobuf field <code>map<int64, .xchange.TimestampedReportData> data = 3;</code>
      * @param array|\Google\Protobuf\Internal\MapField $var
      * @return $this
      */

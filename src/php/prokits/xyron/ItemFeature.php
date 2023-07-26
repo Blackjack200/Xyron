@@ -45,6 +45,10 @@ class ItemFeature extends \Google\Protobuf\Internal\Message
      * Generated from protobuf field <code>bool isCrossBow = 8;</code>
      */
     protected $isCrossBow = false;
+    /**
+     * Generated from protobuf field <code>bool isShield = 9;</code>
+     */
+    protected $isShield = false;
 
     /**
      * Constructor.
@@ -60,6 +64,7 @@ class ItemFeature extends \Google\Protobuf\Internal\Message
      *     @type bool $isTool
      *     @type bool $isBow
      *     @type bool $isCrossBow
+     *     @type bool $isShield
      * }
      */
     public function __construct($data = NULL) {
@@ -239,6 +244,28 @@ class ItemFeature extends \Google\Protobuf\Internal\Message
     {
         GPBUtil::checkBool($var);
         $this->isCrossBow = $var;
+
+        return $this;
+    }
+
+    /**
+     * Generated from protobuf field <code>bool isShield = 9;</code>
+     * @return bool
+     */
+    public function getIsShield()
+    {
+        return $this->isShield;
+    }
+
+    /**
+     * Generated from protobuf field <code>bool isShield = 9;</code>
+     * @param bool $var
+     * @return $this
+     */
+    public function setIsShield($var)
+    {
+        GPBUtil::checkBool($var);
+        $this->isShield = $var;
 
         return $this;
     }

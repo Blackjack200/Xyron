@@ -82,7 +82,7 @@ func (b *BufferedDataQueue) Add(tick int64, wdata *xyron.WildcardReportData) {
 	b.m[tick] = append(b.m[tick], wdata)
 }
 
-func (b *BufferedDataQueue) Flush(ctx context.Context, c xyron.AnticheatClient, p *xyron.PlayerReceipt, tick int64) (*xyron.ReportResponse, error) {
+func (b *BufferedDataQueue) Flush(ctx context.Context, c xyron.AnticheatClient, p *xyron.PlayerReceipt, tick int64, latency float64) (*xyron.ReportResponse, error) {
 	b.mu.Lock()
 	var needSend []int64
 	for k, _ := range b.m {
@@ -99,8 +99,9 @@ func (b *BufferedDataQueue) Flush(ctx context.Context, c xyron.AnticheatClient, 
 	}
 	b.mu.Unlock()
 	return c.Report(ctx, &xyron.PlayerReport{
-		Player: p,
-		Data:   needSendMap,
+		Player:  p,
+		Latency: latency,
+		Data:    needSendMap,
 	})
 }
 
@@ -130,6 +131,7 @@ func main() {
 		}})
 		handleEffects(p, &hdrs)
 		go func() {
+			p.Speed()
 			pp, _ := c.AddPlayer(context.TODO(), &xyron.AddPlayerRequest{
 				Player: &xyron.Player{
 					//TODO Os
@@ -222,7 +224,7 @@ func newPlayerHandler(log *logrus.Logger, p *player.Player, pp *xyron.PlayerRece
 			select {
 			case _ = <-hdr.ticker.C:
 				if !hdr.closed.Load() {
-					if jdjm, err := hdr.buf.Flush(context.TODO(), hdr.c, hdr.pp, getCurrentWorldTick(hdr.p.World())); err != nil {
+					if jdjm, err := hdr.buf.Flush(context.TODO(), hdr.c, hdr.pp, getCurrentWorldTick(hdr.p.World()), hdr.p.Latency().Seconds()); err != nil {
 						hdr.p.Messagef("judgement error: %v", err)
 					} else {
 						for _, j := range jdjm.Judgements {
@@ -396,14 +398,14 @@ func ToXyronBlockData(w *world.World, blk world.Block, pos cube.Pos) (*xyron.Blo
 	_, ice2 := blk.(block.BlueIce)
 	if air {
 		return &xyron.BlockData{
-			RelativePosition: ToXyronCubePos(pos),
+			Position: ToXyronCubePos(pos),
 			Feature: &xyron.BlockFeature{
 				IsAir: true,
 			},
 		}, false
 	}
 	bd := &xyron.BlockData{
-		RelativePosition: ToXyronCubePos(pos),
+		Position: ToXyronCubePos(pos),
 		Feature: &xyron.BlockFeature{
 			CollisionBoxes: bboxs,
 			Friction:       fric,
@@ -428,10 +430,8 @@ func (h *playerHandler) getXyronPositionData(pos, rot mgl64.Vec3) *xyron.EntityP
 	xpos[1] = int(math.Floor(h.p.Type().BBox(h.p).Min()[1] - 0.50001))
 	b, _ := ToXyronBlockData(h.p.World(), h.p.World().Block(xpos), xpos)
 	return &xyron.EntityPositionData{
-		Location: &xyron.Loc3F{
-			Position:  ToXyronVec3(pos),
-			Direction: ToXyronVec3(rot),
-		},
+		Position:                ToXyronVec3(pos),
+		Direction:               ToXyronVec3(rot),
 		BoundingBox:             ToXyronBBox(h.p.Type().BBox(h.p)),
 		BelowThatAffectMovement: b,
 		IsImmobile:              h.p.Immobile(),

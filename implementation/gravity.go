@@ -56,9 +56,9 @@ func (g *Gravity) HandleMoveData(p *anticheat.InternalPlayer, data *xyron.Player
 		}
 	}
 
-	oldOldPos := toVec3(p.Location.Previous().Location.Position)
-	oldPos := toVec3(p.Location.Current().Location.Position)
-	newPos := toVec3(data.NewPosition.Location.Position)
+	oldOldPos := toVec3(p.Location.Previous().Position)
+	oldPos := toVec3(p.Location.Current().Position)
+	newPos := toVec3(data.NewPosition.Position)
 	prevDeltaY := oldPos.Sub(oldOldPos).Y()
 	measuredDeltaY := newPos.Sub(oldPos).Y()
 	predictedDeltaY := g.predictDeltaY(p, data, prevDeltaY)

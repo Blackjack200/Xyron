@@ -14,15 +14,13 @@ use Google\Protobuf\Internal\GPBUtil;
 class BlockData extends \Google\Protobuf\Internal\Message
 {
     /**
-     * Generated from protobuf field <code>.xchange.Vec3i relativePosition = 1;</code>
-     */
-    protected $relativePosition = null;
-    /**
-     *string feature = 2; //registered in BlockFeatureRegistry
-     *
-     * Generated from protobuf field <code>.xchange.BlockFeature feature = 2;</code>
+     * Generated from protobuf field <code>.xchange.BlockFeature feature = 1;</code>
      */
     protected $feature = null;
+    /**
+     * Generated from protobuf field <code>.xchange.Vec3i position = 2;</code>
+     */
+    protected $position = null;
 
     /**
      * Constructor.
@@ -30,9 +28,8 @@ class BlockData extends \Google\Protobuf\Internal\Message
      * @param array $data {
      *     Optional. Data for populating the Message object.
      *
-     *     @type \prokits\xyron\Vec3i $relativePosition
      *     @type \prokits\xyron\BlockFeature $feature
-     *          string feature = 2; //registered in BlockFeatureRegistry
+     *     @type \prokits\xyron\Vec3i $position
      * }
      */
     public function __construct($data = NULL) {
@@ -41,41 +38,7 @@ class BlockData extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * Generated from protobuf field <code>.xchange.Vec3i relativePosition = 1;</code>
-     * @return \prokits\xyron\Vec3i|null
-     */
-    public function getRelativePosition()
-    {
-        return $this->relativePosition;
-    }
-
-    public function hasRelativePosition()
-    {
-        return isset($this->relativePosition);
-    }
-
-    public function clearRelativePosition()
-    {
-        unset($this->relativePosition);
-    }
-
-    /**
-     * Generated from protobuf field <code>.xchange.Vec3i relativePosition = 1;</code>
-     * @param \prokits\xyron\Vec3i $var
-     * @return $this
-     */
-    public function setRelativePosition($var)
-    {
-        GPBUtil::checkMessage($var, \prokits\xyron\Vec3i::class);
-        $this->relativePosition = $var;
-
-        return $this;
-    }
-
-    /**
-     *string feature = 2; //registered in BlockFeatureRegistry
-     *
-     * Generated from protobuf field <code>.xchange.BlockFeature feature = 2;</code>
+     * Generated from protobuf field <code>.xchange.BlockFeature feature = 1;</code>
      * @return \prokits\xyron\BlockFeature|null
      */
     public function getFeature()
@@ -94,9 +57,7 @@ class BlockData extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     *string feature = 2; //registered in BlockFeatureRegistry
-     *
-     * Generated from protobuf field <code>.xchange.BlockFeature feature = 2;</code>
+     * Generated from protobuf field <code>.xchange.BlockFeature feature = 1;</code>
      * @param \prokits\xyron\BlockFeature $var
      * @return $this
      */
@@ -104,6 +65,38 @@ class BlockData extends \Google\Protobuf\Internal\Message
     {
         GPBUtil::checkMessage($var, \prokits\xyron\BlockFeature::class);
         $this->feature = $var;
+
+        return $this;
+    }
+
+    /**
+     * Generated from protobuf field <code>.xchange.Vec3i position = 2;</code>
+     * @return \prokits\xyron\Vec3i|null
+     */
+    public function getPosition()
+    {
+        return $this->position;
+    }
+
+    public function hasPosition()
+    {
+        return isset($this->position);
+    }
+
+    public function clearPosition()
+    {
+        unset($this->position);
+    }
+
+    /**
+     * Generated from protobuf field <code>.xchange.Vec3i position = 2;</code>
+     * @param \prokits\xyron\Vec3i $var
+     * @return $this
+     */
+    public function setPosition($var)
+    {
+        GPBUtil::checkMessage($var, \prokits\xyron\Vec3i::class);
+        $this->position = $var;
 
         return $this;
     }

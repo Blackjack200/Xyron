@@ -72,7 +72,7 @@ func (pred *predictor) handleRelativeFrictionAndCalculateMovement(
 	newDeltaMovement = pred.moveRelative(
 		pred.getFrictionInfluencedSpeed(p, friction),
 		deltaMovement,
-		toVec3(p.Location.Current().Location.Direction),
+		toVec3(p.Location.Current().Direction),
 	)
 	newDeltaMovement = pred.handleOnClimbable(p, newDeltaMovement)
 	newDeltaMovement = pred.moveSelf(p, newDeltaMovement)

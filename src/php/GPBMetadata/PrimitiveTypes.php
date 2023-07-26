@@ -16,7 +16,7 @@ class PrimitiveTypes
         }
         $pool->internalAddGeneratedFile(
             '
-­	
+À
 primitive_types.protoxchange"
 Vec2f	
 x (	
@@ -31,16 +31,13 @@ class PrimitiveTypes
 Vec3i	
 x (	
 y (	
-z ("L
-Loc3f 
-position (2.xchange.Vec3f!
-	direction (2.xchange.Vec3f"R
+z ("R
 AxisAlignedBoundingBox
 min (2.xchange.Vec3f
-max (2.xchange.Vec3f"]
-	BlockData(
-relativePosition (2.xchange.Vec3i&
-feature (2.xchange.BlockFeature"è
+max (2.xchange.Vec3f"U
+	BlockData&
+feature (2.xchange.BlockFeature 
+position (2.xchange.Vec3i"è
 BlockFeature7
 collisionBoxes (2.xchange.AxisAlignedBoundingBox
 friction (
@@ -52,13 +49,11 @@ class PrimitiveTypes
 isIce	 (
 isCobweb
  (
-isSweetBerry ("\'
-PotionEffectRegistry
-effects (	"U
-ItemData
-count (
-vanillaName (	%
-feature (2.xchange.ItemFeature"¨
+isSweetBerry ("U
+ItemData%
+feature (2.xchange.ItemFeature
+vanillaName (	
+count ("º
 ItemFeature
 isArmor (
 isBlockPlanterItem (
@@ -68,7 +63,8 @@ class PrimitiveTypes
 isTool (
 isBow (
 
-isCrossBow ("š
+isCrossBow (
+isShield	 ("š
 EffectFeature
 	amplifier (
 isSpeed (

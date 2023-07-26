@@ -42,9 +42,9 @@ func (g *MovementPrediction) HandleMoveData(p *anticheat.InternalPlayer, data *x
 		}
 	}
 
-	oldOldPos := toVec3(p.Location.Previous().Location.Position)
-	oldPos := toVec3(p.Location.Current().Location.Position)
-	newPos := toVec3(data.NewPosition.Location.Position)
+	oldOldPos := toVec3(p.Location.Previous().Position)
+	oldPos := toVec3(p.Location.Current().Position)
+	newPos := toVec3(data.NewPosition.Position)
 
 	prevDelta := oldPos.Sub(oldOldPos)
 	measuredDelta := newPos.Sub(oldPos)

@@ -54,6 +54,8 @@ enum PlayerAction {
   StopGliding = 9;
   StartSwimming = 10;
   StopSwimming = 11;
+  OpenInventory = 12;
+  CloseInventory = 13;
 }
 
 enum DamageCause {
@@ -88,16 +90,18 @@ enum ConsumeStatus {
 }
 
 message EntityPositionData {
-  Loc3f location = 1;
-  AxisAlignedBoundingBox boundingBox = 2;
-  BlockData belowThatAffectMovement = 3;
+  Vec3f position = 1;
+  Vec3f direction = 2;
+  AxisAlignedBoundingBox boundingBox = 3;
   bool isImmobile = 4;
   bool isOnGround = 5;
   bool allowFlying = 6;
   bool isFlying = 7;
   bool haveGravity = 8;
-  repeated BlockData collidedBlocks = 9;
-  repeated BlockData intersectedBlocks = 10;
+  double movementSpeed = 9;
+  BlockData belowThatAffectMovement = 10;
+  repeated BlockData collidedBlocks = 11;
+  repeated BlockData intersectedBlocks = 12;
 }
 
 message AttackData {

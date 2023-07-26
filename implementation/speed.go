@@ -51,9 +51,9 @@ func (g *Speed) HandleMoveData(p *anticheat.InternalPlayer, data *xyron.PlayerMo
 		}
 	}
 
-	oldOldPos := toVec3(p.Location.Previous().Location.Position)
-	oldPos := toVec3(p.Location.Current().Location.Position)
-	newPos := toVec3(data.NewPosition.Location.Position)
+	oldOldPos := toVec3(p.Location.Previous().Position)
+	oldPos := toVec3(p.Location.Current().Position)
+	newPos := toVec3(data.NewPosition.Position)
 	prevDelta := oldPos.Sub(oldOldPos)
 	measuredDelta := newPos.Sub(oldPos)
 	prevDeltaXZ := math.Hypot(prevDelta.X(), prevDelta.Z())

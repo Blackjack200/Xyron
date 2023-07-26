@@ -14,19 +14,17 @@ use Google\Protobuf\Internal\GPBUtil;
 class ItemData extends \Google\Protobuf\Internal\Message
 {
     /**
-     * Generated from protobuf field <code>uint32 count = 1;</code>
+     * Generated from protobuf field <code>.xchange.ItemFeature feature = 1;</code>
      */
-    protected $count = 0;
+    protected $feature = null;
     /**
      * Generated from protobuf field <code>string vanillaName = 2;</code>
      */
     protected $vanillaName = '';
     /**
-     *string feature = 3; //registered in ItemFeatureRegistry
-     *
-     * Generated from protobuf field <code>.xchange.ItemFeature feature = 3;</code>
+     * Generated from protobuf field <code>uint32 count = 3;</code>
      */
-    protected $feature = null;
+    protected $count = 0;
 
     /**
      * Constructor.
@@ -34,10 +32,9 @@ class ItemData extends \Google\Protobuf\Internal\Message
      * @param array $data {
      *     Optional. Data for populating the Message object.
      *
-     *     @type int $count
-     *     @type string $vanillaName
      *     @type \prokits\xyron\ItemFeature $feature
-     *          string feature = 3; //registered in ItemFeatureRegistry
+     *     @type string $vanillaName
+     *     @type int $count
      * }
      */
     public function __construct($data = NULL) {
@@ -46,23 +43,33 @@ class ItemData extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * Generated from protobuf field <code>uint32 count = 1;</code>
-     * @return int
+     * Generated from protobuf field <code>.xchange.ItemFeature feature = 1;</code>
+     * @return \prokits\xyron\ItemFeature|null
      */
-    public function getCount()
+    public function getFeature()
     {
-        return $this->count;
+        return $this->feature;
+    }
+
+    public function hasFeature()
+    {
+        return isset($this->feature);
+    }
+
+    public function clearFeature()
+    {
+        unset($this->feature);
     }
 
     /**
-     * Generated from protobuf field <code>uint32 count = 1;</code>
-     * @param int $var
+     * Generated from protobuf field <code>.xchange.ItemFeature feature = 1;</code>
+     * @param \prokits\xyron\ItemFeature $var
      * @return $this
      */
-    public function setCount($var)
+    public function setFeature($var)
     {
-        GPBUtil::checkUint32($var);
-        $this->count = $var;
+        GPBUtil::checkMessage($var, \prokits\xyron\ItemFeature::class);
+        $this->feature = $var;
 
         return $this;
     }
@@ -90,37 +97,23 @@ class ItemData extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     *string feature = 3; //registered in ItemFeatureRegistry
-     *
-     * Generated from protobuf field <code>.xchange.ItemFeature feature = 3;</code>
-     * @return \prokits\xyron\ItemFeature|null
+     * Generated from protobuf field <code>uint32 count = 3;</code>
+     * @return int
      */
-    public function getFeature()
+    public function getCount()
     {
-        return $this->feature;
-    }
-
-    public function hasFeature()
-    {
-        return isset($this->feature);
-    }
-
-    public function clearFeature()
-    {
-        unset($this->feature);
+        return $this->count;
     }
 
     /**
-     *string feature = 3; //registered in ItemFeatureRegistry
-     *
-     * Generated from protobuf field <code>.xchange.ItemFeature feature = 3;</code>
-     * @param \prokits\xyron\ItemFeature $var
+     * Generated from protobuf field <code>uint32 count = 3;</code>
+     * @param int $var
      * @return $this
      */
-    public function setFeature($var)
+    public function setCount($var)
     {
-        GPBUtil::checkMessage($var, \prokits\xyron\ItemFeature::class);
-        $this->feature = $var;
+        GPBUtil::checkUint32($var);
+        $this->count = $var;
 
         return $this;
     }

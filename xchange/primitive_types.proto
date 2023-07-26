@@ -30,20 +30,14 @@ message Vec3i {
   int32 z = 3;
 }
 
-message Loc3f {
-  Vec3f position = 1;
-  Vec3f direction = 2;
-}
-
 message AxisAlignedBoundingBox{
   Vec3f min = 1;
   Vec3f max = 2;
 }
 
 message BlockData {
-  Vec3i relativePosition = 1;
-  //string feature = 2; //registered in BlockFeatureRegistry
-  BlockFeature feature = 2;
+  BlockFeature feature = 1;
+  Vec3i position = 2;
 }
 
 message BlockFeature {
@@ -58,20 +52,11 @@ message BlockFeature {
   bool isCobweb = 10;
   bool isSweetBerry = 11;
 }
-/*
-message BlockFeatureRegistry {
-  map<string, BlockFeature> features = 1;
-}
-*/
-message PotionEffectRegistry {
-  repeated string effects = 1;
-}
 
 message ItemData {
-  uint32 count = 1;
+  ItemFeature feature = 1;
   string vanillaName = 2;
-  //string feature = 3; //registered in ItemFeatureRegistry
-  ItemFeature feature = 3;
+  uint32 count = 3;
 }
 
 message ItemFeature {
@@ -83,12 +68,8 @@ message ItemFeature {
   bool isTool = 6;
   bool isBow = 7;
   bool isCrossBow = 8;
+  bool isShield = 9;
 }
-/*
-message ItemFeatureRegistry {
-  map<string, ItemFeatureRegistry> features = 1;
-}
-*/
 
 message EffectFeature {
   int32 amplifier = 1;

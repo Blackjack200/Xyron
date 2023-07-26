@@ -67,42 +67,44 @@ func (p *InternalPlayer) GetVolatile() *VolatileData {
 func (p *InternalPlayer) SetLocation(pos *xyron.EntityPositionData) {
 	p.Location.Set(pos)
 	if p.Location.Previous() != nil {
-		prev := toVec3(p.Location.Previous().Location.Position)
-		cur := toVec3(pos.Location.Position)
+		prev := toVec3(p.Location.Previous().Position)
+		cur := toVec3(pos.Position)
 		p.DeltaPosition.Set(cur.Sub(prev))
 	}
 	if pos != nil {
-		check := func(checkFeature func(*xyron.BlockFeature) bool) func([]*xyron.BlockData) bool {
-			return func(bb []*xyron.BlockData) bool {
-				for _, b := range bb {
-					if checkFeature(b.Feature) {
-						return true
-					}
-				}
-				return false
-			}
-		}
-		checkSolid := check(func(f *xyron.BlockFeature) bool {
-			return f.IsSolid
-		})
-		checkIce := check(func(f *xyron.BlockFeature) bool {
-			return f.IsIce
-		})
-		checkCobweb := check(func(f *xyron.BlockFeature) bool {
-			return f.IsCobweb
-		})
-		checkSweetBerry := check(func(f *xyron.BlockFeature) bool {
-			return f.IsSweetBerry
-		})
-		checkClimbable := check(func(f *xyron.BlockFeature) bool {
-			return f.IsClimbable
-		})
-		p.OnGround.Set(checkSolid(pos.CollidedBlocks) || checkSolid(pos.IntersectedBlocks))
-		p.OnIce.Set(checkIce(pos.CollidedBlocks) || checkIce(pos.IntersectedBlocks))
-		p.InCobweb.Set(checkCobweb(pos.CollidedBlocks) || checkCobweb(pos.IntersectedBlocks))
-		p.InSweetBerry.Set(checkSweetBerry(pos.CollidedBlocks) || checkSweetBerry(pos.IntersectedBlocks))
-		p.OnClimbable.Set(checkClimbable(pos.CollidedBlocks) || checkClimbable(pos.IntersectedBlocks))
+		OnGround, OnIce, InCobweb, InSweetBerry, OnClimbable := p.CheckGroundState(pos)
+		p.OnGround.Set(OnGround)
+		p.OnIce.Set(OnIce)
+		p.InCobweb.Set(InCobweb)
+		p.InSweetBerry.Set(InSweetBerry)
+		p.OnClimbable.Set(OnClimbable)
 	}
+}
+
+func (p *InternalPlayer) CheckGroundState(pos *xyron.EntityPositionData) (
+	OnGround, OnIce, InCobweb, InSweetBerry, OnClimbable bool,
+) {
+	check := func(checkFeature func(*xyron.BlockFeature) bool) func([]*xyron.BlockData) bool {
+		return func(bb []*xyron.BlockData) bool {
+			for _, b := range bb {
+				if checkFeature(b.Feature) {
+					return true
+				}
+			}
+			return false
+		}
+	}
+	checkSolid := check(func(f *xyron.BlockFeature) bool { return f.IsSolid })
+	checkIce := check(func(f *xyron.BlockFeature) bool { return f.IsIce })
+	checkCobweb := check(func(f *xyron.BlockFeature) bool { return f.IsCobweb })
+	checkSweetBerry := check(func(f *xyron.BlockFeature) bool { return f.IsSweetBerry })
+	checkClimbable := check(func(f *xyron.BlockFeature) bool { return f.IsClimbable })
+	OnGround = checkSolid(pos.CollidedBlocks) || checkSolid(pos.IntersectedBlocks)
+	OnIce = checkIce(pos.CollidedBlocks) || checkIce(pos.IntersectedBlocks)
+	InCobweb = checkCobweb(pos.CollidedBlocks) || checkCobweb(pos.IntersectedBlocks)
+	InSweetBerry = checkSweetBerry(pos.CollidedBlocks) || checkSweetBerry(pos.IntersectedBlocks)
+	OnClimbable = checkClimbable(pos.CollidedBlocks) || checkClimbable(pos.IntersectedBlocks)
+	return
 }
 
 type VolatileData struct {

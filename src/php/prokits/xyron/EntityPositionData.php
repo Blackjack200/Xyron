@@ -14,17 +14,17 @@ use Google\Protobuf\Internal\GPBUtil;
 class EntityPositionData extends \Google\Protobuf\Internal\Message
 {
     /**
-     * Generated from protobuf field <code>.xchange.Loc3f location = 1;</code>
+     * Generated from protobuf field <code>.xchange.Vec3f position = 1;</code>
      */
-    protected $location = null;
+    protected $position = null;
     /**
-     * Generated from protobuf field <code>.xchange.AxisAlignedBoundingBox boundingBox = 2;</code>
+     * Generated from protobuf field <code>.xchange.Vec3f direction = 2;</code>
+     */
+    protected $direction = null;
+    /**
+     * Generated from protobuf field <code>.xchange.AxisAlignedBoundingBox boundingBox = 3;</code>
      */
     protected $boundingBox = null;
-    /**
-     * Generated from protobuf field <code>.xchange.BlockData belowThatAffectMovement = 3;</code>
-     */
-    protected $belowThatAffectMovement = null;
     /**
      * Generated from protobuf field <code>bool isImmobile = 4;</code>
      */
@@ -46,11 +46,19 @@ class EntityPositionData extends \Google\Protobuf\Internal\Message
      */
     protected $haveGravity = false;
     /**
-     * Generated from protobuf field <code>repeated .xchange.BlockData collidedBlocks = 9;</code>
+     * Generated from protobuf field <code>double movementSpeed = 9;</code>
+     */
+    protected $movementSpeed = 0.0;
+    /**
+     * Generated from protobuf field <code>.xchange.BlockData belowThatAffectMovement = 10;</code>
+     */
+    protected $belowThatAffectMovement = null;
+    /**
+     * Generated from protobuf field <code>repeated .xchange.BlockData collidedBlocks = 11;</code>
      */
     private $collidedBlocks;
     /**
-     * Generated from protobuf field <code>repeated .xchange.BlockData intersectedBlocks = 10;</code>
+     * Generated from protobuf field <code>repeated .xchange.BlockData intersectedBlocks = 12;</code>
      */
     private $intersectedBlocks;
 
@@ -60,14 +68,16 @@ class EntityPositionData extends \Google\Protobuf\Internal\Message
      * @param array $data {
      *     Optional. Data for populating the Message object.
      *
-     *     @type \prokits\xyron\Loc3f $location
+     *     @type \prokits\xyron\Vec3f $position
+     *     @type \prokits\xyron\Vec3f $direction
      *     @type \prokits\xyron\AxisAlignedBoundingBox $boundingBox
-     *     @type \prokits\xyron\BlockData $belowThatAffectMovement
      *     @type bool $isImmobile
      *     @type bool $isOnGround
      *     @type bool $allowFlying
      *     @type bool $isFlying
      *     @type bool $haveGravity
+     *     @type float $movementSpeed
+     *     @type \prokits\xyron\BlockData $belowThatAffectMovement
      *     @type array<\prokits\xyron\BlockData>|\Google\Protobuf\Internal\RepeatedField $collidedBlocks
      *     @type array<\prokits\xyron\BlockData>|\Google\Protobuf\Internal\RepeatedField $intersectedBlocks
      * }
@@ -78,39 +88,71 @@ class EntityPositionData extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * Generated from protobuf field <code>.xchange.Loc3f location = 1;</code>
-     * @return \prokits\xyron\Loc3f|null
+     * Generated from protobuf field <code>.xchange.Vec3f position = 1;</code>
+     * @return \prokits\xyron\Vec3f|null
      */
-    public function getLocation()
+    public function getPosition()
     {
-        return $this->location;
+        return $this->position;
     }
 
-    public function hasLocation()
+    public function hasPosition()
     {
-        return isset($this->location);
+        return isset($this->position);
     }
 
-    public function clearLocation()
+    public function clearPosition()
     {
-        unset($this->location);
+        unset($this->position);
     }
 
     /**
-     * Generated from protobuf field <code>.xchange.Loc3f location = 1;</code>
-     * @param \prokits\xyron\Loc3f $var
+     * Generated from protobuf field <code>.xchange.Vec3f position = 1;</code>
+     * @param \prokits\xyron\Vec3f $var
      * @return $this
      */
-    public function setLocation($var)
+    public function setPosition($var)
     {
-        GPBUtil::checkMessage($var, \prokits\xyron\Loc3f::class);
-        $this->location = $var;
+        GPBUtil::checkMessage($var, \prokits\xyron\Vec3f::class);
+        $this->position = $var;
 
         return $this;
     }
 
     /**
-     * Generated from protobuf field <code>.xchange.AxisAlignedBoundingBox boundingBox = 2;</code>
+     * Generated from protobuf field <code>.xchange.Vec3f direction = 2;</code>
+     * @return \prokits\xyron\Vec3f|null
+     */
+    public function getDirection()
+    {
+        return $this->direction;
+    }
+
+    public function hasDirection()
+    {
+        return isset($this->direction);
+    }
+
+    public function clearDirection()
+    {
+        unset($this->direction);
+    }
+
+    /**
+     * Generated from protobuf field <code>.xchange.Vec3f direction = 2;</code>
+     * @param \prokits\xyron\Vec3f $var
+     * @return $this
+     */
+    public function setDirection($var)
+    {
+        GPBUtil::checkMessage($var, \prokits\xyron\Vec3f::class);
+        $this->direction = $var;
+
+        return $this;
+    }
+
+    /**
+     * Generated from protobuf field <code>.xchange.AxisAlignedBoundingBox boundingBox = 3;</code>
      * @return \prokits\xyron\AxisAlignedBoundingBox|null
      */
     public function getBoundingBox()
@@ -129,7 +171,7 @@ class EntityPositionData extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * Generated from protobuf field <code>.xchange.AxisAlignedBoundingBox boundingBox = 2;</code>
+     * Generated from protobuf field <code>.xchange.AxisAlignedBoundingBox boundingBox = 3;</code>
      * @param \prokits\xyron\AxisAlignedBoundingBox $var
      * @return $this
      */
@@ -137,38 +179,6 @@ class EntityPositionData extends \Google\Protobuf\Internal\Message
     {
         GPBUtil::checkMessage($var, \prokits\xyron\AxisAlignedBoundingBox::class);
         $this->boundingBox = $var;
-
-        return $this;
-    }
-
-    /**
-     * Generated from protobuf field <code>.xchange.BlockData belowThatAffectMovement = 3;</code>
-     * @return \prokits\xyron\BlockData|null
-     */
-    public function getBelowThatAffectMovement()
-    {
-        return $this->belowThatAffectMovement;
-    }
-
-    public function hasBelowThatAffectMovement()
-    {
-        return isset($this->belowThatAffectMovement);
-    }
-
-    public function clearBelowThatAffectMovement()
-    {
-        unset($this->belowThatAffectMovement);
-    }
-
-    /**
-     * Generated from protobuf field <code>.xchange.BlockData belowThatAffectMovement = 3;</code>
-     * @param \prokits\xyron\BlockData $var
-     * @return $this
-     */
-    public function setBelowThatAffectMovement($var)
-    {
-        GPBUtil::checkMessage($var, \prokits\xyron\BlockData::class);
-        $this->belowThatAffectMovement = $var;
 
         return $this;
     }
@@ -284,7 +294,61 @@ class EntityPositionData extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * Generated from protobuf field <code>repeated .xchange.BlockData collidedBlocks = 9;</code>
+     * Generated from protobuf field <code>double movementSpeed = 9;</code>
+     * @return float
+     */
+    public function getMovementSpeed()
+    {
+        return $this->movementSpeed;
+    }
+
+    /**
+     * Generated from protobuf field <code>double movementSpeed = 9;</code>
+     * @param float $var
+     * @return $this
+     */
+    public function setMovementSpeed($var)
+    {
+        GPBUtil::checkDouble($var);
+        $this->movementSpeed = $var;
+
+        return $this;
+    }
+
+    /**
+     * Generated from protobuf field <code>.xchange.BlockData belowThatAffectMovement = 10;</code>
+     * @return \prokits\xyron\BlockData|null
+     */
+    public function getBelowThatAffectMovement()
+    {
+        return $this->belowThatAffectMovement;
+    }
+
+    public function hasBelowThatAffectMovement()
+    {
+        return isset($this->belowThatAffectMovement);
+    }
+
+    public function clearBelowThatAffectMovement()
+    {
+        unset($this->belowThatAffectMovement);
+    }
+
+    /**
+     * Generated from protobuf field <code>.xchange.BlockData belowThatAffectMovement = 10;</code>
+     * @param \prokits\xyron\BlockData $var
+     * @return $this
+     */
+    public function setBelowThatAffectMovement($var)
+    {
+        GPBUtil::checkMessage($var, \prokits\xyron\BlockData::class);
+        $this->belowThatAffectMovement = $var;
+
+        return $this;
+    }
+
+    /**
+     * Generated from protobuf field <code>repeated .xchange.BlockData collidedBlocks = 11;</code>
      * @return \Google\Protobuf\Internal\RepeatedField
      */
     public function getCollidedBlocks()
@@ -293,7 +357,7 @@ class EntityPositionData extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * Generated from protobuf field <code>repeated .xchange.BlockData collidedBlocks = 9;</code>
+     * Generated from protobuf field <code>repeated .xchange.BlockData collidedBlocks = 11;</code>
      * @param array<\prokits\xyron\BlockData>|\Google\Protobuf\Internal\RepeatedField $var
      * @return $this
      */
@@ -306,7 +370,7 @@ class EntityPositionData extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * Generated from protobuf field <code>repeated .xchange.BlockData intersectedBlocks = 10;</code>
+     * Generated from protobuf field <code>repeated .xchange.BlockData intersectedBlocks = 12;</code>
      * @return \Google\Protobuf\Internal\RepeatedField
      */
     public function getIntersectedBlocks()
@@ -315,7 +379,7 @@ class EntityPositionData extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * Generated from protobuf field <code>repeated .xchange.BlockData intersectedBlocks = 10;</code>
+     * Generated from protobuf field <code>repeated .xchange.BlockData intersectedBlocks = 12;</code>
      * @param array<\prokits\xyron\BlockData>|\Google\Protobuf\Internal\RepeatedField $var
      * @return $this
      */

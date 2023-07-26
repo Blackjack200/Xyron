@@ -35,8 +35,9 @@ message AddPlayerRequest{
 
 message PlayerReport{
   PlayerReceipt player = 1;
+  double latency = 2;
   //timestamp->report data
-  map<int64, TimestampedReportData> data = 2;
+  map<int64, TimestampedReportData> data = 3;
 }
 
 message JudgementData{
