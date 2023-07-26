@@ -4,3 +4,5 @@ players
 world
 config.toml
 resources
+target
+*.iml
