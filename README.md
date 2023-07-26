@@ -19,17 +19,17 @@ Here you can find the anticheat check demo. This section demonstrates how the an
 showcasing various cheat-detection techniques implemented in the concept. This demo allows you to see the anticheat in
 action and understand its effectiveness.
 
-### 3. `xchange`
+### 3. `src/main/proto`
 
-The `xchange` directory contains the protobuf files used for data exchange and communication between different
+The `src/main/proto` directory contains the protobuf files used for data exchange and communication between different
 components of the Xyron anticheat system. These files define the data structures and communication protocols that
 facilitate seamless integration and interaction between various parts of the system.
 
-### 4. `src/java`, `src/php`, `xyron`
+### 4. `src/main/java`, `src/main/php`, `xyron`
 
 These directories store the generated code for Golang, derived from the protobuf files. The code in these directories is
 used to implement specific functionalities of the Xyron anticheat system. The code is automatically generated based on
-the defined data structures and communication protocols in the `xchange` directory.
+the defined data structures and communication protocols in the `src/main/proto` directory.
 
 ## Getting Started
 
