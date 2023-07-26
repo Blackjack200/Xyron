@@ -7,7 +7,7 @@ PHP_PROTO_OUT="src/main/php"
 GO_PROTO_BASEDIR="./"
 GO_PROTO_OUT="xyron"
 
-JAVA_PROTO_OUT="src/main/java"
+JAVA_PROTO_OUT="java_protobuf/src/main/java"
 
 php:
 	@mkdir -p $(PHP_PROTO_OUT)
