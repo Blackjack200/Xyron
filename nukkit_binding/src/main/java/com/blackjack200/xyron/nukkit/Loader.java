@@ -400,7 +400,8 @@ public class Loader extends PluginBase implements Listener {
             for (int y = minY; y <= maxY; ++y) {
                 for (int z = minZ; z <= maxZ; ++z) {
                     var block = level.getBlock(x, y, z);
-                    if (block.getCollisionBoundingBox().intersectsWith(bb)) {
+                    var b = block.getCollisionBoundingBox();
+                    if (b != null && b.intersectsWith(bb)) {
                         list.add(block);
                     }
                 }
