@@ -8,60 +8,77 @@ import (
 )
 
 type InternalPlayer struct {
-	handleDataMutex *sync.Mutex
-	log             *logrus.Logger
-	checks          []any
-	Os              xyron.DeviceOS
-	Input           xyron.InputMode
-	Name            string
-	GameMode        xyron.GameMode
-	Alive           *BufferedData[bool]
-	effects         []*xyron.EffectFeature
-	Motion          *BufferedData[*TimestampedData[mgl64.Vec3]]
-	Location        *BufferedData[*xyron.EntityPositionData]
-	DeltaPosition   *BufferedData[mgl64.Vec3]
-	Volatile        *TickedData[*VolatileData]
+	tickHandlingMu *sync.Mutex
+	log            *logrus.Logger
+	checks         []any
 
-	Sprinting *BufferedData[bool]
-	Sneaking  *BufferedData[bool]
+	Os            xyron.DeviceOS
+	Input         xyron.InputMode
+	Name          string
+	GameMode      xyron.GameMode
+	Alive         *BufferedTimestampedData[bool]
+	effects       []*xyron.EffectFeature
+	Motion        *BufferedTimestampedData[mgl64.Vec3]
+	Location      *BufferedData[*xyron.EntityPositionData]
+	DeltaPosition *BufferedData[mgl64.Vec3]
+	Volatile      *TickedData[*VolatileData]
 
-	OnGround     *BufferedData[bool]
-	OnIce        *BufferedData[bool]
-	InCobweb     *BufferedData[bool]
-	InSweetBerry *BufferedData[bool]
-	OnClimbable  *BufferedData[bool]
+	Sprinting      *BufferedTimestampedData[bool]
+	Sneaking       *BufferedTimestampedData[bool]
+	Gliding        *BufferedTimestampedData[bool]
+	Swimming       *BufferedTimestampedData[bool]
+	Flying         *BufferedTimestampedData[bool]
+	OpenInventory  *BufferedTimestampedData[bool]
+	CloseInventory *BufferedTimestampedData[bool]
+	Attack         *BufferedTimestampedData[*xyron.AttackData]
 
-	InAirTick        uint32
-	OnGroundTick     uint32
-	OnIceTick        uint32
-	InCobwebTick     uint32
-	InSweetBerryTick uint32
-	currentTimestamp int64
+	OnGround     *BufferedTimestampedData[bool]
+	OnIce        *BufferedTimestampedData[bool]
+	InCobweb     *BufferedTimestampedData[bool]
+	InSweetBerry *BufferedTimestampedData[bool]
+	OnClimbable  *BufferedTimestampedData[bool]
 
-	Teleport *BufferedData[int64]
+	InAirTick         uint32
+	OnGroundTick      uint32
+	OnIceTick         uint32
+	timestampThisTick int64
+
+	Teleport *BufferedTimestampedData[mgl64.Vec3]
 }
 
 func NewInternalPlayer(log *logrus.Logger, checks []any, os xyron.DeviceOS, name string) *InternalPlayer {
 	return &InternalPlayer{
-		handleDataMutex: &sync.Mutex{},
-		log:             log,
-		checks:          checks,
-		Os:              os,
-		Name:            name,
-		GameMode:        0,
-		Alive:           NewBufferedData(true),
-		Motion:          NewBufferedData[*TimestampedData[mgl64.Vec3]](nil),
-		Location:        NewBufferedData[*xyron.EntityPositionData](nil),
-		DeltaPosition:   NewBufferedData[mgl64.Vec3](mgl64.Vec3{}),
-		Volatile:        NewTickedData(&VolatileData{}),
-		Sprinting:       NewBufferedData(false),
-		Sneaking:        NewBufferedData(false),
-		OnGround:        NewBufferedData(true),
-		OnIce:           NewBufferedData(false),
-		InCobweb:        NewBufferedData(false),
-		InSweetBerry:    NewBufferedData(false),
-		OnClimbable:     NewBufferedData(false),
-		Teleport:        NewBufferedData[int64](0),
+		tickHandlingMu:    &sync.Mutex{},
+		log:               log,
+		checks:            checks,
+		Os:                os,
+		Input:             0,
+		Name:              name,
+		GameMode:          0,
+		Alive:             NewBufferedTimestampedData(true),
+		effects:           nil,
+		Motion:            NewBufferedTimestampedData(mgl64.Vec3{}),
+		Location:          NewBufferedData[*xyron.EntityPositionData](nil),
+		DeltaPosition:     NewBufferedData[mgl64.Vec3](mgl64.Vec3{}),
+		Volatile:          NewTickedData(&VolatileData{}),
+		Sprinting:         NewBufferedTimestampedData(false),
+		Sneaking:          NewBufferedTimestampedData(false),
+		Gliding:           NewBufferedTimestampedData(false),
+		Swimming:          NewBufferedTimestampedData(false),
+		Flying:            NewBufferedTimestampedData(false),
+		OpenInventory:     NewBufferedTimestampedData(false),
+		CloseInventory:    NewBufferedTimestampedData(false),
+		Attack:            NewBufferedTimestampedData[*xyron.AttackData](nil),
+		OnGround:          NewBufferedTimestampedData(true),
+		OnIce:             NewBufferedTimestampedData(false),
+		InCobweb:          NewBufferedTimestampedData(false),
+		InSweetBerry:      NewBufferedTimestampedData(false),
+		OnClimbable:       NewBufferedTimestampedData(false),
+		InAirTick:         0,
+		OnGroundTick:      0,
+		OnIceTick:         0,
+		timestampThisTick: 0,
+		Teleport:          NewBufferedTimestampedData(mgl64.Vec3{}),
 	}
 }
 
@@ -78,11 +95,11 @@ func (p *InternalPlayer) SetLocation(pos *xyron.EntityPositionData) {
 	}
 	if pos != nil {
 		OnGround, OnIce, InCobweb, InSweetBerry, OnClimbable := p.CheckGroundState(pos)
-		p.OnGround.Set(OnGround)
-		p.OnIce.Set(OnIce)
-		p.InCobweb.Set(InCobweb)
-		p.InSweetBerry.Set(InSweetBerry)
-		p.OnClimbable.Set(OnClimbable)
+		p.OnGround.Set(p.timestampThisTick, OnGround)
+		p.OnIce.Set(p.timestampThisTick, OnIce)
+		p.InCobweb.Set(p.timestampThisTick, InCobweb)
+		p.InSweetBerry.Set(p.timestampThisTick, InSweetBerry)
+		p.OnClimbable.Set(p.timestampThisTick, OnClimbable)
 	}
 }
 
@@ -104,6 +121,7 @@ func (p *InternalPlayer) CheckGroundState(pos *xyron.EntityPositionData) (
 	checkCobweb := check(func(f *xyron.BlockFeature) bool { return f.IsCobweb })
 	checkSweetBerry := check(func(f *xyron.BlockFeature) bool { return f.IsSweetBerry })
 	checkClimbable := check(func(f *xyron.BlockFeature) bool { return f.IsClimbable })
+
 	OnGround = checkSolid(pos.CollidedBlocks) || checkSolid(pos.IntersectedBlocks) || checkSolid([]*xyron.BlockData{pos.BelowThatAffectMovement})
 	OnIce = checkIce(pos.CollidedBlocks) || checkIce(pos.IntersectedBlocks) || checkIce([]*xyron.BlockData{pos.BelowThatAffectMovement})
 	InCobweb = checkCobweb(pos.CollidedBlocks) || checkCobweb(pos.IntersectedBlocks) || checkCobweb([]*xyron.BlockData{pos.BelowThatAffectMovement})
@@ -118,33 +136,23 @@ type VolatileData struct {
 }
 
 func (p *InternalPlayer) CurrentTimestamp() int64 {
-	return p.currentTimestamp
+	return p.timestampThisTick
 }
 
 func (p *InternalPlayer) Tick() {
 	p.Volatile.Set(&VolatileData{})
-	p.Motion.Set(nil)
-	if !p.OnGround.Current() {
+	p.Motion.Set(p.timestampThisTick, mgl64.Vec3{})
+	if !p.OnGround.Current().Get() {
 		p.InAirTick++
 		p.OnGroundTick = 0
 	} else {
 		p.InAirTick = 0
 		p.OnGroundTick++
 	}
-	if p.OnIce.Current() {
+	if p.OnIce.Current().Get() {
 		p.OnIceTick++
 	} else {
 		p.OnIceTick = 0
-	}
-	if p.InCobweb.Current() {
-		p.InCobwebTick++
-	} else {
-		p.InCobwebTick = 0
-	}
-	if p.InSweetBerry.Current() {
-		p.InSweetBerryTick++
-	} else {
-		p.InSweetBerryTick = 0
 	}
 }
 

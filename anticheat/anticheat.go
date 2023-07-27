@@ -31,7 +31,7 @@ func (s *SimpleAnticheat) AddPlayer(_ context.Context, req *xyron.AddPlayerReque
 	s.mu.Lock()
 	defer s.mu.Unlock()
 	if _, ok := s.players[req.Player.Name]; ok {
-		return &xyron.PlayerReceipt{InternalId: req.Player.Name}, nil
+		return nil, fmt.Errorf("player already exists: %v", req.Player.Name)
 	}
 	log.Printf("AP:%v", req.Player.Name)
 	ip := NewInternalPlayer(s.log, s.checks(), req.Player.Os, req.Player.Name)

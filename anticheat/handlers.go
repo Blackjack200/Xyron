@@ -1,6 +1,9 @@
 package anticheat
 
-import "github.com/blackjack200/xyron/xyron"
+import (
+	"github.com/blackjack200/xyron/xyron"
+	"sync"
+)
 
 func (s *SimpleAnticheat) handleData(p *InternalPlayer, tdata map[int64]*xyron.TimestampedReportData) (r []*xyron.JudgementData) {
 	checks := p.checks
@@ -10,62 +13,96 @@ func (s *SimpleAnticheat) handleData(p *InternalPlayer, tdata map[int64]*xyron.T
 	}
 	sorted := ComparableSlice[int64](keys)
 	sorted.Sort()
-	p.handleDataMutex.Lock()
-	defer p.handleDataMutex.Unlock()
 	for _, timestamp := range sorted {
-		p.currentTimestamp = timestamp
+		p.timestampThisTick = timestamp
 		for _, wdata := range tdata[timestamp].Data {
+			wg := &sync.WaitGroup{}
+			mu := &sync.Mutex{}
 			for _, c := range checks {
-				r = append(r, s.callHandlers(p, c, wdata)...)
+				wg.Add(1)
+				c := c
+				go func() {
+					data := s.callHandlers(p, c, wdata)
+					mu.Lock()
+					r = append(r, data...)
+					mu.Unlock()
+					wg.Done()
+				}()
 			}
-			switch data := wdata.Data.(type) {
-			case *xyron.WildcardReportData_ActionData:
-				p.SetLocation(data.ActionData.Position)
-				switch data.ActionData.Action {
-				case xyron.PlayerAction_Jump:
-					p.Volatile.Get().Jumped = true
-				case xyron.PlayerAction_StartSprint:
-					p.Sprinting.Set(true)
-				case xyron.PlayerAction_StopSprint:
-					p.Sprinting.Set(false)
-				case xyron.PlayerAction_StartSneak:
-					p.Sneaking.Set(true)
-				case xyron.PlayerAction_StopSneak:
-					p.Sneaking.Set(false)
-				}
-				//TODO
-			case *xyron.WildcardReportData_MoveData:
-				p.SetLocation(data.MoveData.NewPosition)
-				if data.MoveData.Teleport {
-					p.Teleport.Set(p.currentTimestamp)
-					p.Volatile.Get().Teleported = true
-				}
-			case *xyron.WildcardReportData_PlaceBlockData:
-				//TODO
-			case *xyron.WildcardReportData_BreakBlockData:
-				//TODO
-			case *xyron.WildcardReportData_EatFoodData:
-				//TODO
-			case *xyron.WildcardReportData_AttackData:
-				//TODO
-			case *xyron.WildcardReportData_EffectData:
-				p.effects = data.EffectData.Effect
-			case *xyron.WildcardReportData_GameModeData:
-				p.GameMode = data.GameModeData.GameMode
-			case *xyron.WildcardReportData_MotionData:
-				p.Motion.Set(NewTimestampedData(timestamp, toVec3(data.MotionData.Motion)))
-				//TODO
-			case *xyron.WildcardReportData_InputModeData:
-				p.Input = data.InputModeData.InputMode
-			case *xyron.WildcardReportData_LifeData:
-				p.Alive.Set(data.LifeData.Alive)
-			case *xyron.WildcardReportData_HeldItemChangeData:
-				//TODO
-			}
+			p.tickHandlingMu.Lock()
+			s.tickPlayer(p, wdata)
+			p.tickHandlingMu.Unlock()
+			wg.Wait()
 		}
 		p.Tick()
 	}
 	return
+}
+
+func (s *SimpleAnticheat) tickPlayer(p *InternalPlayer, wdata *xyron.WildcardReportData) {
+	switch data := wdata.Data.(type) {
+	case *xyron.WildcardReportData_ActionData:
+		p.SetLocation(data.ActionData.Position)
+		switch data.ActionData.Action {
+		case xyron.PlayerAction_Jump:
+			p.Volatile.Get().Jumped = true
+		case xyron.PlayerAction_StartSprint:
+			p.Sprinting.Set(p.timestampThisTick, true)
+		case xyron.PlayerAction_StopSprint:
+			p.Sprinting.Set(p.timestampThisTick, false)
+		case xyron.PlayerAction_StartSneak:
+			p.Sneaking.Set(p.timestampThisTick, true)
+		case xyron.PlayerAction_StopSneak:
+			p.Sneaking.Set(p.timestampThisTick, false)
+		case xyron.PlayerAction_StartGliding:
+			p.Gliding.Set(p.timestampThisTick, true)
+		case xyron.PlayerAction_StopGliding:
+			p.Gliding.Set(p.timestampThisTick, false)
+		case xyron.PlayerAction_StartSwimming:
+			p.Swimming.Set(p.timestampThisTick, true)
+		case xyron.PlayerAction_StopSwimming:
+			p.Swimming.Set(p.timestampThisTick, false)
+		case xyron.PlayerAction_StartSprintFlying:
+			p.Flying.Set(p.timestampThisTick, true)
+		case xyron.PlayerAction_StopSprintFlying:
+			p.Flying.Set(p.timestampThisTick, false)
+		case xyron.PlayerAction_OpenInventory:
+			p.OpenInventory.Set(p.timestampThisTick, true)
+		case xyron.PlayerAction_CloseInventory:
+			p.CloseInventory.Set(p.timestampThisTick, true)
+		default:
+			s.log.Errorf("unhandled action data: %v", data.ActionData.Action)
+		}
+		//TODO
+	case *xyron.WildcardReportData_MoveData:
+		p.SetLocation(data.MoveData.NewPosition)
+		if data.MoveData.Teleport {
+			p.Teleport.Set(p.timestampThisTick, toVec3(data.MoveData.NewPosition.Position))
+			p.Volatile.Get().Teleported = true
+		}
+	case *xyron.WildcardReportData_PlaceBlockData:
+		//TODO
+	case *xyron.WildcardReportData_BreakBlockData:
+		//TODO
+	case *xyron.WildcardReportData_EatFoodData:
+		//TODO
+	case *xyron.WildcardReportData_AttackData:
+		p.Attack.Set(p.timestampThisTick, data.AttackData.Data)
+	case *xyron.WildcardReportData_EffectData:
+		p.effects = data.EffectData.Effect
+	case *xyron.WildcardReportData_GameModeData:
+		p.GameMode = data.GameModeData.GameMode
+	case *xyron.WildcardReportData_MotionData:
+		p.Motion.Set(p.timestampThisTick, toVec3(data.MotionData.Motion))
+	case *xyron.WildcardReportData_InputModeData:
+		p.Input = data.InputModeData.InputMode
+	case *xyron.WildcardReportData_LifeData:
+		p.Alive.Set(p.timestampThisTick, data.LifeData.Alive)
+	case *xyron.WildcardReportData_HeldItemChangeData:
+	//TODO
+	default:
+		s.log.Errorf("unhandled data: %T", data)
+	}
 }
 
 // ActionDataHandler handles *xyron.WildcardReportData_ActionData

@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"github.com/blackjack200/xyron/anticheat"
 	"github.com/blackjack200/xyron/xyron"
+	"github.com/go-gl/mathgl/mgl64"
 	"math"
 )
 
@@ -26,18 +27,20 @@ func init() {
 	}
 }
 
-const epsilon = 0.001
+const epsilon = 0.00000001
 
 func (g *Gravity) HandleMoveData(p *anticheat.InternalPlayer, data *xyron.PlayerMoveData) *xyron.JudgementData {
-	tickSinceTeleport := p.CurrentTimestamp() - p.Teleport.Current()
-	if p.Motion.Current() != nil {
+	if math.Abs(mgl64.Clamp(p.Motion.Current().Get().Y(), -epsilon, epsilon)) > epsilon {
+		return nil
+	}
+	tickSinceTeleport := p.CurrentTimestamp() - p.Teleport.Current().Timestamp()
+	if tickSinceTeleport < 15 {
 		return nil
 	}
 	if p.Location.Previous() == nil ||
-		tickSinceTeleport < 15 ||
 		//TODO better high jump support
 		p.InAirTick < 15 ||
-		p.OnGround.Current() {
+		p.OnGround.Current().Get() {
 		return nil
 	}
 	newOnGround, _, _, _, _ := p.CheckGroundState(data.NewPosition)
@@ -45,11 +48,8 @@ func (g *Gravity) HandleMoveData(p *anticheat.InternalPlayer, data *xyron.Player
 	if newOnGround {
 		return nil
 	}
-	if p.Location.Current().IsFlying {
-		return nil
-	}
 	motion := p.Motion.Current()
-	if motion != nil {
+	if motion.Get().Len() > epsilon {
 		maxTick := int64(10)
 		//TODO improve big motion support
 		if motion.Get().Len() >= 1.5 {
@@ -66,11 +66,17 @@ func (g *Gravity) HandleMoveData(p *anticheat.InternalPlayer, data *xyron.Player
 	newPos := toVec3(data.NewPosition.Position)
 	prevDeltaY := oldPos.Sub(oldOldPos).Y()
 	measuredDeltaY := newPos.Sub(oldPos).Y()
-	predictedDeltaY := g.predictDeltaY(p, data, prevDeltaY)
+	predictedDeltaY := g.predictDeltaY(p, prevDeltaY)
+
+	if newPos.Sub(oldPos).Len() <= epsilon {
+		return nil
+	}
 
 	equalness := 1 - math.Min(measuredDeltaY/predictedDeltaY, predictedDeltaY/measuredDeltaY)
 
-	g.HandleMaxRate(equalness, g.PredictionLatitude, g.UnstableRate)
+	if !p.Location.Current().IsFlying {
+		g.HandleMaxRate(equalness, g.PredictionLatitude, g.UnstableRate)
+	}
 	return &xyron.JudgementData{
 		Type:      "Gravity",
 		Judgement: g.Evaluate(),
@@ -79,9 +85,8 @@ func (g *Gravity) HandleMoveData(p *anticheat.InternalPlayer, data *xyron.Player
 }
 
 // predictDeltaY https://github.com/Blackjack200/minecraft_client_1_16_2/blob/master/net/minecraft/world/entity/LivingEntity.java#L1891-1911
-func (g *Gravity) predictDeltaY(p *anticheat.InternalPlayer, data *xyron.PlayerMoveData, prevDeltaY float64) float64 {
+func (g *Gravity) predictDeltaY(p *anticheat.InternalPlayer, prevDeltaY float64) float64 {
 	predictedDeltaY := prevDeltaY
-	_, _, newInCobweb, newInSweetBerry, _ := p.CheckGroundState(data.NewPosition)
 	if e, ok := p.GetEffect(func(f *xyron.EffectFeature) bool {
 		return f.IsLevitation
 	}); ok {
@@ -91,24 +96,26 @@ func (g *Gravity) predictDeltaY(p *anticheat.InternalPlayer, data *xyron.PlayerM
 	}
 	predictedDeltaY *= 0.9800000190734863
 
-	//Cobweb https://github.com/Blackjack200/minecraft_client_1_16_2/blob/master/net/minecraft/world/entity/Entity.java#L516
-	//https://github.com/Blackjack200/minecraft_client_1_16_2/blob/c7f87b96efaeb477d9604354aa23ada0eb637ec6/net/minecraft/world/level/block/WebBlock.java#L17C1
-	if p.InCobweb.Current() || newInCobweb {
-		println("COB")
-		//TODO fix
-		predictedDeltaY *= 0.13111
-	}
+	//FIXME stuck block prediction not works at all
+	/*
+			//Cobweb https://github.com/Blackjack200/minecraft_client_1_16_2/blob/master/net/minecraft/world/entity/Entity.java#L516
+		//https://github.com/Blackjack200/minecraft_client_1_16_2/blob/c7f87b96efaeb477d9604354aa23ada0eb637ec6/net/minecraft/world/level/block/WebBlock.java#L17C1
+		if p.InCobweb.Current().Get() || newInCobweb {
+			println("COB")
+			predictedDeltaY *= 0.05
+		}
 
-	//SweetBerry https://github.com/Blackjack200/minecraft_client_1_16_2/blob/c7f87b96efaeb477d9604354aa23ada0eb637ec6/net/minecraft/world/level/block/SweetBerryBushBlock.java#L73
-	if p.InSweetBerry.Current() || newInSweetBerry {
-		predictedDeltaY *= 0.75
-	}
+		//SweetBerry https://github.com/Blackjack200/minecraft_client_1_16_2/blob/c7f87b96efaeb477d9604354aa23ada0eb637ec6/net/minecraft/world/level/block/SweetBerryBushBlock.java#L73
+		if p.InSweetBerry.Current().Get() || newInSweetBerry {
+			predictedDeltaY *= 0.75
+		}
+	*/
 	return predictedDeltaY
 }
 
 func calculateGravity(p *anticheat.InternalPlayer) float64 {
 	gravity := 0.08
-	if !p.OnGround.Current() && p.HasEffect(func(f *xyron.EffectFeature) bool {
+	if !p.OnGround.Current().Get() && p.HasEffect(func(f *xyron.EffectFeature) bool {
 		return f.IsSlowFalling
 	}) {
 		gravity = 0.01

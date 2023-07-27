@@ -64,16 +64,38 @@ type TimestampedData[T any] struct {
 	v T
 }
 
-func (t *TimestampedData[T]) Timestamp() int64 {
+func (t TimestampedData[T]) Timestamp() int64 {
 	return t.t
 }
 
-func (t *TimestampedData[T]) Get() T {
+func (t TimestampedData[T]) Get() T {
 	return t.v
 }
 
-func NewTimestampedData[T any](timestamp int64, v T) *TimestampedData[T] {
-	return &TimestampedData[T]{t: timestamp, v: v}
+func NewTimestampedData[T any](timestamp int64, v T) TimestampedData[T] {
+	return TimestampedData[T]{t: timestamp, v: v}
+}
+
+type BufferedTimestampedData[T any] BufferedData[TimestampedData[T]]
+
+func (b *BufferedTimestampedData[T]) Previous() TimestampedData[T] {
+	return b.prev
+}
+
+func (b *BufferedTimestampedData[T]) Current() TimestampedData[T] {
+	return b.cur
+}
+
+func (b *BufferedTimestampedData[T]) Set(timestamp int64, v T) {
+	b.prev, b.cur = b.cur, NewTimestampedData(timestamp, v)
+}
+
+func NewBufferedTimestampedData[T any](v T) *BufferedTimestampedData[T] {
+	p := NewTimestampedData[T](0, v)
+	return &BufferedTimestampedData[T]{
+		prev: p,
+		cur:  p,
+	}
 }
 
 type ComparableSlice[T ~int |

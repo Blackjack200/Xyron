@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"github.com/blackjack200/xyron/anticheat"
 	"github.com/blackjack200/xyron/xyron"
+	"github.com/go-gl/mathgl/mgl64"
 	"math"
 )
 
@@ -27,19 +28,29 @@ func init() {
 }
 
 func (g *Speed) HandleMoveData(p *anticheat.InternalPlayer, data *xyron.PlayerMoveData) *xyron.JudgementData {
-	tickSinceTeleport := p.CurrentTimestamp() - p.Teleport.Current()
-	if p.Motion.Current() != nil {
+	if math.Abs(mgl64.Clamp(p.Motion.Current().Get().Y(), -epsilon, epsilon)) > epsilon {
+		return nil
+	}
+	tickSinceTeleport := p.CurrentTimestamp() - p.Teleport.Current().Timestamp()
+	if tickSinceTeleport < 15 {
 		return nil
 	}
 	if p.Location.Previous() == nil ||
-		tickSinceTeleport < 15 ||
 		//TODO better high jump support
 		p.InAirTick < 15 ||
-		p.OnGround.Current() {
+		p.OnGround.Current().Get() {
+		return nil
+	}
+	newOnGround, _, _, _, _ := p.CheckGroundState(data.NewPosition)
+	//sometimes when player land and death, false positives appear
+	if newOnGround {
+		return nil
+	}
+	if p.Location.Current().IsFlying {
 		return nil
 	}
 	motion := p.Motion.Current()
-	if motion != nil {
+	if motion.Get().Len() > epsilon {
 		maxTick := int64(10)
 		//TODO improve big motion support
 		if motion.Get().Len() >= 1.5 {
@@ -58,15 +69,19 @@ func (g *Speed) HandleMoveData(p *anticheat.InternalPlayer, data *xyron.PlayerMo
 	measuredDelta := newPos.Sub(oldPos)
 	prevDeltaXZ := math.Hypot(prevDelta.X(), prevDelta.Z())
 	measuredDeltaXZ := math.Hypot(measuredDelta.X(), measuredDelta.Z())
+
+	if newPos.Sub(oldPos).Len() <= epsilon {
+		return nil
+	}
+
 	sp := 0.02
-	if p.Sprinting.Current() {
+	if p.Sprinting.Current().Get() {
 		sp = 0.026
 	}
 	predictedDeltaXZ := prevDeltaXZ*0.91 + sp
 
 	equalness := 1 - math.Min(measuredDeltaXZ/predictedDeltaXZ, predictedDeltaXZ/measuredDeltaXZ)
 	if !p.Location.Current().IsFlying {
-
 		g.HandleMaxRate(equalness, g.PredictionLatitude, g.UnstableRate)
 	}
 	return &xyron.JudgementData{
