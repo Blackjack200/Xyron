@@ -212,7 +212,7 @@ public class Loader extends PluginBase implements Listener {
     }
 
     @EventHandler
-    public void onPlayerToggleGlide(PlayerToggleSwimEvent ev) {
+    public void onPlayerToggleSwim(PlayerToggleSwimEvent ev) {
         val player = ev.getPlayer();
         val action = ev.isSwimming() ?
                 PlayerOuterClass.PlayerAction.StartSwimming :
@@ -293,7 +293,7 @@ public class Loader extends PluginBase implements Listener {
     }
 
     @EventHandler
-    public void onPlayerConsume(EntityDamageByEntityEvent ev) {
+    public void onPVP(EntityDamageByEntityEvent ev) {
         if (ev.getEntity() instanceof Player && ev.getDamager() instanceof Player) {
             val player = (Player) ev.getEntity();
             val damager = (Player) ev.getDamager();
