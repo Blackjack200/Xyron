@@ -81,6 +81,7 @@ func (g *Gravity) HandleMoveData(p *anticheat.InternalPlayer, data *xyron.Player
 // predictDeltaY https://github.com/Blackjack200/minecraft_client_1_16_2/blob/master/net/minecraft/world/entity/LivingEntity.java#L1891-1911
 func (g *Gravity) predictDeltaY(p *anticheat.InternalPlayer, data *xyron.PlayerMoveData, prevDeltaY float64) float64 {
 	predictedDeltaY := prevDeltaY
+	_, _, newInCobweb, newInSweetBerry, _ := p.CheckGroundState(data.NewPosition)
 	if e, ok := p.GetEffect(func(f *xyron.EffectFeature) bool {
 		return f.IsLevitation
 	}); ok {
@@ -92,12 +93,14 @@ func (g *Gravity) predictDeltaY(p *anticheat.InternalPlayer, data *xyron.PlayerM
 
 	//Cobweb https://github.com/Blackjack200/minecraft_client_1_16_2/blob/master/net/minecraft/world/entity/Entity.java#L516
 	//https://github.com/Blackjack200/minecraft_client_1_16_2/blob/c7f87b96efaeb477d9604354aa23ada0eb637ec6/net/minecraft/world/level/block/WebBlock.java#L17C1
-	if p.InCobweb.Current() {
-		predictedDeltaY *= 0.05000000074505806
+	if p.InCobweb.Current() || newInCobweb {
+		println("COB")
+		//TODO fix
+		predictedDeltaY *= 0.13111
 	}
 
 	//SweetBerry https://github.com/Blackjack200/minecraft_client_1_16_2/blob/c7f87b96efaeb477d9604354aa23ada0eb637ec6/net/minecraft/world/level/block/SweetBerryBushBlock.java#L73
-	if p.InCobweb.Current() {
+	if p.InSweetBerry.Current() || newInSweetBerry {
 		predictedDeltaY *= 0.75
 	}
 	return predictedDeltaY

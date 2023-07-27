@@ -1,0 +1,8 @@
+name: XyronLoader
+main: prokits\xyron\loader\Loader
+version: 0.1.0
+api: 5.0.0
+author: Blackjack200
+load: POSTWORLD
+depend:
+  - libasync

@@ -104,11 +104,11 @@ func (p *InternalPlayer) CheckGroundState(pos *xyron.EntityPositionData) (
 	checkCobweb := check(func(f *xyron.BlockFeature) bool { return f.IsCobweb })
 	checkSweetBerry := check(func(f *xyron.BlockFeature) bool { return f.IsSweetBerry })
 	checkClimbable := check(func(f *xyron.BlockFeature) bool { return f.IsClimbable })
-	OnGround = checkSolid(pos.CollidedBlocks) || checkSolid(pos.IntersectedBlocks)
-	OnIce = checkIce(pos.CollidedBlocks) || checkIce(pos.IntersectedBlocks)
-	InCobweb = checkCobweb(pos.CollidedBlocks) || checkCobweb(pos.IntersectedBlocks)
-	InSweetBerry = checkSweetBerry(pos.CollidedBlocks) || checkSweetBerry(pos.IntersectedBlocks)
-	OnClimbable = checkClimbable(pos.CollidedBlocks) || checkClimbable(pos.IntersectedBlocks)
+	OnGround = checkSolid(pos.CollidedBlocks) || checkSolid(pos.IntersectedBlocks) || checkSolid([]*xyron.BlockData{pos.BelowThatAffectMovement})
+	OnIce = checkIce(pos.CollidedBlocks) || checkIce(pos.IntersectedBlocks) || checkIce([]*xyron.BlockData{pos.BelowThatAffectMovement})
+	InCobweb = checkCobweb(pos.CollidedBlocks) || checkCobweb(pos.IntersectedBlocks) || checkCobweb([]*xyron.BlockData{pos.BelowThatAffectMovement})
+	InSweetBerry = checkSweetBerry(pos.CollidedBlocks) || checkSweetBerry(pos.IntersectedBlocks) || checkSweetBerry([]*xyron.BlockData{pos.BelowThatAffectMovement})
+	OnClimbable = checkClimbable(pos.CollidedBlocks) || checkClimbable(pos.IntersectedBlocks) || checkClimbable([]*xyron.BlockData{pos.BelowThatAffectMovement})
 	return
 }
 

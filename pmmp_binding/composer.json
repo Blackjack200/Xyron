@@ -1,0 +1,7 @@
+{
+  "name": "blackjack200/xyron-loader",
+  "type": "project",
+  "require": {
+    "blackjack200/xyron": "dev-master"
+  }
+}
