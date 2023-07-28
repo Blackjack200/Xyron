@@ -2,12 +2,14 @@
 
 namespace prokits\xyron\loader;
 
+use Generator;
 use Grpc\ChannelCredentials;
 use libasync\await\Await;
+use libasync\exception\AsyncExceptionWrapped;
 use libasync\executor\Executor;
 use libasync\executor\ThreadFactory;
-use libasync\executor\ThreadPoolExecutor;
 use libasync\utils\LoggerUtils;
+use pmmp\thread\ThreadSafeArray;
 use pocketmine\block\Air;
 use pocketmine\event\block\BlockBreakEvent;
 use pocketmine\event\block\BlockPlaceEvent;
@@ -32,18 +34,19 @@ use pocketmine\event\player\PlayerToggleGlideEvent;
 use pocketmine\event\player\PlayerToggleSneakEvent;
 use pocketmine\event\player\PlayerToggleSprintEvent;
 use pocketmine\event\player\PlayerToggleSwimEvent;
-use pocketmine\item\ItemTypeIds;
 use pocketmine\math\AxisAlignedBB;
 use pocketmine\math\Vector3;
 use pocketmine\player\Player;
 use pocketmine\plugin\Plugin;
 use pocketmine\plugin\PluginBase;
-use pocketmine\scheduler\ClosureTask;
 use pocketmine\Server;
 use pocketmine\world\World;
 use prokits\xyron\AddPlayerRequest;
 use prokits\xyron\AnticheatClient;
 use prokits\xyron\AttackData;
+use prokits\xyron\BatchedReportData;
+use prokits\xyron\BatchedReportResponse;
+use prokits\xyron\BatchedReportResponseEntry;
 use prokits\xyron\ConsumeStatus;
 use prokits\xyron\EntityPositionData;
 use prokits\xyron\Judgement;
@@ -62,15 +65,14 @@ use prokits\xyron\PlayerMotionData;
 use prokits\xyron\PlayerMoveData;
 use prokits\xyron\PlayerPlaceBlockData;
 use prokits\xyron\PlayerReceipt;
-use prokits\xyron\PlayerReport;
-use prokits\xyron\ReportResponse;
+use prokits\xyron\ReportData;
 use prokits\xyron\TimestampedReportData;
 use RuntimeException;
 use Symfony\Component\Filesystem\Path;
 use const Grpc\STATUS_OK;
 
 class Loader extends PluginBase implements Listener {
-	private ThreadPoolExecutor $executor;
+	private Executor $executor;
 	private string $autoload;
 	/** @var XyronData[] */
 	protected array $data = [];
@@ -82,61 +84,115 @@ class Loader extends PluginBase implements Listener {
 	}
 
 	protected function onEnable() : void {
-		$this->getServer()->getPluginManager()->registerEvents($this, $this);
-		$this->executor = self::createThreadPoolExecutor($this, $this->autoload, "127.0.0.1:8884");
+		$this->executor = self::newRuntime($this, $this->autoload, "127.0.0.1:8884");
 		$this->executor->start();
+		while (!$this->executor->isInitialized()) {
+		}
+		if (!$this->executor->isReadyToUse()) {
+			$this->getLogger()->error('failed: connected to the server');
+			$this->getServer()->getPluginManager()->disablePlugin($this);
+			return;
+		}
+		$this->getServer()->getPluginManager()->registerEvents($this, $this);
 		//more than 100000 years available LOL so PHP_INT_MAX
-		Await::do(function() {
-			Await::tick(function() : void {
+		$needReconnect = true;
+		$retry = 0;
+		Await::do(function() use (&$needReconnect, &$retry) {
+			Await::tick(function() use (&$needReconnect, &$retry) : void {
+				if (count(Server::getInstance()->getOnlinePlayers()) < 1) {
+					return;
+				}
+				if ($needReconnect) {
+					$ready = Await::fiberAsync(static function(AnticheatClient $client) : bool {
+						if (!$client->waitForReady(10)) {
+							return false;
+						}
+						return true;
+					}, $this->executor);
+					$needReconnect = !$ready;
+					if (!$needReconnect) {
+						$retry = 0;
+						return;
+					}
+					$retry++;
+					if ($retry > (20 / 4) * 60) {
+						throw new RuntimeException('failed: reconnect to the server: retry: ' . $retry);
+					}
+				}
+				$batched = new ThreadSafeArray();
+				$internalIdToPlayer = [];
+				$removal = [];
 				foreach (Server::getInstance()->getOnlinePlayers() as $player) {
 					if (isset($this->data[spl_object_id($player)])) {
 						$data = $this->data[spl_object_id($player)];
 						$tData = [];
-						foreach ($data->getQueue()->flush($this->getTick()) as $tck => $wdata) {
+						foreach ($data->getQueue()->flush($this->getTick(), $remove) as $tck => $wdata) {
 							$tData[$tck] = (new TimestampedReportData())->setData($wdata);
 						}
+						$removal[] = $remove;
+						$internalIdToPlayer[spl_object_id($player)] = $data->receipt->getInternalId();
 
-						$rpData = (new PlayerReport())
+						$batched[] = (new ReportData())
 							->setPlayer($data->receipt)
 							->setLatency($player->getNetworkSession()->getPing() / 1000)
 							->setData($tData)
 							->serializeToString();
-
-						$jdjm = new ReportResponse();
-						$jdjm->mergeFromString(Await::fiberAsync(static function(AnticheatClient $client) use ($rpData) : string {
-							$rp = (new PlayerReport());
-							$rp->mergeFromString($rpData);
-							[$resp, $status] = $client->Report($rp)->wait();
-							if ($status->code !== STATUS_OK) {
-								throw new RuntimeException($status);
-							}
-							assert($resp instanceof ReportResponse);
-							return $resp->serializeToString();
-						}, $this->executor));
-						$this->handleJudgements($player, iterator_to_array($jdjm->getJudgements()->getIterator()));
 					}
+				}
+				try {
+					$jdjm = new BatchedReportResponse();
+					$jdjm->mergeFromString(Await::fiberAsync(static function(AnticheatClient $client) use ($batched) : string {
+						if (!$client->waitForReady(10000 * 10)) {
+							throw new RuntimeException('failed to connect to server');
+						}
+						$data = [];
+						foreach ($batched as $b) {
+							$r = (new ReportData());
+							$r->mergeFromString($b);
+							$data[] = $r;
+						}
+						$rp = (new BatchedReportData())
+							->setData($data);
+						[$resp, $status] = $client->ReportBatched($rp)->wait();
+						if ($status->code !== STATUS_OK) {
+							throw new RuntimeException($status->details, $status->code);
+						}
+						assert($resp instanceof BatchedReportResponse);
+						return $resp->serializeToString();
+					}, $this->executor));
+					foreach ($jdjm->getData() as $d) {
+						assert($d instanceof BatchedReportResponseEntry);
+						assert($d->getPlayer() !== null);
+						$player = $internalIdToPlayer[$d->getPlayer()->getInternalId()];
+						$this->handleJudgements($player, iterator_to_array($d->getJudgements()->getIterator()));
+					}
+					foreach ($removal as $r) {
+						$r();
+					}
+				} catch (AsyncExceptionWrapped $wrapped) {
+					$needReconnect = true;
+					$this->getLogger()->debug('server is offline');
 				}
 			}, 4, PHP_INT_MAX);
 		})->panic();
 	}
 
 	protected function onDisable() : void {
-		$this->executor->shutdown();
+		$this->executor->quit();
 	}
 
-	public static function createThreadPoolExecutor(Plugin $plugin, string $autoload, string $hostname) : ThreadPoolExecutor {
-		return new ThreadPoolExecutor(new ThreadFactory(
+	public static function newRuntime(Plugin $plugin, string $autoload, string $hostname) : Executor {
+		return (new ThreadFactory(
 			Executor::class, LoggerUtils::makeLogger($plugin), $autoload,
-			static function(Executor $e) use ($autoload, $hostname) : array {
-				require_once $autoload;
+			static function(Executor $e) use ($hostname) : array {
 				$client = new AnticheatClient($hostname, ['credentials' => ChannelCredentials::createInsecure()]);
-				if (!$client->waitForReady(1000 * 10)) {
-					throw new RuntimeException('failed to connect to server');
+				if (!$client->waitForReady(10000 * 10)) {
+					throw new RuntimeException('failed connect to server');
 				}
 				return [$client];
 			},
 			static fn(AnticheatClient $client) => $client->close()
-		), 2);
+		))->new('default');
 	}
 
 	/**
@@ -187,11 +243,14 @@ class Loader extends PluginBase implements Listener {
 
 			$receipt = new PlayerReceipt();
 			$receipt->mergeFromString(Await::fiberAsync(static function(AnticheatClient $client) use ($reqData) : string {
+				if (!$client->waitForReady(1000 * 10)) {
+					throw new RuntimeException('failed to connect to server');
+				}
 				$req = (new AddPlayerRequest());
 				$req->mergeFromString($reqData);
 				[$resp, $status] = $client->AddPlayer($req)->wait();
 				if ($status->code !== STATUS_OK) {
-					throw new RuntimeException($status);
+					throw new RuntimeException($status->details, $status->code);
 				}
 				assert($resp instanceof PlayerReceipt);
 				return $resp->serializeToString();
@@ -214,11 +273,14 @@ class Loader extends PluginBase implements Listener {
 			$receiptData = $data->receipt->serializeToString();
 			Await::do(function() use ($receiptData) : void {
 				Await::fiberAsync(static function(AnticheatClient $client) use ($receiptData) : void {
+					if (!$client->waitForReady(1000 * 10)) {
+						throw new RuntimeException('failed to connect to server');
+					}
 					$receipt = new PlayerReceipt();
 					$receipt->mergeFromString($receiptData);
 					[$resp, $status] = $client->RemovePlayer($receipt)->wait();
 					if ($status->code !== STATUS_OK) {
-						throw new RuntimeException($status);
+						throw new RuntimeException($status->details, $status->code);
 					}
 				}, $this->executor);
 			})->panic();
@@ -466,7 +528,7 @@ class Loader extends PluginBase implements Listener {
 			->setTeleport($teleport);
 	}
 
-	private function getIntersectedBlock(World $world, AxisAlignedBB $bb) : \Generator {
+	private function getIntersectedBlock(World $world, AxisAlignedBB $bb) : Generator {
 		$inset = 0.002;
 		$minX = (int) floor($bb->minX - $inset);
 		$minY = (int) floor($bb->minY - $inset);
@@ -479,7 +541,7 @@ class Loader extends PluginBase implements Listener {
 			for ($x = $minX; $x <= $maxX; ++$x) {
 				for ($y = $minY; $y <= $maxY; ++$y) {
 					$blk = $world->getBlockAt($x, $y, $z);
-					if(!$blk instanceof Air){
+					if (!$blk instanceof Air) {
 						yield $blk;
 					}
 				}
@@ -532,8 +594,7 @@ class Loader extends PluginBase implements Listener {
 			->setIsOnGround($player->isOnGround())
 			->setAllowFlying($player->getAllowFlight())
 			->setIsFlying($player->isFlying())
-			//TODO improve this
-			->setHaveGravity(true)
+			->setHaveGravity($player->hasGravity())
 			->setMovementSpeed($player->getMovementSpeed())
 			->setWouldCollideVertically($this->wouldCollideVertically($player, $newPos))
 			->setBelowThatAffectMovement(Convert::xyronBlock($below, $blockPos))
@@ -541,9 +602,7 @@ class Loader extends PluginBase implements Listener {
 			->setIntersectedBlocks($intersected);
 	}
 
-	private function getTick() : int {
-		return Server::getInstance()->getTick();
-	}
+	private function getTick() : int { return Server::getInstance()->getTick(); }
 
 	private function getEffectData(Player $player) : PlayerEffectData {
 		return (new PlayerEffectData())

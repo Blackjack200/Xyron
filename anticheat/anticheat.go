@@ -62,7 +62,7 @@ func (s *SimpleAnticheat) Report(_ context.Context, r *xyron.ReportData) (*xyron
 	return &xyron.ReportResponse{Judgements: jdjm}, nil
 }
 
-func (s *SimpleAnticheat) ReportBatch(_ context.Context, data *xyron.BatchedReportData) (*xyron.BatchedReportResponse, error) {
+func (s *SimpleAnticheat) ReportBatched(_ context.Context, data *xyron.BatchedReportData) (*xyron.BatchedReportResponse, error) {
 	f := func(d *xyron.ReportData) *xyron.BatchedReportResponseEntry {
 		s.mu.Lock()
 		var p *InternalPlayer
@@ -87,12 +87,14 @@ func (s *SimpleAnticheat) ReportBatch(_ context.Context, data *xyron.BatchedRepo
 		wg.Add(1)
 		go func() {
 			resp := f(d)
-			mu.Lock()
-			res = append(res, resp)
-			mu.Unlock()
+			if resp != nil {
+				mu.Lock()
+				res = append(res, resp)
+				mu.Unlock()
+			}
 			wg.Done()
 		}()
 	}
 	wg.Wait()
-	return &xyron.BatchedReportResponse{Data: res}, nil
+	return &xyron.BatchedReportResponse{Data: nil}, nil
 }

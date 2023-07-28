@@ -2,6 +2,8 @@
 
 namespace prokits\xyron\loader;
 
+use Closure;
+use Generator;
 use prokits\xyron\WildcardReportData;
 
 class BufferedDataQueue {
@@ -15,12 +17,18 @@ class BufferedDataQueue {
 		$this->data[$tick][] = $data;
 	}
 
-	public function flush(int $tick) : \Generator {
+	public function flush(int $tick, Closure &$remove) : Generator {
+		$tks = [];
 		foreach ($this->data as $tck => $data) {
 			if ($tck <= $tick) {
 				yield $tck => $data;
-				unset($this->data[$tck]);
+				$tks[] = $tck;
 			}
 		}
+		$remove = function() use ($tks) : void {
+			foreach ($tks as $tck) {
+				unset($this->data[$tck]);
+			}
+		};
 	}
 }

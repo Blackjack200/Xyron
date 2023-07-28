@@ -2,6 +2,8 @@
   "name": "blackjack200/xyron-loader",
   "type": "project",
   "require": {
-    "blackjack200/xyron": "dev-master"
+    "blackjack200/xyron": "dev-master",
+    "ext-grpc": "*",
+    "ext-pmmpthread": "*"
   }
 }

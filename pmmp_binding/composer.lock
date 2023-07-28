@@ -12,12 +12,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Blackjack200/Xyron.git",
-                "reference": "1e8ead15230762dfef711a8782184e04c54d30b3"
+                "reference": "c4df2e008562824b4bd2b4a365dfc630d1a4489d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Blackjack200/Xyron/zipball/1e8ead15230762dfef711a8782184e04c54d30b3",
-                "reference": "1e8ead15230762dfef711a8782184e04c54d30b3",
+                "url": "https://api.github.com/repos/Blackjack200/Xyron/zipball/c4df2e008562824b4bd2b4a365dfc630d1a4489d",
+                "reference": "c4df2e008562824b4bd2b4a365dfc630d1a4489d",
                 "shasum": ""
             },
             "require": {
@@ -48,7 +48,7 @@
                 "issues": "https://github.com/Blackjack200/Xyron/issues",
                 "source": "https://github.com/Blackjack200/Xyron/tree/master"
             },
-            "time": "2023-07-27T05:27:25+00:00"
+            "time": "2023-07-28T14:46:33+00:00"
         },
         {
             "name": "google/protobuf",

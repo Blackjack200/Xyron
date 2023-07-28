@@ -44,6 +44,7 @@ use prokits\xyron\PlayerPlaceBlockData;
 use prokits\xyron\Vec3f;
 use prokits\xyron\Vec3i;
 use prokits\xyron\WildcardReportData;
+use RuntimeException;
 
 final class Convert {
 	private function __construct() { }
@@ -119,7 +120,7 @@ final class Convert {
 		$min = $aabb->getMin();
 		$max = $aabb->getMax();
 		if ($min === null || $max === null) {
-			throw new \RuntimeException();
+			throw new RuntimeException();
 		}
 		return new AxisAlignedBB(
 			$min->getX(), $min->getY(), $min->getZ(),
@@ -245,6 +246,6 @@ final class Convert {
 		if ($data instanceof PlayerLifeData) {
 			return (new WildcardReportData())->setLifeData($data);
 		}
-		throw new \RuntimeException();
+		throw new RuntimeException();
 	}
 }
