@@ -27,7 +27,7 @@ func (pred *predictor) predictNextTickDeltaMovement(
 		if dircY < -0.2 {
 			d = 0.085
 		}
-		if dircY <= 0.0 || p.GetVolatile().Jumped || !p.IntersectedLiquid.Current().Get() {
+		if dircY <= 0.0 || p.Jump.Current().Duration(p.CurrentTimestamp()) == 0 || !p.IntersectedLiquid.Current().Get() {
 			newDeltaMovement[1] += (dircY - newDeltaMovement.Y()) * d
 		}
 	}

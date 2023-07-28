@@ -28,37 +28,6 @@ func (b *BufferedData[T]) Set(v T) {
 	b.prev, b.cur = b.cur, v
 }
 
-type TickedData[T any] struct {
-	dv T
-	v  T
-}
-
-func (t *TickedData[T]) Default(dv T) {
-	t.dv = dv
-}
-
-func (t *TickedData[T]) Set(v T) {
-	t.v = v
-}
-func (t *TickedData[T]) Get() T {
-	return t.v
-}
-
-func (t *TickedData[T]) Reset() {
-	t.v = t.dv
-}
-
-func NewTickedData[T any](dv T) *TickedData[T] {
-	return &TickedData[T]{dv: dv, v: dv}
-}
-
-func NewTickedBool(d bool) *TickedData[bool] {
-	return &TickedData[bool]{
-		dv: d,
-		v:  d,
-	}
-}
-
 type TimestampedData[T any] struct {
 	t int64
 	v T
@@ -66,6 +35,10 @@ type TimestampedData[T any] struct {
 
 func (t TimestampedData[T]) Timestamp() int64 {
 	return t.t
+}
+
+func (t TimestampedData[T]) Duration(tick int64) int64 {
+	return tick - t.Timestamp()
 }
 
 func (t TimestampedData[T]) Get() T {

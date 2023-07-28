@@ -20,9 +20,9 @@ func (s *SimpleAnticheat) handleData(p *InternalPlayer, tdata map[int64]*xyron.T
 				data := s.callHandlers(p, c, wdata)
 				r = append(r, data...)
 			}
-			p.tickHandlingMu.Lock()
+			p.dataProcessingMu.Lock()
 			s.tickPlayer(p, wdata)
-			p.tickHandlingMu.Unlock()
+			p.dataProcessingMu.Unlock()
 		}
 		p.Tick()
 	}
@@ -35,7 +35,14 @@ func (s *SimpleAnticheat) tickPlayer(p *InternalPlayer, wdata *xyron.WildcardRep
 		p.SetLocation(data.ActionData.Position)
 		switch data.ActionData.Action {
 		case xyron.PlayerAction_Jump:
-			p.Volatile.Get().Jumped = true
+			eff, ok := p.GetEffect(func(f *xyron.EffectFeature) bool {
+				return f.IsJumpBoost
+			})
+			if ok {
+				p.Jump.Set(p.timestampThisTick, int64(eff.Amplifier))
+			} else {
+				p.Jump.Set(p.timestampThisTick, 0)
+			}
 		case xyron.PlayerAction_StartSprint:
 			p.Sprinting.Set(p.timestampThisTick, true)
 		case xyron.PlayerAction_StopSprint:
@@ -68,7 +75,6 @@ func (s *SimpleAnticheat) tickPlayer(p *InternalPlayer, wdata *xyron.WildcardRep
 		p.SetLocation(data.MoveData.NewPosition)
 		if data.MoveData.Teleport {
 			p.Teleport.Set(p.timestampThisTick, toVec3(data.MoveData.NewPosition.Position))
-			p.Volatile.Get().Teleported = true
 		}
 	case *xyron.WildcardReportData_PlaceBlockData:
 		//TODO

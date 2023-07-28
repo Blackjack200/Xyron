@@ -57,6 +57,24 @@ func (b *ViolationBuffer) HandleUnstableRate(measured, expectedMax, rate float64
 	}
 }
 
+func (b *ViolationBuffer) HandleRelative(measured, expected, latitude float64) {
+	if math.Abs(measured-expected) > latitude {
+		b.buf++
+	}
+}
+
+func (b *ViolationBuffer) HandleRelativeUnstable(measured, expected, latitude float64) {
+	b.HandleRelativeUnstableRate(measured, expected, latitude, 0)
+}
+
+func (b *ViolationBuffer) HandleRelativeUnstableRate(measured, expected, latitude, rate float64) {
+	if math.Abs(measured-expected) > latitude {
+		b.buf++
+	} else {
+		b.buf *= rate
+	}
+}
+
 type Evaluator struct {
 	*ViolationBuffer
 	MinValidPossibility     float64

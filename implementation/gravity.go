@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"github.com/blackjack200/xyron/anticheat"
 	"github.com/blackjack200/xyron/xyron"
-	"github.com/go-gl/mathgl/mgl64"
 	"math"
 )
 
@@ -27,59 +26,35 @@ func init() {
 }
 
 func (g *Gravity) HandleMoveData(p *anticheat.InternalPlayer, data *xyron.PlayerMoveData) *xyron.JudgementData {
-	if math.Abs(mgl64.Clamp(p.Motion.Current().Get().Y(), -epsilon, epsilon)) > epsilon {
+	if !isPlayerFreeFalling(p, data.NewPosition) {
 		return nil
 	}
-	tickSinceTeleport := p.CurrentTimestamp() - p.Teleport.Current().Timestamp()
-	if tickSinceTeleport < 15 {
+	if p.Location.Previous() == nil {
 		return nil
 	}
-	if p.Location.Previous() == nil ||
-		//TODO better high jump support
-		p.InAirTick < 20 ||
-		(!p.Flying.Current().Get() && p.CurrentTimestamp()-p.Flying.Current().Timestamp() < 20) ||
-		p.IntersectedLiquid.Current().Get() ||
-		p.OnGround.Current().Get() {
-		return nil
-	}
-	newOnGround, _, _, _, _, _ := p.CheckGroundState(data.NewPosition)
-	//sometimes when player land and death, false positives appear
-	if newOnGround {
-		return nil
-	}
-	motion := p.Motion.Current()
-	if motion.Get().Len() > epsilon {
-		maxTick := int64(10)
-		//TODO improve big motion support
-		if motion.Get().Len() >= 1.5 {
-			maxTick = 35
-		}
-		tickSinceMotion := p.CurrentTimestamp() - motion.Timestamp()
-		if tickSinceMotion < maxTick {
-			return nil
-		}
-	}
+	oldPos := toVec3(p.Location.Previous().Position)
+	pos := toVec3(p.Location.Current().Position)
+	deltaY := pos.Sub(oldPos).Y()
 
-	oldOldPos := toVec3(p.Location.Previous().Position)
-	oldPos := toVec3(p.Location.Current().Position)
-	newPos := toVec3(data.NewPosition.Position)
-	prevDeltaY := oldPos.Sub(oldOldPos).Y()
-	measuredDeltaY := newPos.Sub(oldPos).Y()
-	predictedDeltaY := g.predictDeltaY(p, prevDeltaY)
-
-	if newPos.Sub(oldPos).Len() <= epsilon {
+	futurePos := toVec3(data.NewPosition.Position)
+	measuredFutureDeltaY := futurePos.Sub(pos).Y()
+	if isZero(futurePos.Sub(pos).Len()) {
 		return nil
 	}
 
-	equalness := 1 - math.Min(measuredDeltaY/predictedDeltaY, predictedDeltaY/measuredDeltaY)
+	predictedDeltaY := g.predictDeltaY(p, deltaY)
 
-	if !p.Location.Current().IsFlying && !data.NewPosition.IsFlying {
-		g.HandleMaxRate(equalness, g.PredictionLatitude, g.UnstableRate)
+	if !p.Location.Current().IsFlying &&
+		!data.NewPosition.IsFlying &&
+		!p.Location.Current().AllowFlying {
+		g.HandleRelativeUnstableRate(measuredFutureDeltaY, predictedDeltaY, g.PredictionLatitude, g.UnstableRate)
 	}
+
+	equalness := math.Abs(measuredFutureDeltaY - predictedDeltaY)
 	return &xyron.JudgementData{
 		Type:      "Gravity",
 		Judgement: g.Evaluate(),
-		Message:   fmt.Sprintf("p:%v pred-dy:%.5f dy:%.5f eq:%.5f", g.PossibilityString(), predictedDeltaY, prevDeltaY, equalness),
+		Message:   fmt.Sprintf("p:%v pred-dy:%.5f dy:%.5f delta:%.5f", g.PossibilityString(), predictedDeltaY, deltaY, equalness),
 	}
 }
 
@@ -93,7 +68,7 @@ func (g *Gravity) predictDeltaY(p *anticheat.InternalPlayer, prevDeltaY float64)
 	} else if p.Location.Current().HaveGravity {
 		predictedDeltaY -= calculateGravity(p)
 	}
-	predictedDeltaY *= 0.9800000190734863
+	predictedDeltaY *= 0.98
 
 	//FIXME stuck block prediction not works at all
 

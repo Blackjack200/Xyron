@@ -8,9 +8,9 @@ import (
 )
 
 type InternalPlayer struct {
-	tickHandlingMu *sync.Mutex
-	log            *logrus.Logger
-	checks         []any
+	dataProcessingMu *sync.Mutex
+	log              *logrus.Logger
+	checks           []any
 
 	Os            xyron.DeviceOS
 	Input         xyron.InputMode
@@ -19,9 +19,9 @@ type InternalPlayer struct {
 	Alive         *BufferedTimestampedData[bool]
 	effects       []*xyron.EffectFeature
 	Motion        *BufferedTimestampedData[mgl64.Vec3]
+	Jump          *BufferedTimestampedData[int64]
 	Location      *BufferedData[*xyron.EntityPositionData]
 	DeltaPosition *BufferedData[mgl64.Vec3]
-	Volatile      *TickedData[*VolatileData]
 
 	Sprinting      *BufferedTimestampedData[bool]
 	Sneaking       *BufferedTimestampedData[bool]
@@ -49,7 +49,7 @@ type InternalPlayer struct {
 
 func NewInternalPlayer(log *logrus.Logger, checks []any, os xyron.DeviceOS, name string) *InternalPlayer {
 	return &InternalPlayer{
-		tickHandlingMu:    &sync.Mutex{},
+		dataProcessingMu:  &sync.Mutex{},
 		log:               log,
 		checks:            checks,
 		Os:                os,
@@ -59,9 +59,9 @@ func NewInternalPlayer(log *logrus.Logger, checks []any, os xyron.DeviceOS, name
 		Alive:             NewBufferedTimestampedData(true),
 		effects:           nil,
 		Motion:            NewBufferedTimestampedData(mgl64.Vec3{}),
+		Jump:              NewBufferedTimestampedData[int64](0),
 		Location:          NewBufferedData[*xyron.EntityPositionData](nil),
 		DeltaPosition:     NewBufferedData[mgl64.Vec3](mgl64.Vec3{}),
-		Volatile:          NewTickedData(&VolatileData{}),
 		Sprinting:         NewBufferedTimestampedData(false),
 		Sneaking:          NewBufferedTimestampedData(false),
 		Gliding:           NewBufferedTimestampedData(false),
@@ -82,10 +82,6 @@ func NewInternalPlayer(log *logrus.Logger, checks []any, os xyron.DeviceOS, name
 		timestampThisTick: 0,
 		Teleport:          NewBufferedTimestampedData(mgl64.Vec3{}),
 	}
-}
-
-func (p *InternalPlayer) GetVolatile() *VolatileData {
-	return p.Volatile.Get()
 }
 
 func (p *InternalPlayer) SetLocation(pos *xyron.EntityPositionData) {
@@ -135,17 +131,11 @@ func (p *InternalPlayer) CheckGroundState(pos *xyron.EntityPositionData) (
 	return
 }
 
-type VolatileData struct {
-	Jumped     bool
-	Teleported bool
-}
-
 func (p *InternalPlayer) CurrentTimestamp() int64 {
 	return p.timestampThisTick
 }
 
 func (p *InternalPlayer) Tick() {
-	p.Volatile.Set(&VolatileData{})
 	p.Motion.Set(p.timestampThisTick, mgl64.Vec3{})
 	if !p.OnGround.Current().Get() {
 		p.InAirTick++

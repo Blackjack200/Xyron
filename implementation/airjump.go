@@ -31,7 +31,9 @@ func (a *AirJump) HandleActionData(p *anticheat.InternalPlayer, data *xyron.Play
 		p.InAirTick >= 15 {
 		measured = 1
 	}
-	a.HandleUnstableRate(measured, 0, a.UnstableRate)
+	if !p.Location.Current().AllowFlying && !data.Position.AllowFlying {
+		a.HandleUnstableRate(measured, 0, a.UnstableRate)
+	}
 	return &xyron.JudgementData{
 		Type:      "AirJump",
 		Judgement: a.Evaluate(),
