@@ -1166,38 +1166,6 @@ public final class PlayerWrappers {
       }
 
       @java.lang.Override
-      public Builder clone() {
-        return super.clone();
-      }
-      @java.lang.Override
-      public Builder setField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return super.setField(field, value);
-      }
-      @java.lang.Override
-      public Builder clearField(
-          com.google.protobuf.Descriptors.FieldDescriptor field) {
-        return super.clearField(field);
-      }
-      @java.lang.Override
-      public Builder clearOneof(
-          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-        return super.clearOneof(oneof);
-      }
-      @java.lang.Override
-      public Builder setRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          int index, java.lang.Object value) {
-        return super.setRepeatedField(field, index, value);
-      }
-      @java.lang.Override
-      public Builder addRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return super.addRepeatedField(field, value);
-      }
-      @java.lang.Override
       public Builder mergeFrom(com.google.protobuf.Message other) {
         if (other instanceof com.github.blackjack200.xyron.PlayerWrappers.WildcardReportData) {
           return mergeFrom((com.github.blackjack200.xyron.PlayerWrappers.WildcardReportData)other);
@@ -3537,38 +3505,6 @@ public final class PlayerWrappers {
       }
 
       @java.lang.Override
-      public Builder clone() {
-        return super.clone();
-      }
-      @java.lang.Override
-      public Builder setField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return super.setField(field, value);
-      }
-      @java.lang.Override
-      public Builder clearField(
-          com.google.protobuf.Descriptors.FieldDescriptor field) {
-        return super.clearField(field);
-      }
-      @java.lang.Override
-      public Builder clearOneof(
-          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-        return super.clearOneof(oneof);
-      }
-      @java.lang.Override
-      public Builder setRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          int index, java.lang.Object value) {
-        return super.setRepeatedField(field, index, value);
-      }
-      @java.lang.Override
-      public Builder addRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return super.addRepeatedField(field, value);
-      }
-      @java.lang.Override
       public Builder mergeFrom(com.google.protobuf.Message other) {
         if (other instanceof com.github.blackjack200.xyron.PlayerWrappers.PlayerActionData) {
           return mergeFrom((com.github.blackjack200.xyron.PlayerWrappers.PlayerActionData)other);
@@ -4230,38 +4166,6 @@ public final class PlayerWrappers {
         }
       }
 
-      @java.lang.Override
-      public Builder clone() {
-        return super.clone();
-      }
-      @java.lang.Override
-      public Builder setField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return super.setField(field, value);
-      }
-      @java.lang.Override
-      public Builder clearField(
-          com.google.protobuf.Descriptors.FieldDescriptor field) {
-        return super.clearField(field);
-      }
-      @java.lang.Override
-      public Builder clearOneof(
-          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-        return super.clearOneof(oneof);
-      }
-      @java.lang.Override
-      public Builder setRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          int index, java.lang.Object value) {
-        return super.setRepeatedField(field, index, value);
-      }
-      @java.lang.Override
-      public Builder addRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return super.addRepeatedField(field, value);
-      }
       @java.lang.Override
       public Builder mergeFrom(com.google.protobuf.Message other) {
         if (other instanceof com.github.blackjack200.xyron.PlayerWrappers.PlayerMoveData) {
@@ -4937,38 +4841,6 @@ public final class PlayerWrappers {
         }
       }
 
-      @java.lang.Override
-      public Builder clone() {
-        return super.clone();
-      }
-      @java.lang.Override
-      public Builder setField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return super.setField(field, value);
-      }
-      @java.lang.Override
-      public Builder clearField(
-          com.google.protobuf.Descriptors.FieldDescriptor field) {
-        return super.clearField(field);
-      }
-      @java.lang.Override
-      public Builder clearOneof(
-          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-        return super.clearOneof(oneof);
-      }
-      @java.lang.Override
-      public Builder setRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          int index, java.lang.Object value) {
-        return super.setRepeatedField(field, index, value);
-      }
-      @java.lang.Override
-      public Builder addRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return super.addRepeatedField(field, value);
-      }
       @java.lang.Override
       public Builder mergeFrom(com.google.protobuf.Message other) {
         if (other instanceof com.github.blackjack200.xyron.PlayerWrappers.PlayerPlaceBlockData) {
@@ -5734,38 +5606,6 @@ public final class PlayerWrappers {
       }
 
       @java.lang.Override
-      public Builder clone() {
-        return super.clone();
-      }
-      @java.lang.Override
-      public Builder setField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return super.setField(field, value);
-      }
-      @java.lang.Override
-      public Builder clearField(
-          com.google.protobuf.Descriptors.FieldDescriptor field) {
-        return super.clearField(field);
-      }
-      @java.lang.Override
-      public Builder clearOneof(
-          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-        return super.clearOneof(oneof);
-      }
-      @java.lang.Override
-      public Builder setRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          int index, java.lang.Object value) {
-        return super.setRepeatedField(field, index, value);
-      }
-      @java.lang.Override
-      public Builder addRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return super.addRepeatedField(field, value);
-      }
-      @java.lang.Override
       public Builder mergeFrom(com.google.protobuf.Message other) {
         if (other instanceof com.github.blackjack200.xyron.PlayerWrappers.PlayerBreakBlockData) {
           return mergeFrom((com.github.blackjack200.xyron.PlayerWrappers.PlayerBreakBlockData)other);
@@ -6440,38 +6280,6 @@ public final class PlayerWrappers {
       }
 
       @java.lang.Override
-      public Builder clone() {
-        return super.clone();
-      }
-      @java.lang.Override
-      public Builder setField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return super.setField(field, value);
-      }
-      @java.lang.Override
-      public Builder clearField(
-          com.google.protobuf.Descriptors.FieldDescriptor field) {
-        return super.clearField(field);
-      }
-      @java.lang.Override
-      public Builder clearOneof(
-          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-        return super.clearOneof(oneof);
-      }
-      @java.lang.Override
-      public Builder setRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          int index, java.lang.Object value) {
-        return super.setRepeatedField(field, index, value);
-      }
-      @java.lang.Override
-      public Builder addRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return super.addRepeatedField(field, value);
-      }
-      @java.lang.Override
       public Builder mergeFrom(com.google.protobuf.Message other) {
         if (other instanceof com.github.blackjack200.xyron.PlayerWrappers.PlayerEatFoodData) {
           return mergeFrom((com.github.blackjack200.xyron.PlayerWrappers.PlayerEatFoodData)other);
@@ -6668,6 +6476,12 @@ public final class PlayerWrappers {
      * <code>.xchange.AttackData data = 1;</code>
      */
     com.github.blackjack200.xyron.PlayerOuterClass.AttackDataOrBuilder getDataOrBuilder();
+
+    /**
+     * <code>bool damaged = 2;</code>
+     * @return The damaged.
+     */
+    boolean getDamaged();
   }
   /**
    * Protobuf type {@code xchange.PlayerAttackData}
@@ -6730,6 +6544,17 @@ public final class PlayerWrappers {
       return data_ == null ? com.github.blackjack200.xyron.PlayerOuterClass.AttackData.getDefaultInstance() : data_;
     }
 
+    public static final int DAMAGED_FIELD_NUMBER = 2;
+    private boolean damaged_ = false;
+    /**
+     * <code>bool damaged = 2;</code>
+     * @return The damaged.
+     */
+    @java.lang.Override
+    public boolean getDamaged() {
+      return damaged_;
+    }
+
     private byte memoizedIsInitialized = -1;
     @java.lang.Override
     public final boolean isInitialized() {
@@ -6747,6 +6572,9 @@ public final class PlayerWrappers {
       if (data_ != null) {
         output.writeMessage(1, getData());
       }
+      if (damaged_ != false) {
+        output.writeBool(2, damaged_);
+      }
       getUnknownFields().writeTo(output);
     }
 
@@ -6759,6 +6587,10 @@ public final class PlayerWrappers {
       if (data_ != null) {
         size += com.google.protobuf.CodedOutputStream
           .computeMessageSize(1, getData());
+      }
+      if (damaged_ != false) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBoolSize(2, damaged_);
       }
       size += getUnknownFields().getSerializedSize();
       memoizedSize = size;
@@ -6780,6 +6612,8 @@ public final class PlayerWrappers {
         if (!getData()
             .equals(other.getData())) return false;
       }
+      if (getDamaged()
+          != other.getDamaged()) return false;
       if (!getUnknownFields().equals(other.getUnknownFields())) return false;
       return true;
     }
@@ -6795,6 +6629,9 @@ public final class PlayerWrappers {
         hash = (37 * hash) + DATA_FIELD_NUMBER;
         hash = (53 * hash) + getData().hashCode();
       }
+      hash = (37 * hash) + DAMAGED_FIELD_NUMBER;
+      hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
+          getDamaged());
       hash = (29 * hash) + getUnknownFields().hashCode();
       memoizedHashCode = hash;
       return hash;
@@ -6931,6 +6768,7 @@ public final class PlayerWrappers {
           dataBuilder_.dispose();
           dataBuilder_ = null;
         }
+        damaged_ = false;
         return this;
       }
 
@@ -6969,40 +6807,11 @@ public final class PlayerWrappers {
               ? data_
               : dataBuilder_.build();
         }
+        if (((from_bitField0_ & 0x00000002) != 0)) {
+          result.damaged_ = damaged_;
+        }
       }
 
-      @java.lang.Override
-      public Builder clone() {
-        return super.clone();
-      }
-      @java.lang.Override
-      public Builder setField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return super.setField(field, value);
-      }
-      @java.lang.Override
-      public Builder clearField(
-          com.google.protobuf.Descriptors.FieldDescriptor field) {
-        return super.clearField(field);
-      }
-      @java.lang.Override
-      public Builder clearOneof(
-          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-        return super.clearOneof(oneof);
-      }
-      @java.lang.Override
-      public Builder setRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          int index, java.lang.Object value) {
-        return super.setRepeatedField(field, index, value);
-      }
-      @java.lang.Override
-      public Builder addRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return super.addRepeatedField(field, value);
-      }
       @java.lang.Override
       public Builder mergeFrom(com.google.protobuf.Message other) {
         if (other instanceof com.github.blackjack200.xyron.PlayerWrappers.PlayerAttackData) {
@@ -7017,6 +6826,9 @@ public final class PlayerWrappers {
         if (other == com.github.blackjack200.xyron.PlayerWrappers.PlayerAttackData.getDefaultInstance()) return this;
         if (other.hasData()) {
           mergeData(other.getData());
+        }
+        if (other.getDamaged() != false) {
+          setDamaged(other.getDamaged());
         }
         this.mergeUnknownFields(other.getUnknownFields());
         onChanged();
@@ -7051,6 +6863,11 @@ public final class PlayerWrappers {
                 bitField0_ |= 0x00000001;
                 break;
               } // case 10
+              case 16: {
+                damaged_ = input.readBool();
+                bitField0_ |= 0x00000002;
+                break;
+              } // case 16
               default: {
                 if (!super.parseUnknownField(input, extensionRegistry, tag)) {
                   done = true; // was an endgroup tag
@@ -7185,6 +7002,38 @@ public final class PlayerWrappers {
           data_ = null;
         }
         return dataBuilder_;
+      }
+
+      private boolean damaged_ ;
+      /**
+       * <code>bool damaged = 2;</code>
+       * @return The damaged.
+       */
+      @java.lang.Override
+      public boolean getDamaged() {
+        return damaged_;
+      }
+      /**
+       * <code>bool damaged = 2;</code>
+       * @param value The damaged to set.
+       * @return This builder for chaining.
+       */
+      public Builder setDamaged(boolean value) {
+
+        damaged_ = value;
+        bitField0_ |= 0x00000002;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>bool damaged = 2;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearDamaged() {
+        bitField0_ = (bitField0_ & ~0x00000002);
+        damaged_ = false;
+        onChanged();
+        return this;
       }
       @java.lang.Override
       public final Builder setUnknownFields(
@@ -7603,38 +7452,6 @@ public final class PlayerWrappers {
         int from_bitField0_ = bitField0_;
       }
 
-      @java.lang.Override
-      public Builder clone() {
-        return super.clone();
-      }
-      @java.lang.Override
-      public Builder setField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return super.setField(field, value);
-      }
-      @java.lang.Override
-      public Builder clearField(
-          com.google.protobuf.Descriptors.FieldDescriptor field) {
-        return super.clearField(field);
-      }
-      @java.lang.Override
-      public Builder clearOneof(
-          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-        return super.clearOneof(oneof);
-      }
-      @java.lang.Override
-      public Builder setRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          int index, java.lang.Object value) {
-        return super.setRepeatedField(field, index, value);
-      }
-      @java.lang.Override
-      public Builder addRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return super.addRepeatedField(field, value);
-      }
       @java.lang.Override
       public Builder mergeFrom(com.google.protobuf.Message other) {
         if (other instanceof com.github.blackjack200.xyron.PlayerWrappers.PlayerEffectData) {
@@ -8331,38 +8148,6 @@ public final class PlayerWrappers {
       }
 
       @java.lang.Override
-      public Builder clone() {
-        return super.clone();
-      }
-      @java.lang.Override
-      public Builder setField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return super.setField(field, value);
-      }
-      @java.lang.Override
-      public Builder clearField(
-          com.google.protobuf.Descriptors.FieldDescriptor field) {
-        return super.clearField(field);
-      }
-      @java.lang.Override
-      public Builder clearOneof(
-          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-        return super.clearOneof(oneof);
-      }
-      @java.lang.Override
-      public Builder setRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          int index, java.lang.Object value) {
-        return super.setRepeatedField(field, index, value);
-      }
-      @java.lang.Override
-      public Builder addRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return super.addRepeatedField(field, value);
-      }
-      @java.lang.Override
       public Builder mergeFrom(com.google.protobuf.Message other) {
         if (other instanceof com.github.blackjack200.xyron.PlayerWrappers.PlayerGameModeData) {
           return mergeFrom((com.github.blackjack200.xyron.PlayerWrappers.PlayerGameModeData)other);
@@ -8929,38 +8714,6 @@ public final class PlayerWrappers {
         }
       }
 
-      @java.lang.Override
-      public Builder clone() {
-        return super.clone();
-      }
-      @java.lang.Override
-      public Builder setField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return super.setField(field, value);
-      }
-      @java.lang.Override
-      public Builder clearField(
-          com.google.protobuf.Descriptors.FieldDescriptor field) {
-        return super.clearField(field);
-      }
-      @java.lang.Override
-      public Builder clearOneof(
-          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-        return super.clearOneof(oneof);
-      }
-      @java.lang.Override
-      public Builder setRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          int index, java.lang.Object value) {
-        return super.setRepeatedField(field, index, value);
-      }
-      @java.lang.Override
-      public Builder addRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return super.addRepeatedField(field, value);
-      }
       @java.lang.Override
       public Builder mergeFrom(com.google.protobuf.Message other) {
         if (other instanceof com.github.blackjack200.xyron.PlayerWrappers.PlayerMotionData) {
@@ -9636,38 +9389,6 @@ public final class PlayerWrappers {
       }
 
       @java.lang.Override
-      public Builder clone() {
-        return super.clone();
-      }
-      @java.lang.Override
-      public Builder setField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return super.setField(field, value);
-      }
-      @java.lang.Override
-      public Builder clearField(
-          com.google.protobuf.Descriptors.FieldDescriptor field) {
-        return super.clearField(field);
-      }
-      @java.lang.Override
-      public Builder clearOneof(
-          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-        return super.clearOneof(oneof);
-      }
-      @java.lang.Override
-      public Builder setRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          int index, java.lang.Object value) {
-        return super.setRepeatedField(field, index, value);
-      }
-      @java.lang.Override
-      public Builder addRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return super.addRepeatedField(field, value);
-      }
-      @java.lang.Override
       public Builder mergeFrom(com.google.protobuf.Message other) {
         if (other instanceof com.github.blackjack200.xyron.PlayerWrappers.PlayerInputModeData) {
           return mergeFrom((com.github.blackjack200.xyron.PlayerWrappers.PlayerInputModeData)other);
@@ -10167,38 +9888,6 @@ public final class PlayerWrappers {
         }
       }
 
-      @java.lang.Override
-      public Builder clone() {
-        return super.clone();
-      }
-      @java.lang.Override
-      public Builder setField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return super.setField(field, value);
-      }
-      @java.lang.Override
-      public Builder clearField(
-          com.google.protobuf.Descriptors.FieldDescriptor field) {
-        return super.clearField(field);
-      }
-      @java.lang.Override
-      public Builder clearOneof(
-          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-        return super.clearOneof(oneof);
-      }
-      @java.lang.Override
-      public Builder setRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          int index, java.lang.Object value) {
-        return super.setRepeatedField(field, index, value);
-      }
-      @java.lang.Override
-      public Builder addRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return super.addRepeatedField(field, value);
-      }
       @java.lang.Override
       public Builder mergeFrom(com.google.protobuf.Message other) {
         if (other instanceof com.github.blackjack200.xyron.PlayerWrappers.PlayerHeldItemChangeData) {
@@ -10734,38 +10423,6 @@ public final class PlayerWrappers {
       }
 
       @java.lang.Override
-      public Builder clone() {
-        return super.clone();
-      }
-      @java.lang.Override
-      public Builder setField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return super.setField(field, value);
-      }
-      @java.lang.Override
-      public Builder clearField(
-          com.google.protobuf.Descriptors.FieldDescriptor field) {
-        return super.clearField(field);
-      }
-      @java.lang.Override
-      public Builder clearOneof(
-          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-        return super.clearOneof(oneof);
-      }
-      @java.lang.Override
-      public Builder setRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          int index, java.lang.Object value) {
-        return super.setRepeatedField(field, index, value);
-      }
-      @java.lang.Override
-      public Builder addRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return super.addRepeatedField(field, value);
-      }
-      @java.lang.Override
       public Builder mergeFrom(com.google.protobuf.Message other) {
         if (other instanceof com.github.blackjack200.xyron.PlayerWrappers.PlayerLifeData) {
           return mergeFrom((com.github.blackjack200.xyron.PlayerWrappers.PlayerLifeData)other);
@@ -11027,19 +10684,20 @@ public final class PlayerWrappers {
       "ion\030\001 \001(\0132\033.xchange.EntityPositionData\022\'" +
       "\n\013brokenBlock\030\002 \001(\0132\022.xchange.BlockData\"" +
       ";\n\021PlayerEatFoodData\022&\n\006status\030\002 \001(\0162\026.x" +
-      "change.ConsumeStatus\"5\n\020PlayerAttackData" +
-      "\022!\n\004data\030\001 \001(\0132\023.xchange.AttackData\":\n\020P" +
-      "layerEffectData\022&\n\006effect\030\001 \003(\0132\026.xchang" +
-      "e.EffectFeature\"9\n\022PlayerGameModeData\022#\n" +
-      "\010gameMode\030\001 \001(\0162\021.xchange.GameMode\"a\n\020Pl" +
-      "ayerMotionData\022-\n\010position\030\001 \001(\0132\033.xchan" +
-      "ge.EntityPositionData\022\036\n\006motion\030\002 \001(\0132\016." +
-      "xchange.Vec3f\"<\n\023PlayerInputModeData\022%\n\t" +
-      "inputMode\030\001 \001(\0162\022.xchange.InputMode\";\n\030P" +
-      "layerHeldItemChangeData\022\037\n\004item\030\001 \001(\0132\021." +
-      "xchange.ItemData\"\037\n\016PlayerLifeData\022\r\n\005al" +
-      "ive\030\001 \001(\010B=\n\035com.github.blackjack200.xyr" +
-      "onZ\006xyron/\210\001\001\312\002\rprokits\\xyron\320\002\001b\006proto3"
+      "change.ConsumeStatus\"F\n\020PlayerAttackData" +
+      "\022!\n\004data\030\001 \001(\0132\023.xchange.AttackData\022\017\n\007d" +
+      "amaged\030\002 \001(\010\":\n\020PlayerEffectData\022&\n\006effe" +
+      "ct\030\001 \003(\0132\026.xchange.EffectFeature\"9\n\022Play" +
+      "erGameModeData\022#\n\010gameMode\030\001 \001(\0162\021.xchan" +
+      "ge.GameMode\"a\n\020PlayerMotionData\022-\n\010posit" +
+      "ion\030\001 \001(\0132\033.xchange.EntityPositionData\022\036" +
+      "\n\006motion\030\002 \001(\0132\016.xchange.Vec3f\"<\n\023Player" +
+      "InputModeData\022%\n\tinputMode\030\001 \001(\0162\022.xchan" +
+      "ge.InputMode\";\n\030PlayerHeldItemChangeData" +
+      "\022\037\n\004item\030\001 \001(\0132\021.xchange.ItemData\"\037\n\016Pla" +
+      "yerLifeData\022\r\n\005alive\030\001 \001(\010B=\n\035com.github" +
+      ".blackjack200.xyronZ\006xyron/\210\001\001\312\002\rprokits" +
+      "\\xyron\320\002\001b\006proto3"
     };
     descriptor = com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
@@ -11088,7 +10746,7 @@ public final class PlayerWrappers {
     internal_static_xchange_PlayerAttackData_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_xchange_PlayerAttackData_descriptor,
-        new java.lang.String[] { "Data", });
+        new java.lang.String[] { "Data", "Damaged", });
     internal_static_xchange_PlayerEffectData_descriptor =
       getDescriptor().getMessageTypes().get(7);
     internal_static_xchange_PlayerEffectData_fieldAccessorTable = new

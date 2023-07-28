@@ -45,16 +45,30 @@ class AnticheatClient extends \Grpc\BaseStub {
     }
 
     /**
-     * @param \prokits\xyron\PlayerReport $argument input argument
+     * @param \prokits\xyron\ReportData $argument input argument
      * @param array $metadata metadata
      * @param array $options call options
      * @return \Grpc\UnaryCall
      */
-    public function Report(\prokits\xyron\PlayerReport $argument,
+    public function Report(\prokits\xyron\ReportData $argument,
       $metadata = [], $options = []) {
         return $this->_simpleRequest('/xchange.Anticheat/Report',
         $argument,
         ['\prokits\xyron\ReportResponse', 'decode'],
+        $metadata, $options);
+    }
+
+    /**
+     * @param \prokits\xyron\BatchedReportData $argument input argument
+     * @param array $metadata metadata
+     * @param array $options call options
+     * @return \Grpc\UnaryCall
+     */
+    public function ReportBatched(\prokits\xyron\BatchedReportData $argument,
+      $metadata = [], $options = []) {
+        return $this->_simpleRequest('/xchange.Anticheat/ReportBatched',
+        $argument,
+        ['\prokits\xyron\BatchedReportResponse', 'decode'],
         $metadata, $options);
     }
 

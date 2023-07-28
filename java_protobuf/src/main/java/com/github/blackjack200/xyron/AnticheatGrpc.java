@@ -77,27 +77,27 @@ public final class AnticheatGrpc {
     return getRemovePlayerMethod;
   }
 
-  private static volatile io.grpc.MethodDescriptor<com.github.blackjack200.xyron.Xchange.PlayerReport,
+  private static volatile io.grpc.MethodDescriptor<com.github.blackjack200.xyron.Xchange.ReportData,
       com.github.blackjack200.xyron.Xchange.ReportResponse> getReportMethod;
 
   @io.grpc.stub.annotations.RpcMethod(
       fullMethodName = SERVICE_NAME + '/' + "Report",
-      requestType = com.github.blackjack200.xyron.Xchange.PlayerReport.class,
+      requestType = com.github.blackjack200.xyron.Xchange.ReportData.class,
       responseType = com.github.blackjack200.xyron.Xchange.ReportResponse.class,
       methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
-  public static io.grpc.MethodDescriptor<com.github.blackjack200.xyron.Xchange.PlayerReport,
+  public static io.grpc.MethodDescriptor<com.github.blackjack200.xyron.Xchange.ReportData,
       com.github.blackjack200.xyron.Xchange.ReportResponse> getReportMethod() {
-    io.grpc.MethodDescriptor<com.github.blackjack200.xyron.Xchange.PlayerReport, com.github.blackjack200.xyron.Xchange.ReportResponse> getReportMethod;
+    io.grpc.MethodDescriptor<com.github.blackjack200.xyron.Xchange.ReportData, com.github.blackjack200.xyron.Xchange.ReportResponse> getReportMethod;
     if ((getReportMethod = AnticheatGrpc.getReportMethod) == null) {
       synchronized (AnticheatGrpc.class) {
         if ((getReportMethod = AnticheatGrpc.getReportMethod) == null) {
           AnticheatGrpc.getReportMethod = getReportMethod =
-              io.grpc.MethodDescriptor.<com.github.blackjack200.xyron.Xchange.PlayerReport, com.github.blackjack200.xyron.Xchange.ReportResponse>newBuilder()
+              io.grpc.MethodDescriptor.<com.github.blackjack200.xyron.Xchange.ReportData, com.github.blackjack200.xyron.Xchange.ReportResponse>newBuilder()
               .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
               .setFullMethodName(generateFullMethodName(SERVICE_NAME, "Report"))
               .setSampledToLocalTracing(true)
               .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
-                  com.github.blackjack200.xyron.Xchange.PlayerReport.getDefaultInstance()))
+                  com.github.blackjack200.xyron.Xchange.ReportData.getDefaultInstance()))
               .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
                   com.github.blackjack200.xyron.Xchange.ReportResponse.getDefaultInstance()))
               .setSchemaDescriptor(new AnticheatMethodDescriptorSupplier("Report"))
@@ -106,6 +106,37 @@ public final class AnticheatGrpc {
       }
     }
     return getReportMethod;
+  }
+
+  private static volatile io.grpc.MethodDescriptor<com.github.blackjack200.xyron.Xchange.BatchedReportData,
+      com.github.blackjack200.xyron.Xchange.BatchedReportResponse> getReportBatchedMethod;
+
+  @io.grpc.stub.annotations.RpcMethod(
+      fullMethodName = SERVICE_NAME + '/' + "ReportBatched",
+      requestType = com.github.blackjack200.xyron.Xchange.BatchedReportData.class,
+      responseType = com.github.blackjack200.xyron.Xchange.BatchedReportResponse.class,
+      methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
+  public static io.grpc.MethodDescriptor<com.github.blackjack200.xyron.Xchange.BatchedReportData,
+      com.github.blackjack200.xyron.Xchange.BatchedReportResponse> getReportBatchedMethod() {
+    io.grpc.MethodDescriptor<com.github.blackjack200.xyron.Xchange.BatchedReportData, com.github.blackjack200.xyron.Xchange.BatchedReportResponse> getReportBatchedMethod;
+    if ((getReportBatchedMethod = AnticheatGrpc.getReportBatchedMethod) == null) {
+      synchronized (AnticheatGrpc.class) {
+        if ((getReportBatchedMethod = AnticheatGrpc.getReportBatchedMethod) == null) {
+          AnticheatGrpc.getReportBatchedMethod = getReportBatchedMethod =
+              io.grpc.MethodDescriptor.<com.github.blackjack200.xyron.Xchange.BatchedReportData, com.github.blackjack200.xyron.Xchange.BatchedReportResponse>newBuilder()
+              .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
+              .setFullMethodName(generateFullMethodName(SERVICE_NAME, "ReportBatched"))
+              .setSampledToLocalTracing(true)
+              .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  com.github.blackjack200.xyron.Xchange.BatchedReportData.getDefaultInstance()))
+              .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  com.github.blackjack200.xyron.Xchange.BatchedReportResponse.getDefaultInstance()))
+              .setSchemaDescriptor(new AnticheatMethodDescriptorSupplier("ReportBatched"))
+              .build();
+        }
+      }
+    }
+    return getReportBatchedMethod;
   }
 
   /**
@@ -172,9 +203,16 @@ public final class AnticheatGrpc {
 
     /**
      */
-    default void report(com.github.blackjack200.xyron.Xchange.PlayerReport request,
+    default void report(com.github.blackjack200.xyron.Xchange.ReportData request,
         io.grpc.stub.StreamObserver<com.github.blackjack200.xyron.Xchange.ReportResponse> responseObserver) {
       io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getReportMethod(), responseObserver);
+    }
+
+    /**
+     */
+    default void reportBatched(com.github.blackjack200.xyron.Xchange.BatchedReportData request,
+        io.grpc.stub.StreamObserver<com.github.blackjack200.xyron.Xchange.BatchedReportResponse> responseObserver) {
+      io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getReportBatchedMethod(), responseObserver);
     }
   }
 
@@ -223,10 +261,18 @@ public final class AnticheatGrpc {
 
     /**
      */
-    public void report(com.github.blackjack200.xyron.Xchange.PlayerReport request,
+    public void report(com.github.blackjack200.xyron.Xchange.ReportData request,
         io.grpc.stub.StreamObserver<com.github.blackjack200.xyron.Xchange.ReportResponse> responseObserver) {
       io.grpc.stub.ClientCalls.asyncUnaryCall(
           getChannel().newCall(getReportMethod(), getCallOptions()), request, responseObserver);
+    }
+
+    /**
+     */
+    public void reportBatched(com.github.blackjack200.xyron.Xchange.BatchedReportData request,
+        io.grpc.stub.StreamObserver<com.github.blackjack200.xyron.Xchange.BatchedReportResponse> responseObserver) {
+      io.grpc.stub.ClientCalls.asyncUnaryCall(
+          getChannel().newCall(getReportBatchedMethod(), getCallOptions()), request, responseObserver);
     }
   }
 
@@ -262,9 +308,16 @@ public final class AnticheatGrpc {
 
     /**
      */
-    public com.github.blackjack200.xyron.Xchange.ReportResponse report(com.github.blackjack200.xyron.Xchange.PlayerReport request) {
+    public com.github.blackjack200.xyron.Xchange.ReportResponse report(com.github.blackjack200.xyron.Xchange.ReportData request) {
       return io.grpc.stub.ClientCalls.blockingUnaryCall(
           getChannel(), getReportMethod(), getCallOptions(), request);
+    }
+
+    /**
+     */
+    public com.github.blackjack200.xyron.Xchange.BatchedReportResponse reportBatched(com.github.blackjack200.xyron.Xchange.BatchedReportData request) {
+      return io.grpc.stub.ClientCalls.blockingUnaryCall(
+          getChannel(), getReportBatchedMethod(), getCallOptions(), request);
     }
   }
 
@@ -303,15 +356,24 @@ public final class AnticheatGrpc {
     /**
      */
     public com.google.common.util.concurrent.ListenableFuture<com.github.blackjack200.xyron.Xchange.ReportResponse> report(
-        com.github.blackjack200.xyron.Xchange.PlayerReport request) {
+        com.github.blackjack200.xyron.Xchange.ReportData request) {
       return io.grpc.stub.ClientCalls.futureUnaryCall(
           getChannel().newCall(getReportMethod(), getCallOptions()), request);
+    }
+
+    /**
+     */
+    public com.google.common.util.concurrent.ListenableFuture<com.github.blackjack200.xyron.Xchange.BatchedReportResponse> reportBatched(
+        com.github.blackjack200.xyron.Xchange.BatchedReportData request) {
+      return io.grpc.stub.ClientCalls.futureUnaryCall(
+          getChannel().newCall(getReportBatchedMethod(), getCallOptions()), request);
     }
   }
 
   private static final int METHODID_ADD_PLAYER = 0;
   private static final int METHODID_REMOVE_PLAYER = 1;
   private static final int METHODID_REPORT = 2;
+  private static final int METHODID_REPORT_BATCHED = 3;
 
   private static final class MethodHandlers<Req, Resp> implements
       io.grpc.stub.ServerCalls.UnaryMethod<Req, Resp>,
@@ -339,8 +401,12 @@ public final class AnticheatGrpc {
               (io.grpc.stub.StreamObserver<com.google.protobuf.Empty>) responseObserver);
           break;
         case METHODID_REPORT:
-          serviceImpl.report((com.github.blackjack200.xyron.Xchange.PlayerReport) request,
+          serviceImpl.report((com.github.blackjack200.xyron.Xchange.ReportData) request,
               (io.grpc.stub.StreamObserver<com.github.blackjack200.xyron.Xchange.ReportResponse>) responseObserver);
+          break;
+        case METHODID_REPORT_BATCHED:
+          serviceImpl.reportBatched((com.github.blackjack200.xyron.Xchange.BatchedReportData) request,
+              (io.grpc.stub.StreamObserver<com.github.blackjack200.xyron.Xchange.BatchedReportResponse>) responseObserver);
           break;
         default:
           throw new AssertionError();
@@ -378,9 +444,16 @@ public final class AnticheatGrpc {
           getReportMethod(),
           io.grpc.stub.ServerCalls.asyncUnaryCall(
             new MethodHandlers<
-              com.github.blackjack200.xyron.Xchange.PlayerReport,
+              com.github.blackjack200.xyron.Xchange.ReportData,
               com.github.blackjack200.xyron.Xchange.ReportResponse>(
                 service, METHODID_REPORT)))
+        .addMethod(
+          getReportBatchedMethod(),
+          io.grpc.stub.ServerCalls.asyncUnaryCall(
+            new MethodHandlers<
+              com.github.blackjack200.xyron.Xchange.BatchedReportData,
+              com.github.blackjack200.xyron.Xchange.BatchedReportResponse>(
+                service, METHODID_REPORT_BATCHED)))
         .build();
   }
 
@@ -432,6 +505,7 @@ public final class AnticheatGrpc {
               .addMethod(getAddPlayerMethod())
               .addMethod(getRemovePlayerMethod())
               .addMethod(getReportMethod())
+              .addMethod(getReportBatchedMethod())
               .build();
         }
       }

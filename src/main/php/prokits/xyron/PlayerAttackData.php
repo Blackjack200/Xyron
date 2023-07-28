@@ -17,6 +17,10 @@ class PlayerAttackData extends \Google\Protobuf\Internal\Message
      * Generated from protobuf field <code>.xchange.AttackData data = 1;</code>
      */
     protected $data = null;
+    /**
+     * Generated from protobuf field <code>bool damaged = 2;</code>
+     */
+    protected $damaged = false;
 
     /**
      * Constructor.
@@ -25,6 +29,7 @@ class PlayerAttackData extends \Google\Protobuf\Internal\Message
      *     Optional. Data for populating the Message object.
      *
      *     @type \prokits\xyron\AttackData $data
+     *     @type bool $damaged
      * }
      */
     public function __construct($data = NULL) {
@@ -60,6 +65,28 @@ class PlayerAttackData extends \Google\Protobuf\Internal\Message
     {
         GPBUtil::checkMessage($var, \prokits\xyron\AttackData::class);
         $this->data = $var;
+
+        return $this;
+    }
+
+    /**
+     * Generated from protobuf field <code>bool damaged = 2;</code>
+     * @return bool
+     */
+    public function getDamaged()
+    {
+        return $this->damaged;
+    }
+
+    /**
+     * Generated from protobuf field <code>bool damaged = 2;</code>
+     * @param bool $var
+     * @return $this
+     */
+    public function setDamaged($var)
+    {
+        GPBUtil::checkBool($var);
+        $this->damaged = $var;
 
         return $this;
     }

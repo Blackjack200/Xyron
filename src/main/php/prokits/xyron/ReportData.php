@@ -9,9 +9,9 @@ use Google\Protobuf\Internal\RepeatedField;
 use Google\Protobuf\Internal\GPBUtil;
 
 /**
- * Generated from protobuf message <code>xchange.PlayerReport</code>
+ * Generated from protobuf message <code>xchange.ReportData</code>
  */
-class PlayerReport extends \Google\Protobuf\Internal\Message
+class ReportData extends \Google\Protobuf\Internal\Message
 {
     /**
      * Generated from protobuf field <code>.xchange.PlayerReceipt player = 1;</code>

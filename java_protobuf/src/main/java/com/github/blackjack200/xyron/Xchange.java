@@ -335,38 +335,6 @@ public final class Xchange {
       }
 
       @java.lang.Override
-      public Builder clone() {
-        return super.clone();
-      }
-      @java.lang.Override
-      public Builder setField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return super.setField(field, value);
-      }
-      @java.lang.Override
-      public Builder clearField(
-          com.google.protobuf.Descriptors.FieldDescriptor field) {
-        return super.clearField(field);
-      }
-      @java.lang.Override
-      public Builder clearOneof(
-          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-        return super.clearOneof(oneof);
-      }
-      @java.lang.Override
-      public Builder setRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          int index, java.lang.Object value) {
-        return super.setRepeatedField(field, index, value);
-      }
-      @java.lang.Override
-      public Builder addRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return super.addRepeatedField(field, value);
-      }
-      @java.lang.Override
       public Builder mergeFrom(com.google.protobuf.Message other) {
         if (other instanceof com.github.blackjack200.xyron.Xchange.PlayerReceipt) {
           return mergeFrom((com.github.blackjack200.xyron.Xchange.PlayerReceipt)other);
@@ -920,38 +888,6 @@ public final class Xchange {
       }
 
       @java.lang.Override
-      public Builder clone() {
-        return super.clone();
-      }
-      @java.lang.Override
-      public Builder setField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return super.setField(field, value);
-      }
-      @java.lang.Override
-      public Builder clearField(
-          com.google.protobuf.Descriptors.FieldDescriptor field) {
-        return super.clearField(field);
-      }
-      @java.lang.Override
-      public Builder clearOneof(
-          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-        return super.clearOneof(oneof);
-      }
-      @java.lang.Override
-      public Builder setRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          int index, java.lang.Object value) {
-        return super.setRepeatedField(field, index, value);
-      }
-      @java.lang.Override
-      public Builder addRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return super.addRepeatedField(field, value);
-      }
-      @java.lang.Override
       public Builder mergeFrom(com.google.protobuf.Message other) {
         if (other instanceof com.github.blackjack200.xyron.Xchange.TimestampedReportData) {
           return mergeFrom((com.github.blackjack200.xyron.Xchange.TimestampedReportData)other);
@@ -1343,714 +1279,6 @@ public final class Xchange {
 
     @java.lang.Override
     public com.github.blackjack200.xyron.Xchange.TimestampedReportData getDefaultInstanceForType() {
-      return DEFAULT_INSTANCE;
-    }
-
-  }
-
-  public interface ServerExecutionOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:xchange.ServerExecution)
-      com.google.protobuf.MessageOrBuilder {
-
-    /**
-     * <code>string type = 1;</code>
-     * @return The type.
-     */
-    java.lang.String getType();
-    /**
-     * <code>string type = 1;</code>
-     * @return The bytes for type.
-     */
-    com.google.protobuf.ByteString
-        getTypeBytes();
-
-    /**
-     * <code>string extraData = 2;</code>
-     * @return The extraData.
-     */
-    java.lang.String getExtraData();
-    /**
-     * <code>string extraData = 2;</code>
-     * @return The bytes for extraData.
-     */
-    com.google.protobuf.ByteString
-        getExtraDataBytes();
-  }
-  /**
-   * <pre>
-   *TODO improve this
-   * </pre>
-   *
-   * Protobuf type {@code xchange.ServerExecution}
-   */
-  public static final class ServerExecution extends
-      com.google.protobuf.GeneratedMessageV3 implements
-      // @@protoc_insertion_point(message_implements:xchange.ServerExecution)
-      ServerExecutionOrBuilder {
-  private static final long serialVersionUID = 0L;
-    // Use ServerExecution.newBuilder() to construct.
-    private ServerExecution(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
-      super(builder);
-    }
-    private ServerExecution() {
-      type_ = "";
-      extraData_ = "";
-    }
-
-    @java.lang.Override
-    @SuppressWarnings({"unused"})
-    protected java.lang.Object newInstance(
-        UnusedPrivateParameter unused) {
-      return new ServerExecution();
-    }
-
-    public static final com.google.protobuf.Descriptors.Descriptor
-        getDescriptor() {
-      return com.github.blackjack200.xyron.Xchange.internal_static_xchange_ServerExecution_descriptor;
-    }
-
-    @java.lang.Override
-    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-        internalGetFieldAccessorTable() {
-      return com.github.blackjack200.xyron.Xchange.internal_static_xchange_ServerExecution_fieldAccessorTable
-          .ensureFieldAccessorsInitialized(
-              com.github.blackjack200.xyron.Xchange.ServerExecution.class, com.github.blackjack200.xyron.Xchange.ServerExecution.Builder.class);
-    }
-
-    public static final int TYPE_FIELD_NUMBER = 1;
-    @SuppressWarnings("serial")
-    private volatile java.lang.Object type_ = "";
-    /**
-     * <code>string type = 1;</code>
-     * @return The type.
-     */
-    @java.lang.Override
-    public java.lang.String getType() {
-      java.lang.Object ref = type_;
-      if (ref instanceof java.lang.String) {
-        return (java.lang.String) ref;
-      } else {
-        com.google.protobuf.ByteString bs = 
-            (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        type_ = s;
-        return s;
-      }
-    }
-    /**
-     * <code>string type = 1;</code>
-     * @return The bytes for type.
-     */
-    @java.lang.Override
-    public com.google.protobuf.ByteString
-        getTypeBytes() {
-      java.lang.Object ref = type_;
-      if (ref instanceof java.lang.String) {
-        com.google.protobuf.ByteString b = 
-            com.google.protobuf.ByteString.copyFromUtf8(
-                (java.lang.String) ref);
-        type_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
-    }
-
-    public static final int EXTRADATA_FIELD_NUMBER = 2;
-    @SuppressWarnings("serial")
-    private volatile java.lang.Object extraData_ = "";
-    /**
-     * <code>string extraData = 2;</code>
-     * @return The extraData.
-     */
-    @java.lang.Override
-    public java.lang.String getExtraData() {
-      java.lang.Object ref = extraData_;
-      if (ref instanceof java.lang.String) {
-        return (java.lang.String) ref;
-      } else {
-        com.google.protobuf.ByteString bs = 
-            (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        extraData_ = s;
-        return s;
-      }
-    }
-    /**
-     * <code>string extraData = 2;</code>
-     * @return The bytes for extraData.
-     */
-    @java.lang.Override
-    public com.google.protobuf.ByteString
-        getExtraDataBytes() {
-      java.lang.Object ref = extraData_;
-      if (ref instanceof java.lang.String) {
-        com.google.protobuf.ByteString b = 
-            com.google.protobuf.ByteString.copyFromUtf8(
-                (java.lang.String) ref);
-        extraData_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
-    }
-
-    private byte memoizedIsInitialized = -1;
-    @java.lang.Override
-    public final boolean isInitialized() {
-      byte isInitialized = memoizedIsInitialized;
-      if (isInitialized == 1) return true;
-      if (isInitialized == 0) return false;
-
-      memoizedIsInitialized = 1;
-      return true;
-    }
-
-    @java.lang.Override
-    public void writeTo(com.google.protobuf.CodedOutputStream output)
-                        throws java.io.IOException {
-      if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(type_)) {
-        com.google.protobuf.GeneratedMessageV3.writeString(output, 1, type_);
-      }
-      if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(extraData_)) {
-        com.google.protobuf.GeneratedMessageV3.writeString(output, 2, extraData_);
-      }
-      getUnknownFields().writeTo(output);
-    }
-
-    @java.lang.Override
-    public int getSerializedSize() {
-      int size = memoizedSize;
-      if (size != -1) return size;
-
-      size = 0;
-      if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(type_)) {
-        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, type_);
-      }
-      if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(extraData_)) {
-        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, extraData_);
-      }
-      size += getUnknownFields().getSerializedSize();
-      memoizedSize = size;
-      return size;
-    }
-
-    @java.lang.Override
-    public boolean equals(final java.lang.Object obj) {
-      if (obj == this) {
-       return true;
-      }
-      if (!(obj instanceof com.github.blackjack200.xyron.Xchange.ServerExecution)) {
-        return super.equals(obj);
-      }
-      com.github.blackjack200.xyron.Xchange.ServerExecution other = (com.github.blackjack200.xyron.Xchange.ServerExecution) obj;
-
-      if (!getType()
-          .equals(other.getType())) return false;
-      if (!getExtraData()
-          .equals(other.getExtraData())) return false;
-      if (!getUnknownFields().equals(other.getUnknownFields())) return false;
-      return true;
-    }
-
-    @java.lang.Override
-    public int hashCode() {
-      if (memoizedHashCode != 0) {
-        return memoizedHashCode;
-      }
-      int hash = 41;
-      hash = (19 * hash) + getDescriptor().hashCode();
-      hash = (37 * hash) + TYPE_FIELD_NUMBER;
-      hash = (53 * hash) + getType().hashCode();
-      hash = (37 * hash) + EXTRADATA_FIELD_NUMBER;
-      hash = (53 * hash) + getExtraData().hashCode();
-      hash = (29 * hash) + getUnknownFields().hashCode();
-      memoizedHashCode = hash;
-      return hash;
-    }
-
-    public static com.github.blackjack200.xyron.Xchange.ServerExecution parseFrom(
-        java.nio.ByteBuffer data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-    public static com.github.blackjack200.xyron.Xchange.ServerExecution parseFrom(
-        java.nio.ByteBuffer data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
-    public static com.github.blackjack200.xyron.Xchange.ServerExecution parseFrom(
-        com.google.protobuf.ByteString data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-    public static com.github.blackjack200.xyron.Xchange.ServerExecution parseFrom(
-        com.google.protobuf.ByteString data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
-    public static com.github.blackjack200.xyron.Xchange.ServerExecution parseFrom(byte[] data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-    public static com.github.blackjack200.xyron.Xchange.ServerExecution parseFrom(
-        byte[] data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
-    public static com.github.blackjack200.xyron.Xchange.ServerExecution parseFrom(java.io.InputStream input)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input);
-    }
-    public static com.github.blackjack200.xyron.Xchange.ServerExecution parseFrom(
-        java.io.InputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input, extensionRegistry);
-    }
-
-    public static com.github.blackjack200.xyron.Xchange.ServerExecution parseDelimitedFrom(java.io.InputStream input)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseDelimitedWithIOException(PARSER, input);
-    }
-
-    public static com.github.blackjack200.xyron.Xchange.ServerExecution parseDelimitedFrom(
-        java.io.InputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
-    }
-    public static com.github.blackjack200.xyron.Xchange.ServerExecution parseFrom(
-        com.google.protobuf.CodedInputStream input)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input);
-    }
-    public static com.github.blackjack200.xyron.Xchange.ServerExecution parseFrom(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input, extensionRegistry);
-    }
-
-    @java.lang.Override
-    public Builder newBuilderForType() { return newBuilder(); }
-    public static Builder newBuilder() {
-      return DEFAULT_INSTANCE.toBuilder();
-    }
-    public static Builder newBuilder(com.github.blackjack200.xyron.Xchange.ServerExecution prototype) {
-      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
-    }
-    @java.lang.Override
-    public Builder toBuilder() {
-      return this == DEFAULT_INSTANCE
-          ? new Builder() : new Builder().mergeFrom(this);
-    }
-
-    @java.lang.Override
-    protected Builder newBuilderForType(
-        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-      Builder builder = new Builder(parent);
-      return builder;
-    }
-    /**
-     * <pre>
-     *TODO improve this
-     * </pre>
-     *
-     * Protobuf type {@code xchange.ServerExecution}
-     */
-    public static final class Builder extends
-        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:xchange.ServerExecution)
-        com.github.blackjack200.xyron.Xchange.ServerExecutionOrBuilder {
-      public static final com.google.protobuf.Descriptors.Descriptor
-          getDescriptor() {
-        return com.github.blackjack200.xyron.Xchange.internal_static_xchange_ServerExecution_descriptor;
-      }
-
-      @java.lang.Override
-      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-          internalGetFieldAccessorTable() {
-        return com.github.blackjack200.xyron.Xchange.internal_static_xchange_ServerExecution_fieldAccessorTable
-            .ensureFieldAccessorsInitialized(
-                com.github.blackjack200.xyron.Xchange.ServerExecution.class, com.github.blackjack200.xyron.Xchange.ServerExecution.Builder.class);
-      }
-
-      // Construct using com.github.blackjack200.xyron.Xchange.ServerExecution.newBuilder()
-      private Builder() {
-
-      }
-
-      private Builder(
-          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-        super(parent);
-
-      }
-      @java.lang.Override
-      public Builder clear() {
-        super.clear();
-        bitField0_ = 0;
-        type_ = "";
-        extraData_ = "";
-        return this;
-      }
-
-      @java.lang.Override
-      public com.google.protobuf.Descriptors.Descriptor
-          getDescriptorForType() {
-        return com.github.blackjack200.xyron.Xchange.internal_static_xchange_ServerExecution_descriptor;
-      }
-
-      @java.lang.Override
-      public com.github.blackjack200.xyron.Xchange.ServerExecution getDefaultInstanceForType() {
-        return com.github.blackjack200.xyron.Xchange.ServerExecution.getDefaultInstance();
-      }
-
-      @java.lang.Override
-      public com.github.blackjack200.xyron.Xchange.ServerExecution build() {
-        com.github.blackjack200.xyron.Xchange.ServerExecution result = buildPartial();
-        if (!result.isInitialized()) {
-          throw newUninitializedMessageException(result);
-        }
-        return result;
-      }
-
-      @java.lang.Override
-      public com.github.blackjack200.xyron.Xchange.ServerExecution buildPartial() {
-        com.github.blackjack200.xyron.Xchange.ServerExecution result = new com.github.blackjack200.xyron.Xchange.ServerExecution(this);
-        if (bitField0_ != 0) { buildPartial0(result); }
-        onBuilt();
-        return result;
-      }
-
-      private void buildPartial0(com.github.blackjack200.xyron.Xchange.ServerExecution result) {
-        int from_bitField0_ = bitField0_;
-        if (((from_bitField0_ & 0x00000001) != 0)) {
-          result.type_ = type_;
-        }
-        if (((from_bitField0_ & 0x00000002) != 0)) {
-          result.extraData_ = extraData_;
-        }
-      }
-
-      @java.lang.Override
-      public Builder clone() {
-        return super.clone();
-      }
-      @java.lang.Override
-      public Builder setField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return super.setField(field, value);
-      }
-      @java.lang.Override
-      public Builder clearField(
-          com.google.protobuf.Descriptors.FieldDescriptor field) {
-        return super.clearField(field);
-      }
-      @java.lang.Override
-      public Builder clearOneof(
-          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-        return super.clearOneof(oneof);
-      }
-      @java.lang.Override
-      public Builder setRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          int index, java.lang.Object value) {
-        return super.setRepeatedField(field, index, value);
-      }
-      @java.lang.Override
-      public Builder addRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return super.addRepeatedField(field, value);
-      }
-      @java.lang.Override
-      public Builder mergeFrom(com.google.protobuf.Message other) {
-        if (other instanceof com.github.blackjack200.xyron.Xchange.ServerExecution) {
-          return mergeFrom((com.github.blackjack200.xyron.Xchange.ServerExecution)other);
-        } else {
-          super.mergeFrom(other);
-          return this;
-        }
-      }
-
-      public Builder mergeFrom(com.github.blackjack200.xyron.Xchange.ServerExecution other) {
-        if (other == com.github.blackjack200.xyron.Xchange.ServerExecution.getDefaultInstance()) return this;
-        if (!other.getType().isEmpty()) {
-          type_ = other.type_;
-          bitField0_ |= 0x00000001;
-          onChanged();
-        }
-        if (!other.getExtraData().isEmpty()) {
-          extraData_ = other.extraData_;
-          bitField0_ |= 0x00000002;
-          onChanged();
-        }
-        this.mergeUnknownFields(other.getUnknownFields());
-        onChanged();
-        return this;
-      }
-
-      @java.lang.Override
-      public final boolean isInitialized() {
-        return true;
-      }
-
-      @java.lang.Override
-      public Builder mergeFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws java.io.IOException {
-        if (extensionRegistry == null) {
-          throw new java.lang.NullPointerException();
-        }
-        try {
-          boolean done = false;
-          while (!done) {
-            int tag = input.readTag();
-            switch (tag) {
-              case 0:
-                done = true;
-                break;
-              case 10: {
-                type_ = input.readStringRequireUtf8();
-                bitField0_ |= 0x00000001;
-                break;
-              } // case 10
-              case 18: {
-                extraData_ = input.readStringRequireUtf8();
-                bitField0_ |= 0x00000002;
-                break;
-              } // case 18
-              default: {
-                if (!super.parseUnknownField(input, extensionRegistry, tag)) {
-                  done = true; // was an endgroup tag
-                }
-                break;
-              } // default:
-            } // switch (tag)
-          } // while (!done)
-        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-          throw e.unwrapIOException();
-        } finally {
-          onChanged();
-        } // finally
-        return this;
-      }
-      private int bitField0_;
-
-      private java.lang.Object type_ = "";
-      /**
-       * <code>string type = 1;</code>
-       * @return The type.
-       */
-      public java.lang.String getType() {
-        java.lang.Object ref = type_;
-        if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs =
-              (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          type_ = s;
-          return s;
-        } else {
-          return (java.lang.String) ref;
-        }
-      }
-      /**
-       * <code>string type = 1;</code>
-       * @return The bytes for type.
-       */
-      public com.google.protobuf.ByteString
-          getTypeBytes() {
-        java.lang.Object ref = type_;
-        if (ref instanceof String) {
-          com.google.protobuf.ByteString b = 
-              com.google.protobuf.ByteString.copyFromUtf8(
-                  (java.lang.String) ref);
-          type_ = b;
-          return b;
-        } else {
-          return (com.google.protobuf.ByteString) ref;
-        }
-      }
-      /**
-       * <code>string type = 1;</code>
-       * @param value The type to set.
-       * @return This builder for chaining.
-       */
-      public Builder setType(
-          java.lang.String value) {
-        if (value == null) { throw new NullPointerException(); }
-        type_ = value;
-        bitField0_ |= 0x00000001;
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>string type = 1;</code>
-       * @return This builder for chaining.
-       */
-      public Builder clearType() {
-        type_ = getDefaultInstance().getType();
-        bitField0_ = (bitField0_ & ~0x00000001);
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>string type = 1;</code>
-       * @param value The bytes for type to set.
-       * @return This builder for chaining.
-       */
-      public Builder setTypeBytes(
-          com.google.protobuf.ByteString value) {
-        if (value == null) { throw new NullPointerException(); }
-        checkByteStringIsUtf8(value);
-        type_ = value;
-        bitField0_ |= 0x00000001;
-        onChanged();
-        return this;
-      }
-
-      private java.lang.Object extraData_ = "";
-      /**
-       * <code>string extraData = 2;</code>
-       * @return The extraData.
-       */
-      public java.lang.String getExtraData() {
-        java.lang.Object ref = extraData_;
-        if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs =
-              (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          extraData_ = s;
-          return s;
-        } else {
-          return (java.lang.String) ref;
-        }
-      }
-      /**
-       * <code>string extraData = 2;</code>
-       * @return The bytes for extraData.
-       */
-      public com.google.protobuf.ByteString
-          getExtraDataBytes() {
-        java.lang.Object ref = extraData_;
-        if (ref instanceof String) {
-          com.google.protobuf.ByteString b = 
-              com.google.protobuf.ByteString.copyFromUtf8(
-                  (java.lang.String) ref);
-          extraData_ = b;
-          return b;
-        } else {
-          return (com.google.protobuf.ByteString) ref;
-        }
-      }
-      /**
-       * <code>string extraData = 2;</code>
-       * @param value The extraData to set.
-       * @return This builder for chaining.
-       */
-      public Builder setExtraData(
-          java.lang.String value) {
-        if (value == null) { throw new NullPointerException(); }
-        extraData_ = value;
-        bitField0_ |= 0x00000002;
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>string extraData = 2;</code>
-       * @return This builder for chaining.
-       */
-      public Builder clearExtraData() {
-        extraData_ = getDefaultInstance().getExtraData();
-        bitField0_ = (bitField0_ & ~0x00000002);
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>string extraData = 2;</code>
-       * @param value The bytes for extraData to set.
-       * @return This builder for chaining.
-       */
-      public Builder setExtraDataBytes(
-          com.google.protobuf.ByteString value) {
-        if (value == null) { throw new NullPointerException(); }
-        checkByteStringIsUtf8(value);
-        extraData_ = value;
-        bitField0_ |= 0x00000002;
-        onChanged();
-        return this;
-      }
-      @java.lang.Override
-      public final Builder setUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.setUnknownFields(unknownFields);
-      }
-
-      @java.lang.Override
-      public final Builder mergeUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.mergeUnknownFields(unknownFields);
-      }
-
-
-      // @@protoc_insertion_point(builder_scope:xchange.ServerExecution)
-    }
-
-    // @@protoc_insertion_point(class_scope:xchange.ServerExecution)
-    private static final com.github.blackjack200.xyron.Xchange.ServerExecution DEFAULT_INSTANCE;
-    static {
-      DEFAULT_INSTANCE = new com.github.blackjack200.xyron.Xchange.ServerExecution();
-    }
-
-    public static com.github.blackjack200.xyron.Xchange.ServerExecution getDefaultInstance() {
-      return DEFAULT_INSTANCE;
-    }
-
-    private static final com.google.protobuf.Parser<ServerExecution>
-        PARSER = new com.google.protobuf.AbstractParser<ServerExecution>() {
-      @java.lang.Override
-      public ServerExecution parsePartialFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws com.google.protobuf.InvalidProtocolBufferException {
-        Builder builder = newBuilder();
-        try {
-          builder.mergeFrom(input, extensionRegistry);
-        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-          throw e.setUnfinishedMessage(builder.buildPartial());
-        } catch (com.google.protobuf.UninitializedMessageException e) {
-          throw e.asInvalidProtocolBufferException().setUnfinishedMessage(builder.buildPartial());
-        } catch (java.io.IOException e) {
-          throw new com.google.protobuf.InvalidProtocolBufferException(e)
-              .setUnfinishedMessage(builder.buildPartial());
-        }
-        return builder.buildPartial();
-      }
-    };
-
-    public static com.google.protobuf.Parser<ServerExecution> parser() {
-      return PARSER;
-    }
-
-    @java.lang.Override
-    public com.google.protobuf.Parser<ServerExecution> getParserForType() {
-      return PARSER;
-    }
-
-    @java.lang.Override
-    public com.github.blackjack200.xyron.Xchange.ServerExecution getDefaultInstanceForType() {
       return DEFAULT_INSTANCE;
     }
 
@@ -2588,38 +1816,6 @@ com.github.blackjack200.xyron.Xchange.TimestampedReportData defaultValue) {
       }
 
       @java.lang.Override
-      public Builder clone() {
-        return super.clone();
-      }
-      @java.lang.Override
-      public Builder setField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return super.setField(field, value);
-      }
-      @java.lang.Override
-      public Builder clearField(
-          com.google.protobuf.Descriptors.FieldDescriptor field) {
-        return super.clearField(field);
-      }
-      @java.lang.Override
-      public Builder clearOneof(
-          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-        return super.clearOneof(oneof);
-      }
-      @java.lang.Override
-      public Builder setRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          int index, java.lang.Object value) {
-        return super.setRepeatedField(field, index, value);
-      }
-      @java.lang.Override
-      public Builder addRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return super.addRepeatedField(field, value);
-      }
-      @java.lang.Override
       public Builder mergeFrom(com.google.protobuf.Message other) {
         if (other instanceof com.github.blackjack200.xyron.Xchange.AddPlayerRequest) {
           return mergeFrom((com.github.blackjack200.xyron.Xchange.AddPlayerRequest)other);
@@ -3033,8 +2229,8 @@ com.github.blackjack200.xyron.Xchange.TimestampedReportData defaultValue) {
 
   }
 
-  public interface PlayerReportOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:xchange.PlayerReport)
+  public interface ReportDataOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:xchange.ReportData)
       com.google.protobuf.MessageOrBuilder {
 
     /**
@@ -3113,30 +2309,30 @@ com.github.blackjack200.xyron.Xchange.TimestampedReportData defaultValue);
         long key);
   }
   /**
-   * Protobuf type {@code xchange.PlayerReport}
+   * Protobuf type {@code xchange.ReportData}
    */
-  public static final class PlayerReport extends
+  public static final class ReportData extends
       com.google.protobuf.GeneratedMessageV3 implements
-      // @@protoc_insertion_point(message_implements:xchange.PlayerReport)
-      PlayerReportOrBuilder {
+      // @@protoc_insertion_point(message_implements:xchange.ReportData)
+      ReportDataOrBuilder {
   private static final long serialVersionUID = 0L;
-    // Use PlayerReport.newBuilder() to construct.
-    private PlayerReport(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+    // Use ReportData.newBuilder() to construct.
+    private ReportData(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
       super(builder);
     }
-    private PlayerReport() {
+    private ReportData() {
     }
 
     @java.lang.Override
     @SuppressWarnings({"unused"})
     protected java.lang.Object newInstance(
         UnusedPrivateParameter unused) {
-      return new PlayerReport();
+      return new ReportData();
     }
 
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
-      return com.github.blackjack200.xyron.Xchange.internal_static_xchange_PlayerReport_descriptor;
+      return com.github.blackjack200.xyron.Xchange.internal_static_xchange_ReportData_descriptor;
     }
 
     @SuppressWarnings({"rawtypes"})
@@ -3154,9 +2350,9 @@ com.github.blackjack200.xyron.Xchange.TimestampedReportData defaultValue);
     @java.lang.Override
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return com.github.blackjack200.xyron.Xchange.internal_static_xchange_PlayerReport_fieldAccessorTable
+      return com.github.blackjack200.xyron.Xchange.internal_static_xchange_ReportData_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
-              com.github.blackjack200.xyron.Xchange.PlayerReport.class, com.github.blackjack200.xyron.Xchange.PlayerReport.Builder.class);
+              com.github.blackjack200.xyron.Xchange.ReportData.class, com.github.blackjack200.xyron.Xchange.ReportData.Builder.class);
     }
 
     public static final int PLAYER_FIELD_NUMBER = 1;
@@ -3202,7 +2398,7 @@ com.github.blackjack200.xyron.Xchange.TimestampedReportData defaultValue);
           java.lang.Long, com.github.blackjack200.xyron.Xchange.TimestampedReportData> defaultEntry =
               com.google.protobuf.MapEntry
               .<java.lang.Long, com.github.blackjack200.xyron.Xchange.TimestampedReportData>newDefaultInstance(
-                  com.github.blackjack200.xyron.Xchange.internal_static_xchange_PlayerReport_DataEntry_descriptor, 
+                  com.github.blackjack200.xyron.Xchange.internal_static_xchange_ReportData_DataEntry_descriptor, 
                   com.google.protobuf.WireFormat.FieldType.INT64,
                   0L,
                   com.google.protobuf.WireFormat.FieldType.MESSAGE,
@@ -3354,10 +2550,10 @@ com.github.blackjack200.xyron.Xchange.TimestampedReportData defaultValue) {
       if (obj == this) {
        return true;
       }
-      if (!(obj instanceof com.github.blackjack200.xyron.Xchange.PlayerReport)) {
+      if (!(obj instanceof com.github.blackjack200.xyron.Xchange.ReportData)) {
         return super.equals(obj);
       }
-      com.github.blackjack200.xyron.Xchange.PlayerReport other = (com.github.blackjack200.xyron.Xchange.PlayerReport) obj;
+      com.github.blackjack200.xyron.Xchange.ReportData other = (com.github.blackjack200.xyron.Xchange.ReportData) obj;
 
       if (hasPlayer() != other.hasPlayer()) return false;
       if (hasPlayer()) {
@@ -3396,44 +2592,44 @@ com.github.blackjack200.xyron.Xchange.TimestampedReportData defaultValue) {
       return hash;
     }
 
-    public static com.github.blackjack200.xyron.Xchange.PlayerReport parseFrom(
+    public static com.github.blackjack200.xyron.Xchange.ReportData parseFrom(
         java.nio.ByteBuffer data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static com.github.blackjack200.xyron.Xchange.PlayerReport parseFrom(
+    public static com.github.blackjack200.xyron.Xchange.ReportData parseFrom(
         java.nio.ByteBuffer data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static com.github.blackjack200.xyron.Xchange.PlayerReport parseFrom(
+    public static com.github.blackjack200.xyron.Xchange.ReportData parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static com.github.blackjack200.xyron.Xchange.PlayerReport parseFrom(
+    public static com.github.blackjack200.xyron.Xchange.ReportData parseFrom(
         com.google.protobuf.ByteString data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static com.github.blackjack200.xyron.Xchange.PlayerReport parseFrom(byte[] data)
+    public static com.github.blackjack200.xyron.Xchange.ReportData parseFrom(byte[] data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static com.github.blackjack200.xyron.Xchange.PlayerReport parseFrom(
+    public static com.github.blackjack200.xyron.Xchange.ReportData parseFrom(
         byte[] data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static com.github.blackjack200.xyron.Xchange.PlayerReport parseFrom(java.io.InputStream input)
+    public static com.github.blackjack200.xyron.Xchange.ReportData parseFrom(java.io.InputStream input)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseWithIOException(PARSER, input);
     }
-    public static com.github.blackjack200.xyron.Xchange.PlayerReport parseFrom(
+    public static com.github.blackjack200.xyron.Xchange.ReportData parseFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
@@ -3441,26 +2637,26 @@ com.github.blackjack200.xyron.Xchange.TimestampedReportData defaultValue) {
           .parseWithIOException(PARSER, input, extensionRegistry);
     }
 
-    public static com.github.blackjack200.xyron.Xchange.PlayerReport parseDelimitedFrom(java.io.InputStream input)
+    public static com.github.blackjack200.xyron.Xchange.ReportData parseDelimitedFrom(java.io.InputStream input)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseDelimitedWithIOException(PARSER, input);
     }
 
-    public static com.github.blackjack200.xyron.Xchange.PlayerReport parseDelimitedFrom(
+    public static com.github.blackjack200.xyron.Xchange.ReportData parseDelimitedFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
     }
-    public static com.github.blackjack200.xyron.Xchange.PlayerReport parseFrom(
+    public static com.github.blackjack200.xyron.Xchange.ReportData parseFrom(
         com.google.protobuf.CodedInputStream input)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseWithIOException(PARSER, input);
     }
-    public static com.github.blackjack200.xyron.Xchange.PlayerReport parseFrom(
+    public static com.github.blackjack200.xyron.Xchange.ReportData parseFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
@@ -3473,7 +2669,7 @@ com.github.blackjack200.xyron.Xchange.TimestampedReportData defaultValue) {
     public static Builder newBuilder() {
       return DEFAULT_INSTANCE.toBuilder();
     }
-    public static Builder newBuilder(com.github.blackjack200.xyron.Xchange.PlayerReport prototype) {
+    public static Builder newBuilder(com.github.blackjack200.xyron.Xchange.ReportData prototype) {
       return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
     }
     @java.lang.Override
@@ -3489,15 +2685,15 @@ com.github.blackjack200.xyron.Xchange.TimestampedReportData defaultValue) {
       return builder;
     }
     /**
-     * Protobuf type {@code xchange.PlayerReport}
+     * Protobuf type {@code xchange.ReportData}
      */
     public static final class Builder extends
         com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:xchange.PlayerReport)
-        com.github.blackjack200.xyron.Xchange.PlayerReportOrBuilder {
+        // @@protoc_insertion_point(builder_implements:xchange.ReportData)
+        com.github.blackjack200.xyron.Xchange.ReportDataOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
-        return com.github.blackjack200.xyron.Xchange.internal_static_xchange_PlayerReport_descriptor;
+        return com.github.blackjack200.xyron.Xchange.internal_static_xchange_ReportData_descriptor;
       }
 
       @SuppressWarnings({"rawtypes"})
@@ -3525,12 +2721,12 @@ com.github.blackjack200.xyron.Xchange.TimestampedReportData defaultValue) {
       @java.lang.Override
       protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
           internalGetFieldAccessorTable() {
-        return com.github.blackjack200.xyron.Xchange.internal_static_xchange_PlayerReport_fieldAccessorTable
+        return com.github.blackjack200.xyron.Xchange.internal_static_xchange_ReportData_fieldAccessorTable
             .ensureFieldAccessorsInitialized(
-                com.github.blackjack200.xyron.Xchange.PlayerReport.class, com.github.blackjack200.xyron.Xchange.PlayerReport.Builder.class);
+                com.github.blackjack200.xyron.Xchange.ReportData.class, com.github.blackjack200.xyron.Xchange.ReportData.Builder.class);
       }
 
-      // Construct using com.github.blackjack200.xyron.Xchange.PlayerReport.newBuilder()
+      // Construct using com.github.blackjack200.xyron.Xchange.ReportData.newBuilder()
       private Builder() {
 
       }
@@ -3557,17 +2753,17 @@ com.github.blackjack200.xyron.Xchange.TimestampedReportData defaultValue) {
       @java.lang.Override
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
-        return com.github.blackjack200.xyron.Xchange.internal_static_xchange_PlayerReport_descriptor;
+        return com.github.blackjack200.xyron.Xchange.internal_static_xchange_ReportData_descriptor;
       }
 
       @java.lang.Override
-      public com.github.blackjack200.xyron.Xchange.PlayerReport getDefaultInstanceForType() {
-        return com.github.blackjack200.xyron.Xchange.PlayerReport.getDefaultInstance();
+      public com.github.blackjack200.xyron.Xchange.ReportData getDefaultInstanceForType() {
+        return com.github.blackjack200.xyron.Xchange.ReportData.getDefaultInstance();
       }
 
       @java.lang.Override
-      public com.github.blackjack200.xyron.Xchange.PlayerReport build() {
-        com.github.blackjack200.xyron.Xchange.PlayerReport result = buildPartial();
+      public com.github.blackjack200.xyron.Xchange.ReportData build() {
+        com.github.blackjack200.xyron.Xchange.ReportData result = buildPartial();
         if (!result.isInitialized()) {
           throw newUninitializedMessageException(result);
         }
@@ -3575,14 +2771,14 @@ com.github.blackjack200.xyron.Xchange.TimestampedReportData defaultValue) {
       }
 
       @java.lang.Override
-      public com.github.blackjack200.xyron.Xchange.PlayerReport buildPartial() {
-        com.github.blackjack200.xyron.Xchange.PlayerReport result = new com.github.blackjack200.xyron.Xchange.PlayerReport(this);
+      public com.github.blackjack200.xyron.Xchange.ReportData buildPartial() {
+        com.github.blackjack200.xyron.Xchange.ReportData result = new com.github.blackjack200.xyron.Xchange.ReportData(this);
         if (bitField0_ != 0) { buildPartial0(result); }
         onBuilt();
         return result;
       }
 
-      private void buildPartial0(com.github.blackjack200.xyron.Xchange.PlayerReport result) {
+      private void buildPartial0(com.github.blackjack200.xyron.Xchange.ReportData result) {
         int from_bitField0_ = bitField0_;
         if (((from_bitField0_ & 0x00000001) != 0)) {
           result.player_ = playerBuilder_ == null
@@ -3599,49 +2795,17 @@ com.github.blackjack200.xyron.Xchange.TimestampedReportData defaultValue) {
       }
 
       @java.lang.Override
-      public Builder clone() {
-        return super.clone();
-      }
-      @java.lang.Override
-      public Builder setField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return super.setField(field, value);
-      }
-      @java.lang.Override
-      public Builder clearField(
-          com.google.protobuf.Descriptors.FieldDescriptor field) {
-        return super.clearField(field);
-      }
-      @java.lang.Override
-      public Builder clearOneof(
-          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-        return super.clearOneof(oneof);
-      }
-      @java.lang.Override
-      public Builder setRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          int index, java.lang.Object value) {
-        return super.setRepeatedField(field, index, value);
-      }
-      @java.lang.Override
-      public Builder addRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return super.addRepeatedField(field, value);
-      }
-      @java.lang.Override
       public Builder mergeFrom(com.google.protobuf.Message other) {
-        if (other instanceof com.github.blackjack200.xyron.Xchange.PlayerReport) {
-          return mergeFrom((com.github.blackjack200.xyron.Xchange.PlayerReport)other);
+        if (other instanceof com.github.blackjack200.xyron.Xchange.ReportData) {
+          return mergeFrom((com.github.blackjack200.xyron.Xchange.ReportData)other);
         } else {
           super.mergeFrom(other);
           return this;
         }
       }
 
-      public Builder mergeFrom(com.github.blackjack200.xyron.Xchange.PlayerReport other) {
-        if (other == com.github.blackjack200.xyron.Xchange.PlayerReport.getDefaultInstance()) return this;
+      public Builder mergeFrom(com.github.blackjack200.xyron.Xchange.ReportData other) {
+        if (other == com.github.blackjack200.xyron.Xchange.ReportData.getDefaultInstance()) return this;
         if (other.hasPlayer()) {
           mergePlayer(other.getPlayer());
         }
@@ -4033,23 +3197,23 @@ com.github.blackjack200.xyron.Xchange.TimestampedReportData defaultValue) {
       }
 
 
-      // @@protoc_insertion_point(builder_scope:xchange.PlayerReport)
+      // @@protoc_insertion_point(builder_scope:xchange.ReportData)
     }
 
-    // @@protoc_insertion_point(class_scope:xchange.PlayerReport)
-    private static final com.github.blackjack200.xyron.Xchange.PlayerReport DEFAULT_INSTANCE;
+    // @@protoc_insertion_point(class_scope:xchange.ReportData)
+    private static final com.github.blackjack200.xyron.Xchange.ReportData DEFAULT_INSTANCE;
     static {
-      DEFAULT_INSTANCE = new com.github.blackjack200.xyron.Xchange.PlayerReport();
+      DEFAULT_INSTANCE = new com.github.blackjack200.xyron.Xchange.ReportData();
     }
 
-    public static com.github.blackjack200.xyron.Xchange.PlayerReport getDefaultInstance() {
+    public static com.github.blackjack200.xyron.Xchange.ReportData getDefaultInstance() {
       return DEFAULT_INSTANCE;
     }
 
-    private static final com.google.protobuf.Parser<PlayerReport>
-        PARSER = new com.google.protobuf.AbstractParser<PlayerReport>() {
+    private static final com.google.protobuf.Parser<ReportData>
+        PARSER = new com.google.protobuf.AbstractParser<ReportData>() {
       @java.lang.Override
-      public PlayerReport parsePartialFrom(
+      public ReportData parsePartialFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws com.google.protobuf.InvalidProtocolBufferException {
@@ -4068,1200 +3232,17 @@ com.github.blackjack200.xyron.Xchange.TimestampedReportData defaultValue) {
       }
     };
 
-    public static com.google.protobuf.Parser<PlayerReport> parser() {
+    public static com.google.protobuf.Parser<ReportData> parser() {
       return PARSER;
     }
 
     @java.lang.Override
-    public com.google.protobuf.Parser<PlayerReport> getParserForType() {
+    public com.google.protobuf.Parser<ReportData> getParserForType() {
       return PARSER;
     }
 
     @java.lang.Override
-    public com.github.blackjack200.xyron.Xchange.PlayerReport getDefaultInstanceForType() {
-      return DEFAULT_INSTANCE;
-    }
-
-  }
-
-  public interface JudgementDataOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:xchange.JudgementData)
-      com.google.protobuf.MessageOrBuilder {
-
-    /**
-     * <code>string type = 1;</code>
-     * @return The type.
-     */
-    java.lang.String getType();
-    /**
-     * <code>string type = 1;</code>
-     * @return The bytes for type.
-     */
-    com.google.protobuf.ByteString
-        getTypeBytes();
-
-    /**
-     * <code>.xchange.Judgement judgement = 2;</code>
-     * @return The enum numeric value on the wire for judgement.
-     */
-    int getJudgementValue();
-    /**
-     * <code>.xchange.Judgement judgement = 2;</code>
-     * @return The judgement.
-     */
-    com.github.blackjack200.xyron.AnticheatTypes.Judgement getJudgement();
-
-    /**
-     * <code>string message = 3;</code>
-     * @return The message.
-     */
-    java.lang.String getMessage();
-    /**
-     * <code>string message = 3;</code>
-     * @return The bytes for message.
-     */
-    com.google.protobuf.ByteString
-        getMessageBytes();
-
-    /**
-     * <code>repeated .xchange.ServerExecution extraExecutions = 4;</code>
-     */
-    java.util.List<com.github.blackjack200.xyron.Xchange.ServerExecution> 
-        getExtraExecutionsList();
-    /**
-     * <code>repeated .xchange.ServerExecution extraExecutions = 4;</code>
-     */
-    com.github.blackjack200.xyron.Xchange.ServerExecution getExtraExecutions(int index);
-    /**
-     * <code>repeated .xchange.ServerExecution extraExecutions = 4;</code>
-     */
-    int getExtraExecutionsCount();
-    /**
-     * <code>repeated .xchange.ServerExecution extraExecutions = 4;</code>
-     */
-    java.util.List<? extends com.github.blackjack200.xyron.Xchange.ServerExecutionOrBuilder> 
-        getExtraExecutionsOrBuilderList();
-    /**
-     * <code>repeated .xchange.ServerExecution extraExecutions = 4;</code>
-     */
-    com.github.blackjack200.xyron.Xchange.ServerExecutionOrBuilder getExtraExecutionsOrBuilder(
-        int index);
-  }
-  /**
-   * Protobuf type {@code xchange.JudgementData}
-   */
-  public static final class JudgementData extends
-      com.google.protobuf.GeneratedMessageV3 implements
-      // @@protoc_insertion_point(message_implements:xchange.JudgementData)
-      JudgementDataOrBuilder {
-  private static final long serialVersionUID = 0L;
-    // Use JudgementData.newBuilder() to construct.
-    private JudgementData(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
-      super(builder);
-    }
-    private JudgementData() {
-      type_ = "";
-      judgement_ = 0;
-      message_ = "";
-      extraExecutions_ = java.util.Collections.emptyList();
-    }
-
-    @java.lang.Override
-    @SuppressWarnings({"unused"})
-    protected java.lang.Object newInstance(
-        UnusedPrivateParameter unused) {
-      return new JudgementData();
-    }
-
-    public static final com.google.protobuf.Descriptors.Descriptor
-        getDescriptor() {
-      return com.github.blackjack200.xyron.Xchange.internal_static_xchange_JudgementData_descriptor;
-    }
-
-    @java.lang.Override
-    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-        internalGetFieldAccessorTable() {
-      return com.github.blackjack200.xyron.Xchange.internal_static_xchange_JudgementData_fieldAccessorTable
-          .ensureFieldAccessorsInitialized(
-              com.github.blackjack200.xyron.Xchange.JudgementData.class, com.github.blackjack200.xyron.Xchange.JudgementData.Builder.class);
-    }
-
-    public static final int TYPE_FIELD_NUMBER = 1;
-    @SuppressWarnings("serial")
-    private volatile java.lang.Object type_ = "";
-    /**
-     * <code>string type = 1;</code>
-     * @return The type.
-     */
-    @java.lang.Override
-    public java.lang.String getType() {
-      java.lang.Object ref = type_;
-      if (ref instanceof java.lang.String) {
-        return (java.lang.String) ref;
-      } else {
-        com.google.protobuf.ByteString bs = 
-            (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        type_ = s;
-        return s;
-      }
-    }
-    /**
-     * <code>string type = 1;</code>
-     * @return The bytes for type.
-     */
-    @java.lang.Override
-    public com.google.protobuf.ByteString
-        getTypeBytes() {
-      java.lang.Object ref = type_;
-      if (ref instanceof java.lang.String) {
-        com.google.protobuf.ByteString b = 
-            com.google.protobuf.ByteString.copyFromUtf8(
-                (java.lang.String) ref);
-        type_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
-    }
-
-    public static final int JUDGEMENT_FIELD_NUMBER = 2;
-    private int judgement_ = 0;
-    /**
-     * <code>.xchange.Judgement judgement = 2;</code>
-     * @return The enum numeric value on the wire for judgement.
-     */
-    @java.lang.Override public int getJudgementValue() {
-      return judgement_;
-    }
-    /**
-     * <code>.xchange.Judgement judgement = 2;</code>
-     * @return The judgement.
-     */
-    @java.lang.Override public com.github.blackjack200.xyron.AnticheatTypes.Judgement getJudgement() {
-      com.github.blackjack200.xyron.AnticheatTypes.Judgement result = com.github.blackjack200.xyron.AnticheatTypes.Judgement.forNumber(judgement_);
-      return result == null ? com.github.blackjack200.xyron.AnticheatTypes.Judgement.UNRECOGNIZED : result;
-    }
-
-    public static final int MESSAGE_FIELD_NUMBER = 3;
-    @SuppressWarnings("serial")
-    private volatile java.lang.Object message_ = "";
-    /**
-     * <code>string message = 3;</code>
-     * @return The message.
-     */
-    @java.lang.Override
-    public java.lang.String getMessage() {
-      java.lang.Object ref = message_;
-      if (ref instanceof java.lang.String) {
-        return (java.lang.String) ref;
-      } else {
-        com.google.protobuf.ByteString bs = 
-            (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        message_ = s;
-        return s;
-      }
-    }
-    /**
-     * <code>string message = 3;</code>
-     * @return The bytes for message.
-     */
-    @java.lang.Override
-    public com.google.protobuf.ByteString
-        getMessageBytes() {
-      java.lang.Object ref = message_;
-      if (ref instanceof java.lang.String) {
-        com.google.protobuf.ByteString b = 
-            com.google.protobuf.ByteString.copyFromUtf8(
-                (java.lang.String) ref);
-        message_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
-    }
-
-    public static final int EXTRAEXECUTIONS_FIELD_NUMBER = 4;
-    @SuppressWarnings("serial")
-    private java.util.List<com.github.blackjack200.xyron.Xchange.ServerExecution> extraExecutions_;
-    /**
-     * <code>repeated .xchange.ServerExecution extraExecutions = 4;</code>
-     */
-    @java.lang.Override
-    public java.util.List<com.github.blackjack200.xyron.Xchange.ServerExecution> getExtraExecutionsList() {
-      return extraExecutions_;
-    }
-    /**
-     * <code>repeated .xchange.ServerExecution extraExecutions = 4;</code>
-     */
-    @java.lang.Override
-    public java.util.List<? extends com.github.blackjack200.xyron.Xchange.ServerExecutionOrBuilder> 
-        getExtraExecutionsOrBuilderList() {
-      return extraExecutions_;
-    }
-    /**
-     * <code>repeated .xchange.ServerExecution extraExecutions = 4;</code>
-     */
-    @java.lang.Override
-    public int getExtraExecutionsCount() {
-      return extraExecutions_.size();
-    }
-    /**
-     * <code>repeated .xchange.ServerExecution extraExecutions = 4;</code>
-     */
-    @java.lang.Override
-    public com.github.blackjack200.xyron.Xchange.ServerExecution getExtraExecutions(int index) {
-      return extraExecutions_.get(index);
-    }
-    /**
-     * <code>repeated .xchange.ServerExecution extraExecutions = 4;</code>
-     */
-    @java.lang.Override
-    public com.github.blackjack200.xyron.Xchange.ServerExecutionOrBuilder getExtraExecutionsOrBuilder(
-        int index) {
-      return extraExecutions_.get(index);
-    }
-
-    private byte memoizedIsInitialized = -1;
-    @java.lang.Override
-    public final boolean isInitialized() {
-      byte isInitialized = memoizedIsInitialized;
-      if (isInitialized == 1) return true;
-      if (isInitialized == 0) return false;
-
-      memoizedIsInitialized = 1;
-      return true;
-    }
-
-    @java.lang.Override
-    public void writeTo(com.google.protobuf.CodedOutputStream output)
-                        throws java.io.IOException {
-      if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(type_)) {
-        com.google.protobuf.GeneratedMessageV3.writeString(output, 1, type_);
-      }
-      if (judgement_ != com.github.blackjack200.xyron.AnticheatTypes.Judgement.DEBUG.getNumber()) {
-        output.writeEnum(2, judgement_);
-      }
-      if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(message_)) {
-        com.google.protobuf.GeneratedMessageV3.writeString(output, 3, message_);
-      }
-      for (int i = 0; i < extraExecutions_.size(); i++) {
-        output.writeMessage(4, extraExecutions_.get(i));
-      }
-      getUnknownFields().writeTo(output);
-    }
-
-    @java.lang.Override
-    public int getSerializedSize() {
-      int size = memoizedSize;
-      if (size != -1) return size;
-
-      size = 0;
-      if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(type_)) {
-        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, type_);
-      }
-      if (judgement_ != com.github.blackjack200.xyron.AnticheatTypes.Judgement.DEBUG.getNumber()) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeEnumSize(2, judgement_);
-      }
-      if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(message_)) {
-        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(3, message_);
-      }
-      for (int i = 0; i < extraExecutions_.size(); i++) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(4, extraExecutions_.get(i));
-      }
-      size += getUnknownFields().getSerializedSize();
-      memoizedSize = size;
-      return size;
-    }
-
-    @java.lang.Override
-    public boolean equals(final java.lang.Object obj) {
-      if (obj == this) {
-       return true;
-      }
-      if (!(obj instanceof com.github.blackjack200.xyron.Xchange.JudgementData)) {
-        return super.equals(obj);
-      }
-      com.github.blackjack200.xyron.Xchange.JudgementData other = (com.github.blackjack200.xyron.Xchange.JudgementData) obj;
-
-      if (!getType()
-          .equals(other.getType())) return false;
-      if (judgement_ != other.judgement_) return false;
-      if (!getMessage()
-          .equals(other.getMessage())) return false;
-      if (!getExtraExecutionsList()
-          .equals(other.getExtraExecutionsList())) return false;
-      if (!getUnknownFields().equals(other.getUnknownFields())) return false;
-      return true;
-    }
-
-    @java.lang.Override
-    public int hashCode() {
-      if (memoizedHashCode != 0) {
-        return memoizedHashCode;
-      }
-      int hash = 41;
-      hash = (19 * hash) + getDescriptor().hashCode();
-      hash = (37 * hash) + TYPE_FIELD_NUMBER;
-      hash = (53 * hash) + getType().hashCode();
-      hash = (37 * hash) + JUDGEMENT_FIELD_NUMBER;
-      hash = (53 * hash) + judgement_;
-      hash = (37 * hash) + MESSAGE_FIELD_NUMBER;
-      hash = (53 * hash) + getMessage().hashCode();
-      if (getExtraExecutionsCount() > 0) {
-        hash = (37 * hash) + EXTRAEXECUTIONS_FIELD_NUMBER;
-        hash = (53 * hash) + getExtraExecutionsList().hashCode();
-      }
-      hash = (29 * hash) + getUnknownFields().hashCode();
-      memoizedHashCode = hash;
-      return hash;
-    }
-
-    public static com.github.blackjack200.xyron.Xchange.JudgementData parseFrom(
-        java.nio.ByteBuffer data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-    public static com.github.blackjack200.xyron.Xchange.JudgementData parseFrom(
-        java.nio.ByteBuffer data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
-    public static com.github.blackjack200.xyron.Xchange.JudgementData parseFrom(
-        com.google.protobuf.ByteString data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-    public static com.github.blackjack200.xyron.Xchange.JudgementData parseFrom(
-        com.google.protobuf.ByteString data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
-    public static com.github.blackjack200.xyron.Xchange.JudgementData parseFrom(byte[] data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-    public static com.github.blackjack200.xyron.Xchange.JudgementData parseFrom(
-        byte[] data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
-    public static com.github.blackjack200.xyron.Xchange.JudgementData parseFrom(java.io.InputStream input)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input);
-    }
-    public static com.github.blackjack200.xyron.Xchange.JudgementData parseFrom(
-        java.io.InputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input, extensionRegistry);
-    }
-
-    public static com.github.blackjack200.xyron.Xchange.JudgementData parseDelimitedFrom(java.io.InputStream input)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseDelimitedWithIOException(PARSER, input);
-    }
-
-    public static com.github.blackjack200.xyron.Xchange.JudgementData parseDelimitedFrom(
-        java.io.InputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
-    }
-    public static com.github.blackjack200.xyron.Xchange.JudgementData parseFrom(
-        com.google.protobuf.CodedInputStream input)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input);
-    }
-    public static com.github.blackjack200.xyron.Xchange.JudgementData parseFrom(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input, extensionRegistry);
-    }
-
-    @java.lang.Override
-    public Builder newBuilderForType() { return newBuilder(); }
-    public static Builder newBuilder() {
-      return DEFAULT_INSTANCE.toBuilder();
-    }
-    public static Builder newBuilder(com.github.blackjack200.xyron.Xchange.JudgementData prototype) {
-      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
-    }
-    @java.lang.Override
-    public Builder toBuilder() {
-      return this == DEFAULT_INSTANCE
-          ? new Builder() : new Builder().mergeFrom(this);
-    }
-
-    @java.lang.Override
-    protected Builder newBuilderForType(
-        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-      Builder builder = new Builder(parent);
-      return builder;
-    }
-    /**
-     * Protobuf type {@code xchange.JudgementData}
-     */
-    public static final class Builder extends
-        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:xchange.JudgementData)
-        com.github.blackjack200.xyron.Xchange.JudgementDataOrBuilder {
-      public static final com.google.protobuf.Descriptors.Descriptor
-          getDescriptor() {
-        return com.github.blackjack200.xyron.Xchange.internal_static_xchange_JudgementData_descriptor;
-      }
-
-      @java.lang.Override
-      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-          internalGetFieldAccessorTable() {
-        return com.github.blackjack200.xyron.Xchange.internal_static_xchange_JudgementData_fieldAccessorTable
-            .ensureFieldAccessorsInitialized(
-                com.github.blackjack200.xyron.Xchange.JudgementData.class, com.github.blackjack200.xyron.Xchange.JudgementData.Builder.class);
-      }
-
-      // Construct using com.github.blackjack200.xyron.Xchange.JudgementData.newBuilder()
-      private Builder() {
-
-      }
-
-      private Builder(
-          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-        super(parent);
-
-      }
-      @java.lang.Override
-      public Builder clear() {
-        super.clear();
-        bitField0_ = 0;
-        type_ = "";
-        judgement_ = 0;
-        message_ = "";
-        if (extraExecutionsBuilder_ == null) {
-          extraExecutions_ = java.util.Collections.emptyList();
-        } else {
-          extraExecutions_ = null;
-          extraExecutionsBuilder_.clear();
-        }
-        bitField0_ = (bitField0_ & ~0x00000008);
-        return this;
-      }
-
-      @java.lang.Override
-      public com.google.protobuf.Descriptors.Descriptor
-          getDescriptorForType() {
-        return com.github.blackjack200.xyron.Xchange.internal_static_xchange_JudgementData_descriptor;
-      }
-
-      @java.lang.Override
-      public com.github.blackjack200.xyron.Xchange.JudgementData getDefaultInstanceForType() {
-        return com.github.blackjack200.xyron.Xchange.JudgementData.getDefaultInstance();
-      }
-
-      @java.lang.Override
-      public com.github.blackjack200.xyron.Xchange.JudgementData build() {
-        com.github.blackjack200.xyron.Xchange.JudgementData result = buildPartial();
-        if (!result.isInitialized()) {
-          throw newUninitializedMessageException(result);
-        }
-        return result;
-      }
-
-      @java.lang.Override
-      public com.github.blackjack200.xyron.Xchange.JudgementData buildPartial() {
-        com.github.blackjack200.xyron.Xchange.JudgementData result = new com.github.blackjack200.xyron.Xchange.JudgementData(this);
-        buildPartialRepeatedFields(result);
-        if (bitField0_ != 0) { buildPartial0(result); }
-        onBuilt();
-        return result;
-      }
-
-      private void buildPartialRepeatedFields(com.github.blackjack200.xyron.Xchange.JudgementData result) {
-        if (extraExecutionsBuilder_ == null) {
-          if (((bitField0_ & 0x00000008) != 0)) {
-            extraExecutions_ = java.util.Collections.unmodifiableList(extraExecutions_);
-            bitField0_ = (bitField0_ & ~0x00000008);
-          }
-          result.extraExecutions_ = extraExecutions_;
-        } else {
-          result.extraExecutions_ = extraExecutionsBuilder_.build();
-        }
-      }
-
-      private void buildPartial0(com.github.blackjack200.xyron.Xchange.JudgementData result) {
-        int from_bitField0_ = bitField0_;
-        if (((from_bitField0_ & 0x00000001) != 0)) {
-          result.type_ = type_;
-        }
-        if (((from_bitField0_ & 0x00000002) != 0)) {
-          result.judgement_ = judgement_;
-        }
-        if (((from_bitField0_ & 0x00000004) != 0)) {
-          result.message_ = message_;
-        }
-      }
-
-      @java.lang.Override
-      public Builder clone() {
-        return super.clone();
-      }
-      @java.lang.Override
-      public Builder setField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return super.setField(field, value);
-      }
-      @java.lang.Override
-      public Builder clearField(
-          com.google.protobuf.Descriptors.FieldDescriptor field) {
-        return super.clearField(field);
-      }
-      @java.lang.Override
-      public Builder clearOneof(
-          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-        return super.clearOneof(oneof);
-      }
-      @java.lang.Override
-      public Builder setRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          int index, java.lang.Object value) {
-        return super.setRepeatedField(field, index, value);
-      }
-      @java.lang.Override
-      public Builder addRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return super.addRepeatedField(field, value);
-      }
-      @java.lang.Override
-      public Builder mergeFrom(com.google.protobuf.Message other) {
-        if (other instanceof com.github.blackjack200.xyron.Xchange.JudgementData) {
-          return mergeFrom((com.github.blackjack200.xyron.Xchange.JudgementData)other);
-        } else {
-          super.mergeFrom(other);
-          return this;
-        }
-      }
-
-      public Builder mergeFrom(com.github.blackjack200.xyron.Xchange.JudgementData other) {
-        if (other == com.github.blackjack200.xyron.Xchange.JudgementData.getDefaultInstance()) return this;
-        if (!other.getType().isEmpty()) {
-          type_ = other.type_;
-          bitField0_ |= 0x00000001;
-          onChanged();
-        }
-        if (other.judgement_ != 0) {
-          setJudgementValue(other.getJudgementValue());
-        }
-        if (!other.getMessage().isEmpty()) {
-          message_ = other.message_;
-          bitField0_ |= 0x00000004;
-          onChanged();
-        }
-        if (extraExecutionsBuilder_ == null) {
-          if (!other.extraExecutions_.isEmpty()) {
-            if (extraExecutions_.isEmpty()) {
-              extraExecutions_ = other.extraExecutions_;
-              bitField0_ = (bitField0_ & ~0x00000008);
-            } else {
-              ensureExtraExecutionsIsMutable();
-              extraExecutions_.addAll(other.extraExecutions_);
-            }
-            onChanged();
-          }
-        } else {
-          if (!other.extraExecutions_.isEmpty()) {
-            if (extraExecutionsBuilder_.isEmpty()) {
-              extraExecutionsBuilder_.dispose();
-              extraExecutionsBuilder_ = null;
-              extraExecutions_ = other.extraExecutions_;
-              bitField0_ = (bitField0_ & ~0x00000008);
-              extraExecutionsBuilder_ = 
-                com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders ?
-                   getExtraExecutionsFieldBuilder() : null;
-            } else {
-              extraExecutionsBuilder_.addAllMessages(other.extraExecutions_);
-            }
-          }
-        }
-        this.mergeUnknownFields(other.getUnknownFields());
-        onChanged();
-        return this;
-      }
-
-      @java.lang.Override
-      public final boolean isInitialized() {
-        return true;
-      }
-
-      @java.lang.Override
-      public Builder mergeFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws java.io.IOException {
-        if (extensionRegistry == null) {
-          throw new java.lang.NullPointerException();
-        }
-        try {
-          boolean done = false;
-          while (!done) {
-            int tag = input.readTag();
-            switch (tag) {
-              case 0:
-                done = true;
-                break;
-              case 10: {
-                type_ = input.readStringRequireUtf8();
-                bitField0_ |= 0x00000001;
-                break;
-              } // case 10
-              case 16: {
-                judgement_ = input.readEnum();
-                bitField0_ |= 0x00000002;
-                break;
-              } // case 16
-              case 26: {
-                message_ = input.readStringRequireUtf8();
-                bitField0_ |= 0x00000004;
-                break;
-              } // case 26
-              case 34: {
-                com.github.blackjack200.xyron.Xchange.ServerExecution m =
-                    input.readMessage(
-                        com.github.blackjack200.xyron.Xchange.ServerExecution.parser(),
-                        extensionRegistry);
-                if (extraExecutionsBuilder_ == null) {
-                  ensureExtraExecutionsIsMutable();
-                  extraExecutions_.add(m);
-                } else {
-                  extraExecutionsBuilder_.addMessage(m);
-                }
-                break;
-              } // case 34
-              default: {
-                if (!super.parseUnknownField(input, extensionRegistry, tag)) {
-                  done = true; // was an endgroup tag
-                }
-                break;
-              } // default:
-            } // switch (tag)
-          } // while (!done)
-        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-          throw e.unwrapIOException();
-        } finally {
-          onChanged();
-        } // finally
-        return this;
-      }
-      private int bitField0_;
-
-      private java.lang.Object type_ = "";
-      /**
-       * <code>string type = 1;</code>
-       * @return The type.
-       */
-      public java.lang.String getType() {
-        java.lang.Object ref = type_;
-        if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs =
-              (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          type_ = s;
-          return s;
-        } else {
-          return (java.lang.String) ref;
-        }
-      }
-      /**
-       * <code>string type = 1;</code>
-       * @return The bytes for type.
-       */
-      public com.google.protobuf.ByteString
-          getTypeBytes() {
-        java.lang.Object ref = type_;
-        if (ref instanceof String) {
-          com.google.protobuf.ByteString b = 
-              com.google.protobuf.ByteString.copyFromUtf8(
-                  (java.lang.String) ref);
-          type_ = b;
-          return b;
-        } else {
-          return (com.google.protobuf.ByteString) ref;
-        }
-      }
-      /**
-       * <code>string type = 1;</code>
-       * @param value The type to set.
-       * @return This builder for chaining.
-       */
-      public Builder setType(
-          java.lang.String value) {
-        if (value == null) { throw new NullPointerException(); }
-        type_ = value;
-        bitField0_ |= 0x00000001;
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>string type = 1;</code>
-       * @return This builder for chaining.
-       */
-      public Builder clearType() {
-        type_ = getDefaultInstance().getType();
-        bitField0_ = (bitField0_ & ~0x00000001);
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>string type = 1;</code>
-       * @param value The bytes for type to set.
-       * @return This builder for chaining.
-       */
-      public Builder setTypeBytes(
-          com.google.protobuf.ByteString value) {
-        if (value == null) { throw new NullPointerException(); }
-        checkByteStringIsUtf8(value);
-        type_ = value;
-        bitField0_ |= 0x00000001;
-        onChanged();
-        return this;
-      }
-
-      private int judgement_ = 0;
-      /**
-       * <code>.xchange.Judgement judgement = 2;</code>
-       * @return The enum numeric value on the wire for judgement.
-       */
-      @java.lang.Override public int getJudgementValue() {
-        return judgement_;
-      }
-      /**
-       * <code>.xchange.Judgement judgement = 2;</code>
-       * @param value The enum numeric value on the wire for judgement to set.
-       * @return This builder for chaining.
-       */
-      public Builder setJudgementValue(int value) {
-        judgement_ = value;
-        bitField0_ |= 0x00000002;
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>.xchange.Judgement judgement = 2;</code>
-       * @return The judgement.
-       */
-      @java.lang.Override
-      public com.github.blackjack200.xyron.AnticheatTypes.Judgement getJudgement() {
-        com.github.blackjack200.xyron.AnticheatTypes.Judgement result = com.github.blackjack200.xyron.AnticheatTypes.Judgement.forNumber(judgement_);
-        return result == null ? com.github.blackjack200.xyron.AnticheatTypes.Judgement.UNRECOGNIZED : result;
-      }
-      /**
-       * <code>.xchange.Judgement judgement = 2;</code>
-       * @param value The judgement to set.
-       * @return This builder for chaining.
-       */
-      public Builder setJudgement(com.github.blackjack200.xyron.AnticheatTypes.Judgement value) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        bitField0_ |= 0x00000002;
-        judgement_ = value.getNumber();
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>.xchange.Judgement judgement = 2;</code>
-       * @return This builder for chaining.
-       */
-      public Builder clearJudgement() {
-        bitField0_ = (bitField0_ & ~0x00000002);
-        judgement_ = 0;
-        onChanged();
-        return this;
-      }
-
-      private java.lang.Object message_ = "";
-      /**
-       * <code>string message = 3;</code>
-       * @return The message.
-       */
-      public java.lang.String getMessage() {
-        java.lang.Object ref = message_;
-        if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs =
-              (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          message_ = s;
-          return s;
-        } else {
-          return (java.lang.String) ref;
-        }
-      }
-      /**
-       * <code>string message = 3;</code>
-       * @return The bytes for message.
-       */
-      public com.google.protobuf.ByteString
-          getMessageBytes() {
-        java.lang.Object ref = message_;
-        if (ref instanceof String) {
-          com.google.protobuf.ByteString b = 
-              com.google.protobuf.ByteString.copyFromUtf8(
-                  (java.lang.String) ref);
-          message_ = b;
-          return b;
-        } else {
-          return (com.google.protobuf.ByteString) ref;
-        }
-      }
-      /**
-       * <code>string message = 3;</code>
-       * @param value The message to set.
-       * @return This builder for chaining.
-       */
-      public Builder setMessage(
-          java.lang.String value) {
-        if (value == null) { throw new NullPointerException(); }
-        message_ = value;
-        bitField0_ |= 0x00000004;
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>string message = 3;</code>
-       * @return This builder for chaining.
-       */
-      public Builder clearMessage() {
-        message_ = getDefaultInstance().getMessage();
-        bitField0_ = (bitField0_ & ~0x00000004);
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>string message = 3;</code>
-       * @param value The bytes for message to set.
-       * @return This builder for chaining.
-       */
-      public Builder setMessageBytes(
-          com.google.protobuf.ByteString value) {
-        if (value == null) { throw new NullPointerException(); }
-        checkByteStringIsUtf8(value);
-        message_ = value;
-        bitField0_ |= 0x00000004;
-        onChanged();
-        return this;
-      }
-
-      private java.util.List<com.github.blackjack200.xyron.Xchange.ServerExecution> extraExecutions_ =
-        java.util.Collections.emptyList();
-      private void ensureExtraExecutionsIsMutable() {
-        if (!((bitField0_ & 0x00000008) != 0)) {
-          extraExecutions_ = new java.util.ArrayList<com.github.blackjack200.xyron.Xchange.ServerExecution>(extraExecutions_);
-          bitField0_ |= 0x00000008;
-         }
-      }
-
-      private com.google.protobuf.RepeatedFieldBuilderV3<
-          com.github.blackjack200.xyron.Xchange.ServerExecution, com.github.blackjack200.xyron.Xchange.ServerExecution.Builder, com.github.blackjack200.xyron.Xchange.ServerExecutionOrBuilder> extraExecutionsBuilder_;
-
-      /**
-       * <code>repeated .xchange.ServerExecution extraExecutions = 4;</code>
-       */
-      public java.util.List<com.github.blackjack200.xyron.Xchange.ServerExecution> getExtraExecutionsList() {
-        if (extraExecutionsBuilder_ == null) {
-          return java.util.Collections.unmodifiableList(extraExecutions_);
-        } else {
-          return extraExecutionsBuilder_.getMessageList();
-        }
-      }
-      /**
-       * <code>repeated .xchange.ServerExecution extraExecutions = 4;</code>
-       */
-      public int getExtraExecutionsCount() {
-        if (extraExecutionsBuilder_ == null) {
-          return extraExecutions_.size();
-        } else {
-          return extraExecutionsBuilder_.getCount();
-        }
-      }
-      /**
-       * <code>repeated .xchange.ServerExecution extraExecutions = 4;</code>
-       */
-      public com.github.blackjack200.xyron.Xchange.ServerExecution getExtraExecutions(int index) {
-        if (extraExecutionsBuilder_ == null) {
-          return extraExecutions_.get(index);
-        } else {
-          return extraExecutionsBuilder_.getMessage(index);
-        }
-      }
-      /**
-       * <code>repeated .xchange.ServerExecution extraExecutions = 4;</code>
-       */
-      public Builder setExtraExecutions(
-          int index, com.github.blackjack200.xyron.Xchange.ServerExecution value) {
-        if (extraExecutionsBuilder_ == null) {
-          if (value == null) {
-            throw new NullPointerException();
-          }
-          ensureExtraExecutionsIsMutable();
-          extraExecutions_.set(index, value);
-          onChanged();
-        } else {
-          extraExecutionsBuilder_.setMessage(index, value);
-        }
-        return this;
-      }
-      /**
-       * <code>repeated .xchange.ServerExecution extraExecutions = 4;</code>
-       */
-      public Builder setExtraExecutions(
-          int index, com.github.blackjack200.xyron.Xchange.ServerExecution.Builder builderForValue) {
-        if (extraExecutionsBuilder_ == null) {
-          ensureExtraExecutionsIsMutable();
-          extraExecutions_.set(index, builderForValue.build());
-          onChanged();
-        } else {
-          extraExecutionsBuilder_.setMessage(index, builderForValue.build());
-        }
-        return this;
-      }
-      /**
-       * <code>repeated .xchange.ServerExecution extraExecutions = 4;</code>
-       */
-      public Builder addExtraExecutions(com.github.blackjack200.xyron.Xchange.ServerExecution value) {
-        if (extraExecutionsBuilder_ == null) {
-          if (value == null) {
-            throw new NullPointerException();
-          }
-          ensureExtraExecutionsIsMutable();
-          extraExecutions_.add(value);
-          onChanged();
-        } else {
-          extraExecutionsBuilder_.addMessage(value);
-        }
-        return this;
-      }
-      /**
-       * <code>repeated .xchange.ServerExecution extraExecutions = 4;</code>
-       */
-      public Builder addExtraExecutions(
-          int index, com.github.blackjack200.xyron.Xchange.ServerExecution value) {
-        if (extraExecutionsBuilder_ == null) {
-          if (value == null) {
-            throw new NullPointerException();
-          }
-          ensureExtraExecutionsIsMutable();
-          extraExecutions_.add(index, value);
-          onChanged();
-        } else {
-          extraExecutionsBuilder_.addMessage(index, value);
-        }
-        return this;
-      }
-      /**
-       * <code>repeated .xchange.ServerExecution extraExecutions = 4;</code>
-       */
-      public Builder addExtraExecutions(
-          com.github.blackjack200.xyron.Xchange.ServerExecution.Builder builderForValue) {
-        if (extraExecutionsBuilder_ == null) {
-          ensureExtraExecutionsIsMutable();
-          extraExecutions_.add(builderForValue.build());
-          onChanged();
-        } else {
-          extraExecutionsBuilder_.addMessage(builderForValue.build());
-        }
-        return this;
-      }
-      /**
-       * <code>repeated .xchange.ServerExecution extraExecutions = 4;</code>
-       */
-      public Builder addExtraExecutions(
-          int index, com.github.blackjack200.xyron.Xchange.ServerExecution.Builder builderForValue) {
-        if (extraExecutionsBuilder_ == null) {
-          ensureExtraExecutionsIsMutable();
-          extraExecutions_.add(index, builderForValue.build());
-          onChanged();
-        } else {
-          extraExecutionsBuilder_.addMessage(index, builderForValue.build());
-        }
-        return this;
-      }
-      /**
-       * <code>repeated .xchange.ServerExecution extraExecutions = 4;</code>
-       */
-      public Builder addAllExtraExecutions(
-          java.lang.Iterable<? extends com.github.blackjack200.xyron.Xchange.ServerExecution> values) {
-        if (extraExecutionsBuilder_ == null) {
-          ensureExtraExecutionsIsMutable();
-          com.google.protobuf.AbstractMessageLite.Builder.addAll(
-              values, extraExecutions_);
-          onChanged();
-        } else {
-          extraExecutionsBuilder_.addAllMessages(values);
-        }
-        return this;
-      }
-      /**
-       * <code>repeated .xchange.ServerExecution extraExecutions = 4;</code>
-       */
-      public Builder clearExtraExecutions() {
-        if (extraExecutionsBuilder_ == null) {
-          extraExecutions_ = java.util.Collections.emptyList();
-          bitField0_ = (bitField0_ & ~0x00000008);
-          onChanged();
-        } else {
-          extraExecutionsBuilder_.clear();
-        }
-        return this;
-      }
-      /**
-       * <code>repeated .xchange.ServerExecution extraExecutions = 4;</code>
-       */
-      public Builder removeExtraExecutions(int index) {
-        if (extraExecutionsBuilder_ == null) {
-          ensureExtraExecutionsIsMutable();
-          extraExecutions_.remove(index);
-          onChanged();
-        } else {
-          extraExecutionsBuilder_.remove(index);
-        }
-        return this;
-      }
-      /**
-       * <code>repeated .xchange.ServerExecution extraExecutions = 4;</code>
-       */
-      public com.github.blackjack200.xyron.Xchange.ServerExecution.Builder getExtraExecutionsBuilder(
-          int index) {
-        return getExtraExecutionsFieldBuilder().getBuilder(index);
-      }
-      /**
-       * <code>repeated .xchange.ServerExecution extraExecutions = 4;</code>
-       */
-      public com.github.blackjack200.xyron.Xchange.ServerExecutionOrBuilder getExtraExecutionsOrBuilder(
-          int index) {
-        if (extraExecutionsBuilder_ == null) {
-          return extraExecutions_.get(index);  } else {
-          return extraExecutionsBuilder_.getMessageOrBuilder(index);
-        }
-      }
-      /**
-       * <code>repeated .xchange.ServerExecution extraExecutions = 4;</code>
-       */
-      public java.util.List<? extends com.github.blackjack200.xyron.Xchange.ServerExecutionOrBuilder> 
-           getExtraExecutionsOrBuilderList() {
-        if (extraExecutionsBuilder_ != null) {
-          return extraExecutionsBuilder_.getMessageOrBuilderList();
-        } else {
-          return java.util.Collections.unmodifiableList(extraExecutions_);
-        }
-      }
-      /**
-       * <code>repeated .xchange.ServerExecution extraExecutions = 4;</code>
-       */
-      public com.github.blackjack200.xyron.Xchange.ServerExecution.Builder addExtraExecutionsBuilder() {
-        return getExtraExecutionsFieldBuilder().addBuilder(
-            com.github.blackjack200.xyron.Xchange.ServerExecution.getDefaultInstance());
-      }
-      /**
-       * <code>repeated .xchange.ServerExecution extraExecutions = 4;</code>
-       */
-      public com.github.blackjack200.xyron.Xchange.ServerExecution.Builder addExtraExecutionsBuilder(
-          int index) {
-        return getExtraExecutionsFieldBuilder().addBuilder(
-            index, com.github.blackjack200.xyron.Xchange.ServerExecution.getDefaultInstance());
-      }
-      /**
-       * <code>repeated .xchange.ServerExecution extraExecutions = 4;</code>
-       */
-      public java.util.List<com.github.blackjack200.xyron.Xchange.ServerExecution.Builder> 
-           getExtraExecutionsBuilderList() {
-        return getExtraExecutionsFieldBuilder().getBuilderList();
-      }
-      private com.google.protobuf.RepeatedFieldBuilderV3<
-          com.github.blackjack200.xyron.Xchange.ServerExecution, com.github.blackjack200.xyron.Xchange.ServerExecution.Builder, com.github.blackjack200.xyron.Xchange.ServerExecutionOrBuilder> 
-          getExtraExecutionsFieldBuilder() {
-        if (extraExecutionsBuilder_ == null) {
-          extraExecutionsBuilder_ = new com.google.protobuf.RepeatedFieldBuilderV3<
-              com.github.blackjack200.xyron.Xchange.ServerExecution, com.github.blackjack200.xyron.Xchange.ServerExecution.Builder, com.github.blackjack200.xyron.Xchange.ServerExecutionOrBuilder>(
-                  extraExecutions_,
-                  ((bitField0_ & 0x00000008) != 0),
-                  getParentForChildren(),
-                  isClean());
-          extraExecutions_ = null;
-        }
-        return extraExecutionsBuilder_;
-      }
-      @java.lang.Override
-      public final Builder setUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.setUnknownFields(unknownFields);
-      }
-
-      @java.lang.Override
-      public final Builder mergeUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.mergeUnknownFields(unknownFields);
-      }
-
-
-      // @@protoc_insertion_point(builder_scope:xchange.JudgementData)
-    }
-
-    // @@protoc_insertion_point(class_scope:xchange.JudgementData)
-    private static final com.github.blackjack200.xyron.Xchange.JudgementData DEFAULT_INSTANCE;
-    static {
-      DEFAULT_INSTANCE = new com.github.blackjack200.xyron.Xchange.JudgementData();
-    }
-
-    public static com.github.blackjack200.xyron.Xchange.JudgementData getDefaultInstance() {
-      return DEFAULT_INSTANCE;
-    }
-
-    private static final com.google.protobuf.Parser<JudgementData>
-        PARSER = new com.google.protobuf.AbstractParser<JudgementData>() {
-      @java.lang.Override
-      public JudgementData parsePartialFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws com.google.protobuf.InvalidProtocolBufferException {
-        Builder builder = newBuilder();
-        try {
-          builder.mergeFrom(input, extensionRegistry);
-        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-          throw e.setUnfinishedMessage(builder.buildPartial());
-        } catch (com.google.protobuf.UninitializedMessageException e) {
-          throw e.asInvalidProtocolBufferException().setUnfinishedMessage(builder.buildPartial());
-        } catch (java.io.IOException e) {
-          throw new com.google.protobuf.InvalidProtocolBufferException(e)
-              .setUnfinishedMessage(builder.buildPartial());
-        }
-        return builder.buildPartial();
-      }
-    };
-
-    public static com.google.protobuf.Parser<JudgementData> parser() {
-      return PARSER;
-    }
-
-    @java.lang.Override
-    public com.google.protobuf.Parser<JudgementData> getParserForType() {
-      return PARSER;
-    }
-
-    @java.lang.Override
-    public com.github.blackjack200.xyron.Xchange.JudgementData getDefaultInstanceForType() {
+    public com.github.blackjack200.xyron.Xchange.ReportData getDefaultInstanceForType() {
       return DEFAULT_INSTANCE;
     }
 
@@ -5620,38 +3601,6 @@ com.github.blackjack200.xyron.Xchange.TimestampedReportData defaultValue) {
         int from_bitField0_ = bitField0_;
       }
 
-      @java.lang.Override
-      public Builder clone() {
-        return super.clone();
-      }
-      @java.lang.Override
-      public Builder setField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return super.setField(field, value);
-      }
-      @java.lang.Override
-      public Builder clearField(
-          com.google.protobuf.Descriptors.FieldDescriptor field) {
-        return super.clearField(field);
-      }
-      @java.lang.Override
-      public Builder clearOneof(
-          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-        return super.clearOneof(oneof);
-      }
-      @java.lang.Override
-      public Builder setRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          int index, java.lang.Object value) {
-        return super.setRepeatedField(field, index, value);
-      }
-      @java.lang.Override
-      public Builder addRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return super.addRepeatedField(field, value);
-      }
       @java.lang.Override
       public Builder mergeFrom(com.google.protobuf.Message other) {
         if (other instanceof com.github.blackjack200.xyron.Xchange.ReportResponse) {
@@ -6049,6 +3998,3225 @@ com.github.blackjack200.xyron.Xchange.TimestampedReportData defaultValue) {
 
   }
 
+  public interface BatchedReportDataOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:xchange.BatchedReportData)
+      com.google.protobuf.MessageOrBuilder {
+
+    /**
+     * <code>repeated .xchange.ReportData data = 1;</code>
+     */
+    java.util.List<com.github.blackjack200.xyron.Xchange.ReportData> 
+        getDataList();
+    /**
+     * <code>repeated .xchange.ReportData data = 1;</code>
+     */
+    com.github.blackjack200.xyron.Xchange.ReportData getData(int index);
+    /**
+     * <code>repeated .xchange.ReportData data = 1;</code>
+     */
+    int getDataCount();
+    /**
+     * <code>repeated .xchange.ReportData data = 1;</code>
+     */
+    java.util.List<? extends com.github.blackjack200.xyron.Xchange.ReportDataOrBuilder> 
+        getDataOrBuilderList();
+    /**
+     * <code>repeated .xchange.ReportData data = 1;</code>
+     */
+    com.github.blackjack200.xyron.Xchange.ReportDataOrBuilder getDataOrBuilder(
+        int index);
+  }
+  /**
+   * Protobuf type {@code xchange.BatchedReportData}
+   */
+  public static final class BatchedReportData extends
+      com.google.protobuf.GeneratedMessageV3 implements
+      // @@protoc_insertion_point(message_implements:xchange.BatchedReportData)
+      BatchedReportDataOrBuilder {
+  private static final long serialVersionUID = 0L;
+    // Use BatchedReportData.newBuilder() to construct.
+    private BatchedReportData(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+      super(builder);
+    }
+    private BatchedReportData() {
+      data_ = java.util.Collections.emptyList();
+    }
+
+    @java.lang.Override
+    @SuppressWarnings({"unused"})
+    protected java.lang.Object newInstance(
+        UnusedPrivateParameter unused) {
+      return new BatchedReportData();
+    }
+
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return com.github.blackjack200.xyron.Xchange.internal_static_xchange_BatchedReportData_descriptor;
+    }
+
+    @java.lang.Override
+    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return com.github.blackjack200.xyron.Xchange.internal_static_xchange_BatchedReportData_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              com.github.blackjack200.xyron.Xchange.BatchedReportData.class, com.github.blackjack200.xyron.Xchange.BatchedReportData.Builder.class);
+    }
+
+    public static final int DATA_FIELD_NUMBER = 1;
+    @SuppressWarnings("serial")
+    private java.util.List<com.github.blackjack200.xyron.Xchange.ReportData> data_;
+    /**
+     * <code>repeated .xchange.ReportData data = 1;</code>
+     */
+    @java.lang.Override
+    public java.util.List<com.github.blackjack200.xyron.Xchange.ReportData> getDataList() {
+      return data_;
+    }
+    /**
+     * <code>repeated .xchange.ReportData data = 1;</code>
+     */
+    @java.lang.Override
+    public java.util.List<? extends com.github.blackjack200.xyron.Xchange.ReportDataOrBuilder> 
+        getDataOrBuilderList() {
+      return data_;
+    }
+    /**
+     * <code>repeated .xchange.ReportData data = 1;</code>
+     */
+    @java.lang.Override
+    public int getDataCount() {
+      return data_.size();
+    }
+    /**
+     * <code>repeated .xchange.ReportData data = 1;</code>
+     */
+    @java.lang.Override
+    public com.github.blackjack200.xyron.Xchange.ReportData getData(int index) {
+      return data_.get(index);
+    }
+    /**
+     * <code>repeated .xchange.ReportData data = 1;</code>
+     */
+    @java.lang.Override
+    public com.github.blackjack200.xyron.Xchange.ReportDataOrBuilder getDataOrBuilder(
+        int index) {
+      return data_.get(index);
+    }
+
+    private byte memoizedIsInitialized = -1;
+    @java.lang.Override
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
+
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    @java.lang.Override
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      for (int i = 0; i < data_.size(); i++) {
+        output.writeMessage(1, data_.get(i));
+      }
+      getUnknownFields().writeTo(output);
+    }
+
+    @java.lang.Override
+    public int getSerializedSize() {
+      int size = memoizedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      for (int i = 0; i < data_.size(); i++) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(1, data_.get(i));
+      }
+      size += getUnknownFields().getSerializedSize();
+      memoizedSize = size;
+      return size;
+    }
+
+    @java.lang.Override
+    public boolean equals(final java.lang.Object obj) {
+      if (obj == this) {
+       return true;
+      }
+      if (!(obj instanceof com.github.blackjack200.xyron.Xchange.BatchedReportData)) {
+        return super.equals(obj);
+      }
+      com.github.blackjack200.xyron.Xchange.BatchedReportData other = (com.github.blackjack200.xyron.Xchange.BatchedReportData) obj;
+
+      if (!getDataList()
+          .equals(other.getDataList())) return false;
+      if (!getUnknownFields().equals(other.getUnknownFields())) return false;
+      return true;
+    }
+
+    @java.lang.Override
+    public int hashCode() {
+      if (memoizedHashCode != 0) {
+        return memoizedHashCode;
+      }
+      int hash = 41;
+      hash = (19 * hash) + getDescriptor().hashCode();
+      if (getDataCount() > 0) {
+        hash = (37 * hash) + DATA_FIELD_NUMBER;
+        hash = (53 * hash) + getDataList().hashCode();
+      }
+      hash = (29 * hash) + getUnknownFields().hashCode();
+      memoizedHashCode = hash;
+      return hash;
+    }
+
+    public static com.github.blackjack200.xyron.Xchange.BatchedReportData parseFrom(
+        java.nio.ByteBuffer data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.github.blackjack200.xyron.Xchange.BatchedReportData parseFrom(
+        java.nio.ByteBuffer data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.github.blackjack200.xyron.Xchange.BatchedReportData parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.github.blackjack200.xyron.Xchange.BatchedReportData parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.github.blackjack200.xyron.Xchange.BatchedReportData parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.github.blackjack200.xyron.Xchange.BatchedReportData parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.github.blackjack200.xyron.Xchange.BatchedReportData parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static com.github.blackjack200.xyron.Xchange.BatchedReportData parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+
+    public static com.github.blackjack200.xyron.Xchange.BatchedReportData parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input);
+    }
+
+    public static com.github.blackjack200.xyron.Xchange.BatchedReportData parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static com.github.blackjack200.xyron.Xchange.BatchedReportData parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static com.github.blackjack200.xyron.Xchange.BatchedReportData parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+
+    @java.lang.Override
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder() {
+      return DEFAULT_INSTANCE.toBuilder();
+    }
+    public static Builder newBuilder(com.github.blackjack200.xyron.Xchange.BatchedReportData prototype) {
+      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+    @java.lang.Override
+    public Builder toBuilder() {
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
+    }
+
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    /**
+     * Protobuf type {@code xchange.BatchedReportData}
+     */
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:xchange.BatchedReportData)
+        com.github.blackjack200.xyron.Xchange.BatchedReportDataOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return com.github.blackjack200.xyron.Xchange.internal_static_xchange_BatchedReportData_descriptor;
+      }
+
+      @java.lang.Override
+      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return com.github.blackjack200.xyron.Xchange.internal_static_xchange_BatchedReportData_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                com.github.blackjack200.xyron.Xchange.BatchedReportData.class, com.github.blackjack200.xyron.Xchange.BatchedReportData.Builder.class);
+      }
+
+      // Construct using com.github.blackjack200.xyron.Xchange.BatchedReportData.newBuilder()
+      private Builder() {
+
+      }
+
+      private Builder(
+          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        super(parent);
+
+      }
+      @java.lang.Override
+      public Builder clear() {
+        super.clear();
+        bitField0_ = 0;
+        if (dataBuilder_ == null) {
+          data_ = java.util.Collections.emptyList();
+        } else {
+          data_ = null;
+          dataBuilder_.clear();
+        }
+        bitField0_ = (bitField0_ & ~0x00000001);
+        return this;
+      }
+
+      @java.lang.Override
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return com.github.blackjack200.xyron.Xchange.internal_static_xchange_BatchedReportData_descriptor;
+      }
+
+      @java.lang.Override
+      public com.github.blackjack200.xyron.Xchange.BatchedReportData getDefaultInstanceForType() {
+        return com.github.blackjack200.xyron.Xchange.BatchedReportData.getDefaultInstance();
+      }
+
+      @java.lang.Override
+      public com.github.blackjack200.xyron.Xchange.BatchedReportData build() {
+        com.github.blackjack200.xyron.Xchange.BatchedReportData result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      @java.lang.Override
+      public com.github.blackjack200.xyron.Xchange.BatchedReportData buildPartial() {
+        com.github.blackjack200.xyron.Xchange.BatchedReportData result = new com.github.blackjack200.xyron.Xchange.BatchedReportData(this);
+        buildPartialRepeatedFields(result);
+        if (bitField0_ != 0) { buildPartial0(result); }
+        onBuilt();
+        return result;
+      }
+
+      private void buildPartialRepeatedFields(com.github.blackjack200.xyron.Xchange.BatchedReportData result) {
+        if (dataBuilder_ == null) {
+          if (((bitField0_ & 0x00000001) != 0)) {
+            data_ = java.util.Collections.unmodifiableList(data_);
+            bitField0_ = (bitField0_ & ~0x00000001);
+          }
+          result.data_ = data_;
+        } else {
+          result.data_ = dataBuilder_.build();
+        }
+      }
+
+      private void buildPartial0(com.github.blackjack200.xyron.Xchange.BatchedReportData result) {
+        int from_bitField0_ = bitField0_;
+      }
+
+      @java.lang.Override
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof com.github.blackjack200.xyron.Xchange.BatchedReportData) {
+          return mergeFrom((com.github.blackjack200.xyron.Xchange.BatchedReportData)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(com.github.blackjack200.xyron.Xchange.BatchedReportData other) {
+        if (other == com.github.blackjack200.xyron.Xchange.BatchedReportData.getDefaultInstance()) return this;
+        if (dataBuilder_ == null) {
+          if (!other.data_.isEmpty()) {
+            if (data_.isEmpty()) {
+              data_ = other.data_;
+              bitField0_ = (bitField0_ & ~0x00000001);
+            } else {
+              ensureDataIsMutable();
+              data_.addAll(other.data_);
+            }
+            onChanged();
+          }
+        } else {
+          if (!other.data_.isEmpty()) {
+            if (dataBuilder_.isEmpty()) {
+              dataBuilder_.dispose();
+              dataBuilder_ = null;
+              data_ = other.data_;
+              bitField0_ = (bitField0_ & ~0x00000001);
+              dataBuilder_ = 
+                com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders ?
+                   getDataFieldBuilder() : null;
+            } else {
+              dataBuilder_.addAllMessages(other.data_);
+            }
+          }
+        }
+        this.mergeUnknownFields(other.getUnknownFields());
+        onChanged();
+        return this;
+      }
+
+      @java.lang.Override
+      public final boolean isInitialized() {
+        return true;
+      }
+
+      @java.lang.Override
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        if (extensionRegistry == null) {
+          throw new java.lang.NullPointerException();
+        }
+        try {
+          boolean done = false;
+          while (!done) {
+            int tag = input.readTag();
+            switch (tag) {
+              case 0:
+                done = true;
+                break;
+              case 10: {
+                com.github.blackjack200.xyron.Xchange.ReportData m =
+                    input.readMessage(
+                        com.github.blackjack200.xyron.Xchange.ReportData.parser(),
+                        extensionRegistry);
+                if (dataBuilder_ == null) {
+                  ensureDataIsMutable();
+                  data_.add(m);
+                } else {
+                  dataBuilder_.addMessage(m);
+                }
+                break;
+              } // case 10
+              default: {
+                if (!super.parseUnknownField(input, extensionRegistry, tag)) {
+                  done = true; // was an endgroup tag
+                }
+                break;
+              } // default:
+            } // switch (tag)
+          } // while (!done)
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          throw e.unwrapIOException();
+        } finally {
+          onChanged();
+        } // finally
+        return this;
+      }
+      private int bitField0_;
+
+      private java.util.List<com.github.blackjack200.xyron.Xchange.ReportData> data_ =
+        java.util.Collections.emptyList();
+      private void ensureDataIsMutable() {
+        if (!((bitField0_ & 0x00000001) != 0)) {
+          data_ = new java.util.ArrayList<com.github.blackjack200.xyron.Xchange.ReportData>(data_);
+          bitField0_ |= 0x00000001;
+         }
+      }
+
+      private com.google.protobuf.RepeatedFieldBuilderV3<
+          com.github.blackjack200.xyron.Xchange.ReportData, com.github.blackjack200.xyron.Xchange.ReportData.Builder, com.github.blackjack200.xyron.Xchange.ReportDataOrBuilder> dataBuilder_;
+
+      /**
+       * <code>repeated .xchange.ReportData data = 1;</code>
+       */
+      public java.util.List<com.github.blackjack200.xyron.Xchange.ReportData> getDataList() {
+        if (dataBuilder_ == null) {
+          return java.util.Collections.unmodifiableList(data_);
+        } else {
+          return dataBuilder_.getMessageList();
+        }
+      }
+      /**
+       * <code>repeated .xchange.ReportData data = 1;</code>
+       */
+      public int getDataCount() {
+        if (dataBuilder_ == null) {
+          return data_.size();
+        } else {
+          return dataBuilder_.getCount();
+        }
+      }
+      /**
+       * <code>repeated .xchange.ReportData data = 1;</code>
+       */
+      public com.github.blackjack200.xyron.Xchange.ReportData getData(int index) {
+        if (dataBuilder_ == null) {
+          return data_.get(index);
+        } else {
+          return dataBuilder_.getMessage(index);
+        }
+      }
+      /**
+       * <code>repeated .xchange.ReportData data = 1;</code>
+       */
+      public Builder setData(
+          int index, com.github.blackjack200.xyron.Xchange.ReportData value) {
+        if (dataBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensureDataIsMutable();
+          data_.set(index, value);
+          onChanged();
+        } else {
+          dataBuilder_.setMessage(index, value);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .xchange.ReportData data = 1;</code>
+       */
+      public Builder setData(
+          int index, com.github.blackjack200.xyron.Xchange.ReportData.Builder builderForValue) {
+        if (dataBuilder_ == null) {
+          ensureDataIsMutable();
+          data_.set(index, builderForValue.build());
+          onChanged();
+        } else {
+          dataBuilder_.setMessage(index, builderForValue.build());
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .xchange.ReportData data = 1;</code>
+       */
+      public Builder addData(com.github.blackjack200.xyron.Xchange.ReportData value) {
+        if (dataBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensureDataIsMutable();
+          data_.add(value);
+          onChanged();
+        } else {
+          dataBuilder_.addMessage(value);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .xchange.ReportData data = 1;</code>
+       */
+      public Builder addData(
+          int index, com.github.blackjack200.xyron.Xchange.ReportData value) {
+        if (dataBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensureDataIsMutable();
+          data_.add(index, value);
+          onChanged();
+        } else {
+          dataBuilder_.addMessage(index, value);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .xchange.ReportData data = 1;</code>
+       */
+      public Builder addData(
+          com.github.blackjack200.xyron.Xchange.ReportData.Builder builderForValue) {
+        if (dataBuilder_ == null) {
+          ensureDataIsMutable();
+          data_.add(builderForValue.build());
+          onChanged();
+        } else {
+          dataBuilder_.addMessage(builderForValue.build());
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .xchange.ReportData data = 1;</code>
+       */
+      public Builder addData(
+          int index, com.github.blackjack200.xyron.Xchange.ReportData.Builder builderForValue) {
+        if (dataBuilder_ == null) {
+          ensureDataIsMutable();
+          data_.add(index, builderForValue.build());
+          onChanged();
+        } else {
+          dataBuilder_.addMessage(index, builderForValue.build());
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .xchange.ReportData data = 1;</code>
+       */
+      public Builder addAllData(
+          java.lang.Iterable<? extends com.github.blackjack200.xyron.Xchange.ReportData> values) {
+        if (dataBuilder_ == null) {
+          ensureDataIsMutable();
+          com.google.protobuf.AbstractMessageLite.Builder.addAll(
+              values, data_);
+          onChanged();
+        } else {
+          dataBuilder_.addAllMessages(values);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .xchange.ReportData data = 1;</code>
+       */
+      public Builder clearData() {
+        if (dataBuilder_ == null) {
+          data_ = java.util.Collections.emptyList();
+          bitField0_ = (bitField0_ & ~0x00000001);
+          onChanged();
+        } else {
+          dataBuilder_.clear();
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .xchange.ReportData data = 1;</code>
+       */
+      public Builder removeData(int index) {
+        if (dataBuilder_ == null) {
+          ensureDataIsMutable();
+          data_.remove(index);
+          onChanged();
+        } else {
+          dataBuilder_.remove(index);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .xchange.ReportData data = 1;</code>
+       */
+      public com.github.blackjack200.xyron.Xchange.ReportData.Builder getDataBuilder(
+          int index) {
+        return getDataFieldBuilder().getBuilder(index);
+      }
+      /**
+       * <code>repeated .xchange.ReportData data = 1;</code>
+       */
+      public com.github.blackjack200.xyron.Xchange.ReportDataOrBuilder getDataOrBuilder(
+          int index) {
+        if (dataBuilder_ == null) {
+          return data_.get(index);  } else {
+          return dataBuilder_.getMessageOrBuilder(index);
+        }
+      }
+      /**
+       * <code>repeated .xchange.ReportData data = 1;</code>
+       */
+      public java.util.List<? extends com.github.blackjack200.xyron.Xchange.ReportDataOrBuilder> 
+           getDataOrBuilderList() {
+        if (dataBuilder_ != null) {
+          return dataBuilder_.getMessageOrBuilderList();
+        } else {
+          return java.util.Collections.unmodifiableList(data_);
+        }
+      }
+      /**
+       * <code>repeated .xchange.ReportData data = 1;</code>
+       */
+      public com.github.blackjack200.xyron.Xchange.ReportData.Builder addDataBuilder() {
+        return getDataFieldBuilder().addBuilder(
+            com.github.blackjack200.xyron.Xchange.ReportData.getDefaultInstance());
+      }
+      /**
+       * <code>repeated .xchange.ReportData data = 1;</code>
+       */
+      public com.github.blackjack200.xyron.Xchange.ReportData.Builder addDataBuilder(
+          int index) {
+        return getDataFieldBuilder().addBuilder(
+            index, com.github.blackjack200.xyron.Xchange.ReportData.getDefaultInstance());
+      }
+      /**
+       * <code>repeated .xchange.ReportData data = 1;</code>
+       */
+      public java.util.List<com.github.blackjack200.xyron.Xchange.ReportData.Builder> 
+           getDataBuilderList() {
+        return getDataFieldBuilder().getBuilderList();
+      }
+      private com.google.protobuf.RepeatedFieldBuilderV3<
+          com.github.blackjack200.xyron.Xchange.ReportData, com.github.blackjack200.xyron.Xchange.ReportData.Builder, com.github.blackjack200.xyron.Xchange.ReportDataOrBuilder> 
+          getDataFieldBuilder() {
+        if (dataBuilder_ == null) {
+          dataBuilder_ = new com.google.protobuf.RepeatedFieldBuilderV3<
+              com.github.blackjack200.xyron.Xchange.ReportData, com.github.blackjack200.xyron.Xchange.ReportData.Builder, com.github.blackjack200.xyron.Xchange.ReportDataOrBuilder>(
+                  data_,
+                  ((bitField0_ & 0x00000001) != 0),
+                  getParentForChildren(),
+                  isClean());
+          data_ = null;
+        }
+        return dataBuilder_;
+      }
+      @java.lang.Override
+      public final Builder setUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.setUnknownFields(unknownFields);
+      }
+
+      @java.lang.Override
+      public final Builder mergeUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.mergeUnknownFields(unknownFields);
+      }
+
+
+      // @@protoc_insertion_point(builder_scope:xchange.BatchedReportData)
+    }
+
+    // @@protoc_insertion_point(class_scope:xchange.BatchedReportData)
+    private static final com.github.blackjack200.xyron.Xchange.BatchedReportData DEFAULT_INSTANCE;
+    static {
+      DEFAULT_INSTANCE = new com.github.blackjack200.xyron.Xchange.BatchedReportData();
+    }
+
+    public static com.github.blackjack200.xyron.Xchange.BatchedReportData getDefaultInstance() {
+      return DEFAULT_INSTANCE;
+    }
+
+    private static final com.google.protobuf.Parser<BatchedReportData>
+        PARSER = new com.google.protobuf.AbstractParser<BatchedReportData>() {
+      @java.lang.Override
+      public BatchedReportData parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        Builder builder = newBuilder();
+        try {
+          builder.mergeFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          throw e.setUnfinishedMessage(builder.buildPartial());
+        } catch (com.google.protobuf.UninitializedMessageException e) {
+          throw e.asInvalidProtocolBufferException().setUnfinishedMessage(builder.buildPartial());
+        } catch (java.io.IOException e) {
+          throw new com.google.protobuf.InvalidProtocolBufferException(e)
+              .setUnfinishedMessage(builder.buildPartial());
+        }
+        return builder.buildPartial();
+      }
+    };
+
+    public static com.google.protobuf.Parser<BatchedReportData> parser() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<BatchedReportData> getParserForType() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.github.blackjack200.xyron.Xchange.BatchedReportData getDefaultInstanceForType() {
+      return DEFAULT_INSTANCE;
+    }
+
+  }
+
+  public interface BatchedReportResponseEntryOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:xchange.BatchedReportResponseEntry)
+      com.google.protobuf.MessageOrBuilder {
+
+    /**
+     * <code>.xchange.PlayerReceipt player = 1;</code>
+     * @return Whether the player field is set.
+     */
+    boolean hasPlayer();
+    /**
+     * <code>.xchange.PlayerReceipt player = 1;</code>
+     * @return The player.
+     */
+    com.github.blackjack200.xyron.Xchange.PlayerReceipt getPlayer();
+    /**
+     * <code>.xchange.PlayerReceipt player = 1;</code>
+     */
+    com.github.blackjack200.xyron.Xchange.PlayerReceiptOrBuilder getPlayerOrBuilder();
+
+    /**
+     * <code>repeated .xchange.JudgementData judgements = 2;</code>
+     */
+    java.util.List<com.github.blackjack200.xyron.Xchange.JudgementData> 
+        getJudgementsList();
+    /**
+     * <code>repeated .xchange.JudgementData judgements = 2;</code>
+     */
+    com.github.blackjack200.xyron.Xchange.JudgementData getJudgements(int index);
+    /**
+     * <code>repeated .xchange.JudgementData judgements = 2;</code>
+     */
+    int getJudgementsCount();
+    /**
+     * <code>repeated .xchange.JudgementData judgements = 2;</code>
+     */
+    java.util.List<? extends com.github.blackjack200.xyron.Xchange.JudgementDataOrBuilder> 
+        getJudgementsOrBuilderList();
+    /**
+     * <code>repeated .xchange.JudgementData judgements = 2;</code>
+     */
+    com.github.blackjack200.xyron.Xchange.JudgementDataOrBuilder getJudgementsOrBuilder(
+        int index);
+  }
+  /**
+   * Protobuf type {@code xchange.BatchedReportResponseEntry}
+   */
+  public static final class BatchedReportResponseEntry extends
+      com.google.protobuf.GeneratedMessageV3 implements
+      // @@protoc_insertion_point(message_implements:xchange.BatchedReportResponseEntry)
+      BatchedReportResponseEntryOrBuilder {
+  private static final long serialVersionUID = 0L;
+    // Use BatchedReportResponseEntry.newBuilder() to construct.
+    private BatchedReportResponseEntry(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+      super(builder);
+    }
+    private BatchedReportResponseEntry() {
+      judgements_ = java.util.Collections.emptyList();
+    }
+
+    @java.lang.Override
+    @SuppressWarnings({"unused"})
+    protected java.lang.Object newInstance(
+        UnusedPrivateParameter unused) {
+      return new BatchedReportResponseEntry();
+    }
+
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return com.github.blackjack200.xyron.Xchange.internal_static_xchange_BatchedReportResponseEntry_descriptor;
+    }
+
+    @java.lang.Override
+    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return com.github.blackjack200.xyron.Xchange.internal_static_xchange_BatchedReportResponseEntry_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              com.github.blackjack200.xyron.Xchange.BatchedReportResponseEntry.class, com.github.blackjack200.xyron.Xchange.BatchedReportResponseEntry.Builder.class);
+    }
+
+    public static final int PLAYER_FIELD_NUMBER = 1;
+    private com.github.blackjack200.xyron.Xchange.PlayerReceipt player_;
+    /**
+     * <code>.xchange.PlayerReceipt player = 1;</code>
+     * @return Whether the player field is set.
+     */
+    @java.lang.Override
+    public boolean hasPlayer() {
+      return player_ != null;
+    }
+    /**
+     * <code>.xchange.PlayerReceipt player = 1;</code>
+     * @return The player.
+     */
+    @java.lang.Override
+    public com.github.blackjack200.xyron.Xchange.PlayerReceipt getPlayer() {
+      return player_ == null ? com.github.blackjack200.xyron.Xchange.PlayerReceipt.getDefaultInstance() : player_;
+    }
+    /**
+     * <code>.xchange.PlayerReceipt player = 1;</code>
+     */
+    @java.lang.Override
+    public com.github.blackjack200.xyron.Xchange.PlayerReceiptOrBuilder getPlayerOrBuilder() {
+      return player_ == null ? com.github.blackjack200.xyron.Xchange.PlayerReceipt.getDefaultInstance() : player_;
+    }
+
+    public static final int JUDGEMENTS_FIELD_NUMBER = 2;
+    @SuppressWarnings("serial")
+    private java.util.List<com.github.blackjack200.xyron.Xchange.JudgementData> judgements_;
+    /**
+     * <code>repeated .xchange.JudgementData judgements = 2;</code>
+     */
+    @java.lang.Override
+    public java.util.List<com.github.blackjack200.xyron.Xchange.JudgementData> getJudgementsList() {
+      return judgements_;
+    }
+    /**
+     * <code>repeated .xchange.JudgementData judgements = 2;</code>
+     */
+    @java.lang.Override
+    public java.util.List<? extends com.github.blackjack200.xyron.Xchange.JudgementDataOrBuilder> 
+        getJudgementsOrBuilderList() {
+      return judgements_;
+    }
+    /**
+     * <code>repeated .xchange.JudgementData judgements = 2;</code>
+     */
+    @java.lang.Override
+    public int getJudgementsCount() {
+      return judgements_.size();
+    }
+    /**
+     * <code>repeated .xchange.JudgementData judgements = 2;</code>
+     */
+    @java.lang.Override
+    public com.github.blackjack200.xyron.Xchange.JudgementData getJudgements(int index) {
+      return judgements_.get(index);
+    }
+    /**
+     * <code>repeated .xchange.JudgementData judgements = 2;</code>
+     */
+    @java.lang.Override
+    public com.github.blackjack200.xyron.Xchange.JudgementDataOrBuilder getJudgementsOrBuilder(
+        int index) {
+      return judgements_.get(index);
+    }
+
+    private byte memoizedIsInitialized = -1;
+    @java.lang.Override
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
+
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    @java.lang.Override
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      if (player_ != null) {
+        output.writeMessage(1, getPlayer());
+      }
+      for (int i = 0; i < judgements_.size(); i++) {
+        output.writeMessage(2, judgements_.get(i));
+      }
+      getUnknownFields().writeTo(output);
+    }
+
+    @java.lang.Override
+    public int getSerializedSize() {
+      int size = memoizedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      if (player_ != null) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(1, getPlayer());
+      }
+      for (int i = 0; i < judgements_.size(); i++) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(2, judgements_.get(i));
+      }
+      size += getUnknownFields().getSerializedSize();
+      memoizedSize = size;
+      return size;
+    }
+
+    @java.lang.Override
+    public boolean equals(final java.lang.Object obj) {
+      if (obj == this) {
+       return true;
+      }
+      if (!(obj instanceof com.github.blackjack200.xyron.Xchange.BatchedReportResponseEntry)) {
+        return super.equals(obj);
+      }
+      com.github.blackjack200.xyron.Xchange.BatchedReportResponseEntry other = (com.github.blackjack200.xyron.Xchange.BatchedReportResponseEntry) obj;
+
+      if (hasPlayer() != other.hasPlayer()) return false;
+      if (hasPlayer()) {
+        if (!getPlayer()
+            .equals(other.getPlayer())) return false;
+      }
+      if (!getJudgementsList()
+          .equals(other.getJudgementsList())) return false;
+      if (!getUnknownFields().equals(other.getUnknownFields())) return false;
+      return true;
+    }
+
+    @java.lang.Override
+    public int hashCode() {
+      if (memoizedHashCode != 0) {
+        return memoizedHashCode;
+      }
+      int hash = 41;
+      hash = (19 * hash) + getDescriptor().hashCode();
+      if (hasPlayer()) {
+        hash = (37 * hash) + PLAYER_FIELD_NUMBER;
+        hash = (53 * hash) + getPlayer().hashCode();
+      }
+      if (getJudgementsCount() > 0) {
+        hash = (37 * hash) + JUDGEMENTS_FIELD_NUMBER;
+        hash = (53 * hash) + getJudgementsList().hashCode();
+      }
+      hash = (29 * hash) + getUnknownFields().hashCode();
+      memoizedHashCode = hash;
+      return hash;
+    }
+
+    public static com.github.blackjack200.xyron.Xchange.BatchedReportResponseEntry parseFrom(
+        java.nio.ByteBuffer data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.github.blackjack200.xyron.Xchange.BatchedReportResponseEntry parseFrom(
+        java.nio.ByteBuffer data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.github.blackjack200.xyron.Xchange.BatchedReportResponseEntry parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.github.blackjack200.xyron.Xchange.BatchedReportResponseEntry parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.github.blackjack200.xyron.Xchange.BatchedReportResponseEntry parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.github.blackjack200.xyron.Xchange.BatchedReportResponseEntry parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.github.blackjack200.xyron.Xchange.BatchedReportResponseEntry parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static com.github.blackjack200.xyron.Xchange.BatchedReportResponseEntry parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+
+    public static com.github.blackjack200.xyron.Xchange.BatchedReportResponseEntry parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input);
+    }
+
+    public static com.github.blackjack200.xyron.Xchange.BatchedReportResponseEntry parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static com.github.blackjack200.xyron.Xchange.BatchedReportResponseEntry parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static com.github.blackjack200.xyron.Xchange.BatchedReportResponseEntry parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+
+    @java.lang.Override
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder() {
+      return DEFAULT_INSTANCE.toBuilder();
+    }
+    public static Builder newBuilder(com.github.blackjack200.xyron.Xchange.BatchedReportResponseEntry prototype) {
+      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+    @java.lang.Override
+    public Builder toBuilder() {
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
+    }
+
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    /**
+     * Protobuf type {@code xchange.BatchedReportResponseEntry}
+     */
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:xchange.BatchedReportResponseEntry)
+        com.github.blackjack200.xyron.Xchange.BatchedReportResponseEntryOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return com.github.blackjack200.xyron.Xchange.internal_static_xchange_BatchedReportResponseEntry_descriptor;
+      }
+
+      @java.lang.Override
+      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return com.github.blackjack200.xyron.Xchange.internal_static_xchange_BatchedReportResponseEntry_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                com.github.blackjack200.xyron.Xchange.BatchedReportResponseEntry.class, com.github.blackjack200.xyron.Xchange.BatchedReportResponseEntry.Builder.class);
+      }
+
+      // Construct using com.github.blackjack200.xyron.Xchange.BatchedReportResponseEntry.newBuilder()
+      private Builder() {
+
+      }
+
+      private Builder(
+          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        super(parent);
+
+      }
+      @java.lang.Override
+      public Builder clear() {
+        super.clear();
+        bitField0_ = 0;
+        player_ = null;
+        if (playerBuilder_ != null) {
+          playerBuilder_.dispose();
+          playerBuilder_ = null;
+        }
+        if (judgementsBuilder_ == null) {
+          judgements_ = java.util.Collections.emptyList();
+        } else {
+          judgements_ = null;
+          judgementsBuilder_.clear();
+        }
+        bitField0_ = (bitField0_ & ~0x00000002);
+        return this;
+      }
+
+      @java.lang.Override
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return com.github.blackjack200.xyron.Xchange.internal_static_xchange_BatchedReportResponseEntry_descriptor;
+      }
+
+      @java.lang.Override
+      public com.github.blackjack200.xyron.Xchange.BatchedReportResponseEntry getDefaultInstanceForType() {
+        return com.github.blackjack200.xyron.Xchange.BatchedReportResponseEntry.getDefaultInstance();
+      }
+
+      @java.lang.Override
+      public com.github.blackjack200.xyron.Xchange.BatchedReportResponseEntry build() {
+        com.github.blackjack200.xyron.Xchange.BatchedReportResponseEntry result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      @java.lang.Override
+      public com.github.blackjack200.xyron.Xchange.BatchedReportResponseEntry buildPartial() {
+        com.github.blackjack200.xyron.Xchange.BatchedReportResponseEntry result = new com.github.blackjack200.xyron.Xchange.BatchedReportResponseEntry(this);
+        buildPartialRepeatedFields(result);
+        if (bitField0_ != 0) { buildPartial0(result); }
+        onBuilt();
+        return result;
+      }
+
+      private void buildPartialRepeatedFields(com.github.blackjack200.xyron.Xchange.BatchedReportResponseEntry result) {
+        if (judgementsBuilder_ == null) {
+          if (((bitField0_ & 0x00000002) != 0)) {
+            judgements_ = java.util.Collections.unmodifiableList(judgements_);
+            bitField0_ = (bitField0_ & ~0x00000002);
+          }
+          result.judgements_ = judgements_;
+        } else {
+          result.judgements_ = judgementsBuilder_.build();
+        }
+      }
+
+      private void buildPartial0(com.github.blackjack200.xyron.Xchange.BatchedReportResponseEntry result) {
+        int from_bitField0_ = bitField0_;
+        if (((from_bitField0_ & 0x00000001) != 0)) {
+          result.player_ = playerBuilder_ == null
+              ? player_
+              : playerBuilder_.build();
+        }
+      }
+
+      @java.lang.Override
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof com.github.blackjack200.xyron.Xchange.BatchedReportResponseEntry) {
+          return mergeFrom((com.github.blackjack200.xyron.Xchange.BatchedReportResponseEntry)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(com.github.blackjack200.xyron.Xchange.BatchedReportResponseEntry other) {
+        if (other == com.github.blackjack200.xyron.Xchange.BatchedReportResponseEntry.getDefaultInstance()) return this;
+        if (other.hasPlayer()) {
+          mergePlayer(other.getPlayer());
+        }
+        if (judgementsBuilder_ == null) {
+          if (!other.judgements_.isEmpty()) {
+            if (judgements_.isEmpty()) {
+              judgements_ = other.judgements_;
+              bitField0_ = (bitField0_ & ~0x00000002);
+            } else {
+              ensureJudgementsIsMutable();
+              judgements_.addAll(other.judgements_);
+            }
+            onChanged();
+          }
+        } else {
+          if (!other.judgements_.isEmpty()) {
+            if (judgementsBuilder_.isEmpty()) {
+              judgementsBuilder_.dispose();
+              judgementsBuilder_ = null;
+              judgements_ = other.judgements_;
+              bitField0_ = (bitField0_ & ~0x00000002);
+              judgementsBuilder_ = 
+                com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders ?
+                   getJudgementsFieldBuilder() : null;
+            } else {
+              judgementsBuilder_.addAllMessages(other.judgements_);
+            }
+          }
+        }
+        this.mergeUnknownFields(other.getUnknownFields());
+        onChanged();
+        return this;
+      }
+
+      @java.lang.Override
+      public final boolean isInitialized() {
+        return true;
+      }
+
+      @java.lang.Override
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        if (extensionRegistry == null) {
+          throw new java.lang.NullPointerException();
+        }
+        try {
+          boolean done = false;
+          while (!done) {
+            int tag = input.readTag();
+            switch (tag) {
+              case 0:
+                done = true;
+                break;
+              case 10: {
+                input.readMessage(
+                    getPlayerFieldBuilder().getBuilder(),
+                    extensionRegistry);
+                bitField0_ |= 0x00000001;
+                break;
+              } // case 10
+              case 18: {
+                com.github.blackjack200.xyron.Xchange.JudgementData m =
+                    input.readMessage(
+                        com.github.blackjack200.xyron.Xchange.JudgementData.parser(),
+                        extensionRegistry);
+                if (judgementsBuilder_ == null) {
+                  ensureJudgementsIsMutable();
+                  judgements_.add(m);
+                } else {
+                  judgementsBuilder_.addMessage(m);
+                }
+                break;
+              } // case 18
+              default: {
+                if (!super.parseUnknownField(input, extensionRegistry, tag)) {
+                  done = true; // was an endgroup tag
+                }
+                break;
+              } // default:
+            } // switch (tag)
+          } // while (!done)
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          throw e.unwrapIOException();
+        } finally {
+          onChanged();
+        } // finally
+        return this;
+      }
+      private int bitField0_;
+
+      private com.github.blackjack200.xyron.Xchange.PlayerReceipt player_;
+      private com.google.protobuf.SingleFieldBuilderV3<
+          com.github.blackjack200.xyron.Xchange.PlayerReceipt, com.github.blackjack200.xyron.Xchange.PlayerReceipt.Builder, com.github.blackjack200.xyron.Xchange.PlayerReceiptOrBuilder> playerBuilder_;
+      /**
+       * <code>.xchange.PlayerReceipt player = 1;</code>
+       * @return Whether the player field is set.
+       */
+      public boolean hasPlayer() {
+        return ((bitField0_ & 0x00000001) != 0);
+      }
+      /**
+       * <code>.xchange.PlayerReceipt player = 1;</code>
+       * @return The player.
+       */
+      public com.github.blackjack200.xyron.Xchange.PlayerReceipt getPlayer() {
+        if (playerBuilder_ == null) {
+          return player_ == null ? com.github.blackjack200.xyron.Xchange.PlayerReceipt.getDefaultInstance() : player_;
+        } else {
+          return playerBuilder_.getMessage();
+        }
+      }
+      /**
+       * <code>.xchange.PlayerReceipt player = 1;</code>
+       */
+      public Builder setPlayer(com.github.blackjack200.xyron.Xchange.PlayerReceipt value) {
+        if (playerBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          player_ = value;
+        } else {
+          playerBuilder_.setMessage(value);
+        }
+        bitField0_ |= 0x00000001;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>.xchange.PlayerReceipt player = 1;</code>
+       */
+      public Builder setPlayer(
+          com.github.blackjack200.xyron.Xchange.PlayerReceipt.Builder builderForValue) {
+        if (playerBuilder_ == null) {
+          player_ = builderForValue.build();
+        } else {
+          playerBuilder_.setMessage(builderForValue.build());
+        }
+        bitField0_ |= 0x00000001;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>.xchange.PlayerReceipt player = 1;</code>
+       */
+      public Builder mergePlayer(com.github.blackjack200.xyron.Xchange.PlayerReceipt value) {
+        if (playerBuilder_ == null) {
+          if (((bitField0_ & 0x00000001) != 0) &&
+            player_ != null &&
+            player_ != com.github.blackjack200.xyron.Xchange.PlayerReceipt.getDefaultInstance()) {
+            getPlayerBuilder().mergeFrom(value);
+          } else {
+            player_ = value;
+          }
+        } else {
+          playerBuilder_.mergeFrom(value);
+        }
+        bitField0_ |= 0x00000001;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>.xchange.PlayerReceipt player = 1;</code>
+       */
+      public Builder clearPlayer() {
+        bitField0_ = (bitField0_ & ~0x00000001);
+        player_ = null;
+        if (playerBuilder_ != null) {
+          playerBuilder_.dispose();
+          playerBuilder_ = null;
+        }
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>.xchange.PlayerReceipt player = 1;</code>
+       */
+      public com.github.blackjack200.xyron.Xchange.PlayerReceipt.Builder getPlayerBuilder() {
+        bitField0_ |= 0x00000001;
+        onChanged();
+        return getPlayerFieldBuilder().getBuilder();
+      }
+      /**
+       * <code>.xchange.PlayerReceipt player = 1;</code>
+       */
+      public com.github.blackjack200.xyron.Xchange.PlayerReceiptOrBuilder getPlayerOrBuilder() {
+        if (playerBuilder_ != null) {
+          return playerBuilder_.getMessageOrBuilder();
+        } else {
+          return player_ == null ?
+              com.github.blackjack200.xyron.Xchange.PlayerReceipt.getDefaultInstance() : player_;
+        }
+      }
+      /**
+       * <code>.xchange.PlayerReceipt player = 1;</code>
+       */
+      private com.google.protobuf.SingleFieldBuilderV3<
+          com.github.blackjack200.xyron.Xchange.PlayerReceipt, com.github.blackjack200.xyron.Xchange.PlayerReceipt.Builder, com.github.blackjack200.xyron.Xchange.PlayerReceiptOrBuilder> 
+          getPlayerFieldBuilder() {
+        if (playerBuilder_ == null) {
+          playerBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
+              com.github.blackjack200.xyron.Xchange.PlayerReceipt, com.github.blackjack200.xyron.Xchange.PlayerReceipt.Builder, com.github.blackjack200.xyron.Xchange.PlayerReceiptOrBuilder>(
+                  getPlayer(),
+                  getParentForChildren(),
+                  isClean());
+          player_ = null;
+        }
+        return playerBuilder_;
+      }
+
+      private java.util.List<com.github.blackjack200.xyron.Xchange.JudgementData> judgements_ =
+        java.util.Collections.emptyList();
+      private void ensureJudgementsIsMutable() {
+        if (!((bitField0_ & 0x00000002) != 0)) {
+          judgements_ = new java.util.ArrayList<com.github.blackjack200.xyron.Xchange.JudgementData>(judgements_);
+          bitField0_ |= 0x00000002;
+         }
+      }
+
+      private com.google.protobuf.RepeatedFieldBuilderV3<
+          com.github.blackjack200.xyron.Xchange.JudgementData, com.github.blackjack200.xyron.Xchange.JudgementData.Builder, com.github.blackjack200.xyron.Xchange.JudgementDataOrBuilder> judgementsBuilder_;
+
+      /**
+       * <code>repeated .xchange.JudgementData judgements = 2;</code>
+       */
+      public java.util.List<com.github.blackjack200.xyron.Xchange.JudgementData> getJudgementsList() {
+        if (judgementsBuilder_ == null) {
+          return java.util.Collections.unmodifiableList(judgements_);
+        } else {
+          return judgementsBuilder_.getMessageList();
+        }
+      }
+      /**
+       * <code>repeated .xchange.JudgementData judgements = 2;</code>
+       */
+      public int getJudgementsCount() {
+        if (judgementsBuilder_ == null) {
+          return judgements_.size();
+        } else {
+          return judgementsBuilder_.getCount();
+        }
+      }
+      /**
+       * <code>repeated .xchange.JudgementData judgements = 2;</code>
+       */
+      public com.github.blackjack200.xyron.Xchange.JudgementData getJudgements(int index) {
+        if (judgementsBuilder_ == null) {
+          return judgements_.get(index);
+        } else {
+          return judgementsBuilder_.getMessage(index);
+        }
+      }
+      /**
+       * <code>repeated .xchange.JudgementData judgements = 2;</code>
+       */
+      public Builder setJudgements(
+          int index, com.github.blackjack200.xyron.Xchange.JudgementData value) {
+        if (judgementsBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensureJudgementsIsMutable();
+          judgements_.set(index, value);
+          onChanged();
+        } else {
+          judgementsBuilder_.setMessage(index, value);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .xchange.JudgementData judgements = 2;</code>
+       */
+      public Builder setJudgements(
+          int index, com.github.blackjack200.xyron.Xchange.JudgementData.Builder builderForValue) {
+        if (judgementsBuilder_ == null) {
+          ensureJudgementsIsMutable();
+          judgements_.set(index, builderForValue.build());
+          onChanged();
+        } else {
+          judgementsBuilder_.setMessage(index, builderForValue.build());
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .xchange.JudgementData judgements = 2;</code>
+       */
+      public Builder addJudgements(com.github.blackjack200.xyron.Xchange.JudgementData value) {
+        if (judgementsBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensureJudgementsIsMutable();
+          judgements_.add(value);
+          onChanged();
+        } else {
+          judgementsBuilder_.addMessage(value);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .xchange.JudgementData judgements = 2;</code>
+       */
+      public Builder addJudgements(
+          int index, com.github.blackjack200.xyron.Xchange.JudgementData value) {
+        if (judgementsBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensureJudgementsIsMutable();
+          judgements_.add(index, value);
+          onChanged();
+        } else {
+          judgementsBuilder_.addMessage(index, value);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .xchange.JudgementData judgements = 2;</code>
+       */
+      public Builder addJudgements(
+          com.github.blackjack200.xyron.Xchange.JudgementData.Builder builderForValue) {
+        if (judgementsBuilder_ == null) {
+          ensureJudgementsIsMutable();
+          judgements_.add(builderForValue.build());
+          onChanged();
+        } else {
+          judgementsBuilder_.addMessage(builderForValue.build());
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .xchange.JudgementData judgements = 2;</code>
+       */
+      public Builder addJudgements(
+          int index, com.github.blackjack200.xyron.Xchange.JudgementData.Builder builderForValue) {
+        if (judgementsBuilder_ == null) {
+          ensureJudgementsIsMutable();
+          judgements_.add(index, builderForValue.build());
+          onChanged();
+        } else {
+          judgementsBuilder_.addMessage(index, builderForValue.build());
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .xchange.JudgementData judgements = 2;</code>
+       */
+      public Builder addAllJudgements(
+          java.lang.Iterable<? extends com.github.blackjack200.xyron.Xchange.JudgementData> values) {
+        if (judgementsBuilder_ == null) {
+          ensureJudgementsIsMutable();
+          com.google.protobuf.AbstractMessageLite.Builder.addAll(
+              values, judgements_);
+          onChanged();
+        } else {
+          judgementsBuilder_.addAllMessages(values);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .xchange.JudgementData judgements = 2;</code>
+       */
+      public Builder clearJudgements() {
+        if (judgementsBuilder_ == null) {
+          judgements_ = java.util.Collections.emptyList();
+          bitField0_ = (bitField0_ & ~0x00000002);
+          onChanged();
+        } else {
+          judgementsBuilder_.clear();
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .xchange.JudgementData judgements = 2;</code>
+       */
+      public Builder removeJudgements(int index) {
+        if (judgementsBuilder_ == null) {
+          ensureJudgementsIsMutable();
+          judgements_.remove(index);
+          onChanged();
+        } else {
+          judgementsBuilder_.remove(index);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .xchange.JudgementData judgements = 2;</code>
+       */
+      public com.github.blackjack200.xyron.Xchange.JudgementData.Builder getJudgementsBuilder(
+          int index) {
+        return getJudgementsFieldBuilder().getBuilder(index);
+      }
+      /**
+       * <code>repeated .xchange.JudgementData judgements = 2;</code>
+       */
+      public com.github.blackjack200.xyron.Xchange.JudgementDataOrBuilder getJudgementsOrBuilder(
+          int index) {
+        if (judgementsBuilder_ == null) {
+          return judgements_.get(index);  } else {
+          return judgementsBuilder_.getMessageOrBuilder(index);
+        }
+      }
+      /**
+       * <code>repeated .xchange.JudgementData judgements = 2;</code>
+       */
+      public java.util.List<? extends com.github.blackjack200.xyron.Xchange.JudgementDataOrBuilder> 
+           getJudgementsOrBuilderList() {
+        if (judgementsBuilder_ != null) {
+          return judgementsBuilder_.getMessageOrBuilderList();
+        } else {
+          return java.util.Collections.unmodifiableList(judgements_);
+        }
+      }
+      /**
+       * <code>repeated .xchange.JudgementData judgements = 2;</code>
+       */
+      public com.github.blackjack200.xyron.Xchange.JudgementData.Builder addJudgementsBuilder() {
+        return getJudgementsFieldBuilder().addBuilder(
+            com.github.blackjack200.xyron.Xchange.JudgementData.getDefaultInstance());
+      }
+      /**
+       * <code>repeated .xchange.JudgementData judgements = 2;</code>
+       */
+      public com.github.blackjack200.xyron.Xchange.JudgementData.Builder addJudgementsBuilder(
+          int index) {
+        return getJudgementsFieldBuilder().addBuilder(
+            index, com.github.blackjack200.xyron.Xchange.JudgementData.getDefaultInstance());
+      }
+      /**
+       * <code>repeated .xchange.JudgementData judgements = 2;</code>
+       */
+      public java.util.List<com.github.blackjack200.xyron.Xchange.JudgementData.Builder> 
+           getJudgementsBuilderList() {
+        return getJudgementsFieldBuilder().getBuilderList();
+      }
+      private com.google.protobuf.RepeatedFieldBuilderV3<
+          com.github.blackjack200.xyron.Xchange.JudgementData, com.github.blackjack200.xyron.Xchange.JudgementData.Builder, com.github.blackjack200.xyron.Xchange.JudgementDataOrBuilder> 
+          getJudgementsFieldBuilder() {
+        if (judgementsBuilder_ == null) {
+          judgementsBuilder_ = new com.google.protobuf.RepeatedFieldBuilderV3<
+              com.github.blackjack200.xyron.Xchange.JudgementData, com.github.blackjack200.xyron.Xchange.JudgementData.Builder, com.github.blackjack200.xyron.Xchange.JudgementDataOrBuilder>(
+                  judgements_,
+                  ((bitField0_ & 0x00000002) != 0),
+                  getParentForChildren(),
+                  isClean());
+          judgements_ = null;
+        }
+        return judgementsBuilder_;
+      }
+      @java.lang.Override
+      public final Builder setUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.setUnknownFields(unknownFields);
+      }
+
+      @java.lang.Override
+      public final Builder mergeUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.mergeUnknownFields(unknownFields);
+      }
+
+
+      // @@protoc_insertion_point(builder_scope:xchange.BatchedReportResponseEntry)
+    }
+
+    // @@protoc_insertion_point(class_scope:xchange.BatchedReportResponseEntry)
+    private static final com.github.blackjack200.xyron.Xchange.BatchedReportResponseEntry DEFAULT_INSTANCE;
+    static {
+      DEFAULT_INSTANCE = new com.github.blackjack200.xyron.Xchange.BatchedReportResponseEntry();
+    }
+
+    public static com.github.blackjack200.xyron.Xchange.BatchedReportResponseEntry getDefaultInstance() {
+      return DEFAULT_INSTANCE;
+    }
+
+    private static final com.google.protobuf.Parser<BatchedReportResponseEntry>
+        PARSER = new com.google.protobuf.AbstractParser<BatchedReportResponseEntry>() {
+      @java.lang.Override
+      public BatchedReportResponseEntry parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        Builder builder = newBuilder();
+        try {
+          builder.mergeFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          throw e.setUnfinishedMessage(builder.buildPartial());
+        } catch (com.google.protobuf.UninitializedMessageException e) {
+          throw e.asInvalidProtocolBufferException().setUnfinishedMessage(builder.buildPartial());
+        } catch (java.io.IOException e) {
+          throw new com.google.protobuf.InvalidProtocolBufferException(e)
+              .setUnfinishedMessage(builder.buildPartial());
+        }
+        return builder.buildPartial();
+      }
+    };
+
+    public static com.google.protobuf.Parser<BatchedReportResponseEntry> parser() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<BatchedReportResponseEntry> getParserForType() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.github.blackjack200.xyron.Xchange.BatchedReportResponseEntry getDefaultInstanceForType() {
+      return DEFAULT_INSTANCE;
+    }
+
+  }
+
+  public interface BatchedReportResponseOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:xchange.BatchedReportResponse)
+      com.google.protobuf.MessageOrBuilder {
+
+    /**
+     * <code>repeated .xchange.BatchedReportResponseEntry data = 1;</code>
+     */
+    java.util.List<com.github.blackjack200.xyron.Xchange.BatchedReportResponseEntry> 
+        getDataList();
+    /**
+     * <code>repeated .xchange.BatchedReportResponseEntry data = 1;</code>
+     */
+    com.github.blackjack200.xyron.Xchange.BatchedReportResponseEntry getData(int index);
+    /**
+     * <code>repeated .xchange.BatchedReportResponseEntry data = 1;</code>
+     */
+    int getDataCount();
+    /**
+     * <code>repeated .xchange.BatchedReportResponseEntry data = 1;</code>
+     */
+    java.util.List<? extends com.github.blackjack200.xyron.Xchange.BatchedReportResponseEntryOrBuilder> 
+        getDataOrBuilderList();
+    /**
+     * <code>repeated .xchange.BatchedReportResponseEntry data = 1;</code>
+     */
+    com.github.blackjack200.xyron.Xchange.BatchedReportResponseEntryOrBuilder getDataOrBuilder(
+        int index);
+  }
+  /**
+   * Protobuf type {@code xchange.BatchedReportResponse}
+   */
+  public static final class BatchedReportResponse extends
+      com.google.protobuf.GeneratedMessageV3 implements
+      // @@protoc_insertion_point(message_implements:xchange.BatchedReportResponse)
+      BatchedReportResponseOrBuilder {
+  private static final long serialVersionUID = 0L;
+    // Use BatchedReportResponse.newBuilder() to construct.
+    private BatchedReportResponse(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+      super(builder);
+    }
+    private BatchedReportResponse() {
+      data_ = java.util.Collections.emptyList();
+    }
+
+    @java.lang.Override
+    @SuppressWarnings({"unused"})
+    protected java.lang.Object newInstance(
+        UnusedPrivateParameter unused) {
+      return new BatchedReportResponse();
+    }
+
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return com.github.blackjack200.xyron.Xchange.internal_static_xchange_BatchedReportResponse_descriptor;
+    }
+
+    @java.lang.Override
+    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return com.github.blackjack200.xyron.Xchange.internal_static_xchange_BatchedReportResponse_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              com.github.blackjack200.xyron.Xchange.BatchedReportResponse.class, com.github.blackjack200.xyron.Xchange.BatchedReportResponse.Builder.class);
+    }
+
+    public static final int DATA_FIELD_NUMBER = 1;
+    @SuppressWarnings("serial")
+    private java.util.List<com.github.blackjack200.xyron.Xchange.BatchedReportResponseEntry> data_;
+    /**
+     * <code>repeated .xchange.BatchedReportResponseEntry data = 1;</code>
+     */
+    @java.lang.Override
+    public java.util.List<com.github.blackjack200.xyron.Xchange.BatchedReportResponseEntry> getDataList() {
+      return data_;
+    }
+    /**
+     * <code>repeated .xchange.BatchedReportResponseEntry data = 1;</code>
+     */
+    @java.lang.Override
+    public java.util.List<? extends com.github.blackjack200.xyron.Xchange.BatchedReportResponseEntryOrBuilder> 
+        getDataOrBuilderList() {
+      return data_;
+    }
+    /**
+     * <code>repeated .xchange.BatchedReportResponseEntry data = 1;</code>
+     */
+    @java.lang.Override
+    public int getDataCount() {
+      return data_.size();
+    }
+    /**
+     * <code>repeated .xchange.BatchedReportResponseEntry data = 1;</code>
+     */
+    @java.lang.Override
+    public com.github.blackjack200.xyron.Xchange.BatchedReportResponseEntry getData(int index) {
+      return data_.get(index);
+    }
+    /**
+     * <code>repeated .xchange.BatchedReportResponseEntry data = 1;</code>
+     */
+    @java.lang.Override
+    public com.github.blackjack200.xyron.Xchange.BatchedReportResponseEntryOrBuilder getDataOrBuilder(
+        int index) {
+      return data_.get(index);
+    }
+
+    private byte memoizedIsInitialized = -1;
+    @java.lang.Override
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
+
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    @java.lang.Override
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      for (int i = 0; i < data_.size(); i++) {
+        output.writeMessage(1, data_.get(i));
+      }
+      getUnknownFields().writeTo(output);
+    }
+
+    @java.lang.Override
+    public int getSerializedSize() {
+      int size = memoizedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      for (int i = 0; i < data_.size(); i++) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(1, data_.get(i));
+      }
+      size += getUnknownFields().getSerializedSize();
+      memoizedSize = size;
+      return size;
+    }
+
+    @java.lang.Override
+    public boolean equals(final java.lang.Object obj) {
+      if (obj == this) {
+       return true;
+      }
+      if (!(obj instanceof com.github.blackjack200.xyron.Xchange.BatchedReportResponse)) {
+        return super.equals(obj);
+      }
+      com.github.blackjack200.xyron.Xchange.BatchedReportResponse other = (com.github.blackjack200.xyron.Xchange.BatchedReportResponse) obj;
+
+      if (!getDataList()
+          .equals(other.getDataList())) return false;
+      if (!getUnknownFields().equals(other.getUnknownFields())) return false;
+      return true;
+    }
+
+    @java.lang.Override
+    public int hashCode() {
+      if (memoizedHashCode != 0) {
+        return memoizedHashCode;
+      }
+      int hash = 41;
+      hash = (19 * hash) + getDescriptor().hashCode();
+      if (getDataCount() > 0) {
+        hash = (37 * hash) + DATA_FIELD_NUMBER;
+        hash = (53 * hash) + getDataList().hashCode();
+      }
+      hash = (29 * hash) + getUnknownFields().hashCode();
+      memoizedHashCode = hash;
+      return hash;
+    }
+
+    public static com.github.blackjack200.xyron.Xchange.BatchedReportResponse parseFrom(
+        java.nio.ByteBuffer data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.github.blackjack200.xyron.Xchange.BatchedReportResponse parseFrom(
+        java.nio.ByteBuffer data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.github.blackjack200.xyron.Xchange.BatchedReportResponse parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.github.blackjack200.xyron.Xchange.BatchedReportResponse parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.github.blackjack200.xyron.Xchange.BatchedReportResponse parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.github.blackjack200.xyron.Xchange.BatchedReportResponse parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.github.blackjack200.xyron.Xchange.BatchedReportResponse parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static com.github.blackjack200.xyron.Xchange.BatchedReportResponse parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+
+    public static com.github.blackjack200.xyron.Xchange.BatchedReportResponse parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input);
+    }
+
+    public static com.github.blackjack200.xyron.Xchange.BatchedReportResponse parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static com.github.blackjack200.xyron.Xchange.BatchedReportResponse parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static com.github.blackjack200.xyron.Xchange.BatchedReportResponse parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+
+    @java.lang.Override
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder() {
+      return DEFAULT_INSTANCE.toBuilder();
+    }
+    public static Builder newBuilder(com.github.blackjack200.xyron.Xchange.BatchedReportResponse prototype) {
+      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+    @java.lang.Override
+    public Builder toBuilder() {
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
+    }
+
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    /**
+     * Protobuf type {@code xchange.BatchedReportResponse}
+     */
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:xchange.BatchedReportResponse)
+        com.github.blackjack200.xyron.Xchange.BatchedReportResponseOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return com.github.blackjack200.xyron.Xchange.internal_static_xchange_BatchedReportResponse_descriptor;
+      }
+
+      @java.lang.Override
+      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return com.github.blackjack200.xyron.Xchange.internal_static_xchange_BatchedReportResponse_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                com.github.blackjack200.xyron.Xchange.BatchedReportResponse.class, com.github.blackjack200.xyron.Xchange.BatchedReportResponse.Builder.class);
+      }
+
+      // Construct using com.github.blackjack200.xyron.Xchange.BatchedReportResponse.newBuilder()
+      private Builder() {
+
+      }
+
+      private Builder(
+          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        super(parent);
+
+      }
+      @java.lang.Override
+      public Builder clear() {
+        super.clear();
+        bitField0_ = 0;
+        if (dataBuilder_ == null) {
+          data_ = java.util.Collections.emptyList();
+        } else {
+          data_ = null;
+          dataBuilder_.clear();
+        }
+        bitField0_ = (bitField0_ & ~0x00000001);
+        return this;
+      }
+
+      @java.lang.Override
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return com.github.blackjack200.xyron.Xchange.internal_static_xchange_BatchedReportResponse_descriptor;
+      }
+
+      @java.lang.Override
+      public com.github.blackjack200.xyron.Xchange.BatchedReportResponse getDefaultInstanceForType() {
+        return com.github.blackjack200.xyron.Xchange.BatchedReportResponse.getDefaultInstance();
+      }
+
+      @java.lang.Override
+      public com.github.blackjack200.xyron.Xchange.BatchedReportResponse build() {
+        com.github.blackjack200.xyron.Xchange.BatchedReportResponse result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      @java.lang.Override
+      public com.github.blackjack200.xyron.Xchange.BatchedReportResponse buildPartial() {
+        com.github.blackjack200.xyron.Xchange.BatchedReportResponse result = new com.github.blackjack200.xyron.Xchange.BatchedReportResponse(this);
+        buildPartialRepeatedFields(result);
+        if (bitField0_ != 0) { buildPartial0(result); }
+        onBuilt();
+        return result;
+      }
+
+      private void buildPartialRepeatedFields(com.github.blackjack200.xyron.Xchange.BatchedReportResponse result) {
+        if (dataBuilder_ == null) {
+          if (((bitField0_ & 0x00000001) != 0)) {
+            data_ = java.util.Collections.unmodifiableList(data_);
+            bitField0_ = (bitField0_ & ~0x00000001);
+          }
+          result.data_ = data_;
+        } else {
+          result.data_ = dataBuilder_.build();
+        }
+      }
+
+      private void buildPartial0(com.github.blackjack200.xyron.Xchange.BatchedReportResponse result) {
+        int from_bitField0_ = bitField0_;
+      }
+
+      @java.lang.Override
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof com.github.blackjack200.xyron.Xchange.BatchedReportResponse) {
+          return mergeFrom((com.github.blackjack200.xyron.Xchange.BatchedReportResponse)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(com.github.blackjack200.xyron.Xchange.BatchedReportResponse other) {
+        if (other == com.github.blackjack200.xyron.Xchange.BatchedReportResponse.getDefaultInstance()) return this;
+        if (dataBuilder_ == null) {
+          if (!other.data_.isEmpty()) {
+            if (data_.isEmpty()) {
+              data_ = other.data_;
+              bitField0_ = (bitField0_ & ~0x00000001);
+            } else {
+              ensureDataIsMutable();
+              data_.addAll(other.data_);
+            }
+            onChanged();
+          }
+        } else {
+          if (!other.data_.isEmpty()) {
+            if (dataBuilder_.isEmpty()) {
+              dataBuilder_.dispose();
+              dataBuilder_ = null;
+              data_ = other.data_;
+              bitField0_ = (bitField0_ & ~0x00000001);
+              dataBuilder_ = 
+                com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders ?
+                   getDataFieldBuilder() : null;
+            } else {
+              dataBuilder_.addAllMessages(other.data_);
+            }
+          }
+        }
+        this.mergeUnknownFields(other.getUnknownFields());
+        onChanged();
+        return this;
+      }
+
+      @java.lang.Override
+      public final boolean isInitialized() {
+        return true;
+      }
+
+      @java.lang.Override
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        if (extensionRegistry == null) {
+          throw new java.lang.NullPointerException();
+        }
+        try {
+          boolean done = false;
+          while (!done) {
+            int tag = input.readTag();
+            switch (tag) {
+              case 0:
+                done = true;
+                break;
+              case 10: {
+                com.github.blackjack200.xyron.Xchange.BatchedReportResponseEntry m =
+                    input.readMessage(
+                        com.github.blackjack200.xyron.Xchange.BatchedReportResponseEntry.parser(),
+                        extensionRegistry);
+                if (dataBuilder_ == null) {
+                  ensureDataIsMutable();
+                  data_.add(m);
+                } else {
+                  dataBuilder_.addMessage(m);
+                }
+                break;
+              } // case 10
+              default: {
+                if (!super.parseUnknownField(input, extensionRegistry, tag)) {
+                  done = true; // was an endgroup tag
+                }
+                break;
+              } // default:
+            } // switch (tag)
+          } // while (!done)
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          throw e.unwrapIOException();
+        } finally {
+          onChanged();
+        } // finally
+        return this;
+      }
+      private int bitField0_;
+
+      private java.util.List<com.github.blackjack200.xyron.Xchange.BatchedReportResponseEntry> data_ =
+        java.util.Collections.emptyList();
+      private void ensureDataIsMutable() {
+        if (!((bitField0_ & 0x00000001) != 0)) {
+          data_ = new java.util.ArrayList<com.github.blackjack200.xyron.Xchange.BatchedReportResponseEntry>(data_);
+          bitField0_ |= 0x00000001;
+         }
+      }
+
+      private com.google.protobuf.RepeatedFieldBuilderV3<
+          com.github.blackjack200.xyron.Xchange.BatchedReportResponseEntry, com.github.blackjack200.xyron.Xchange.BatchedReportResponseEntry.Builder, com.github.blackjack200.xyron.Xchange.BatchedReportResponseEntryOrBuilder> dataBuilder_;
+
+      /**
+       * <code>repeated .xchange.BatchedReportResponseEntry data = 1;</code>
+       */
+      public java.util.List<com.github.blackjack200.xyron.Xchange.BatchedReportResponseEntry> getDataList() {
+        if (dataBuilder_ == null) {
+          return java.util.Collections.unmodifiableList(data_);
+        } else {
+          return dataBuilder_.getMessageList();
+        }
+      }
+      /**
+       * <code>repeated .xchange.BatchedReportResponseEntry data = 1;</code>
+       */
+      public int getDataCount() {
+        if (dataBuilder_ == null) {
+          return data_.size();
+        } else {
+          return dataBuilder_.getCount();
+        }
+      }
+      /**
+       * <code>repeated .xchange.BatchedReportResponseEntry data = 1;</code>
+       */
+      public com.github.blackjack200.xyron.Xchange.BatchedReportResponseEntry getData(int index) {
+        if (dataBuilder_ == null) {
+          return data_.get(index);
+        } else {
+          return dataBuilder_.getMessage(index);
+        }
+      }
+      /**
+       * <code>repeated .xchange.BatchedReportResponseEntry data = 1;</code>
+       */
+      public Builder setData(
+          int index, com.github.blackjack200.xyron.Xchange.BatchedReportResponseEntry value) {
+        if (dataBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensureDataIsMutable();
+          data_.set(index, value);
+          onChanged();
+        } else {
+          dataBuilder_.setMessage(index, value);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .xchange.BatchedReportResponseEntry data = 1;</code>
+       */
+      public Builder setData(
+          int index, com.github.blackjack200.xyron.Xchange.BatchedReportResponseEntry.Builder builderForValue) {
+        if (dataBuilder_ == null) {
+          ensureDataIsMutable();
+          data_.set(index, builderForValue.build());
+          onChanged();
+        } else {
+          dataBuilder_.setMessage(index, builderForValue.build());
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .xchange.BatchedReportResponseEntry data = 1;</code>
+       */
+      public Builder addData(com.github.blackjack200.xyron.Xchange.BatchedReportResponseEntry value) {
+        if (dataBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensureDataIsMutable();
+          data_.add(value);
+          onChanged();
+        } else {
+          dataBuilder_.addMessage(value);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .xchange.BatchedReportResponseEntry data = 1;</code>
+       */
+      public Builder addData(
+          int index, com.github.blackjack200.xyron.Xchange.BatchedReportResponseEntry value) {
+        if (dataBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensureDataIsMutable();
+          data_.add(index, value);
+          onChanged();
+        } else {
+          dataBuilder_.addMessage(index, value);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .xchange.BatchedReportResponseEntry data = 1;</code>
+       */
+      public Builder addData(
+          com.github.blackjack200.xyron.Xchange.BatchedReportResponseEntry.Builder builderForValue) {
+        if (dataBuilder_ == null) {
+          ensureDataIsMutable();
+          data_.add(builderForValue.build());
+          onChanged();
+        } else {
+          dataBuilder_.addMessage(builderForValue.build());
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .xchange.BatchedReportResponseEntry data = 1;</code>
+       */
+      public Builder addData(
+          int index, com.github.blackjack200.xyron.Xchange.BatchedReportResponseEntry.Builder builderForValue) {
+        if (dataBuilder_ == null) {
+          ensureDataIsMutable();
+          data_.add(index, builderForValue.build());
+          onChanged();
+        } else {
+          dataBuilder_.addMessage(index, builderForValue.build());
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .xchange.BatchedReportResponseEntry data = 1;</code>
+       */
+      public Builder addAllData(
+          java.lang.Iterable<? extends com.github.blackjack200.xyron.Xchange.BatchedReportResponseEntry> values) {
+        if (dataBuilder_ == null) {
+          ensureDataIsMutable();
+          com.google.protobuf.AbstractMessageLite.Builder.addAll(
+              values, data_);
+          onChanged();
+        } else {
+          dataBuilder_.addAllMessages(values);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .xchange.BatchedReportResponseEntry data = 1;</code>
+       */
+      public Builder clearData() {
+        if (dataBuilder_ == null) {
+          data_ = java.util.Collections.emptyList();
+          bitField0_ = (bitField0_ & ~0x00000001);
+          onChanged();
+        } else {
+          dataBuilder_.clear();
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .xchange.BatchedReportResponseEntry data = 1;</code>
+       */
+      public Builder removeData(int index) {
+        if (dataBuilder_ == null) {
+          ensureDataIsMutable();
+          data_.remove(index);
+          onChanged();
+        } else {
+          dataBuilder_.remove(index);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .xchange.BatchedReportResponseEntry data = 1;</code>
+       */
+      public com.github.blackjack200.xyron.Xchange.BatchedReportResponseEntry.Builder getDataBuilder(
+          int index) {
+        return getDataFieldBuilder().getBuilder(index);
+      }
+      /**
+       * <code>repeated .xchange.BatchedReportResponseEntry data = 1;</code>
+       */
+      public com.github.blackjack200.xyron.Xchange.BatchedReportResponseEntryOrBuilder getDataOrBuilder(
+          int index) {
+        if (dataBuilder_ == null) {
+          return data_.get(index);  } else {
+          return dataBuilder_.getMessageOrBuilder(index);
+        }
+      }
+      /**
+       * <code>repeated .xchange.BatchedReportResponseEntry data = 1;</code>
+       */
+      public java.util.List<? extends com.github.blackjack200.xyron.Xchange.BatchedReportResponseEntryOrBuilder> 
+           getDataOrBuilderList() {
+        if (dataBuilder_ != null) {
+          return dataBuilder_.getMessageOrBuilderList();
+        } else {
+          return java.util.Collections.unmodifiableList(data_);
+        }
+      }
+      /**
+       * <code>repeated .xchange.BatchedReportResponseEntry data = 1;</code>
+       */
+      public com.github.blackjack200.xyron.Xchange.BatchedReportResponseEntry.Builder addDataBuilder() {
+        return getDataFieldBuilder().addBuilder(
+            com.github.blackjack200.xyron.Xchange.BatchedReportResponseEntry.getDefaultInstance());
+      }
+      /**
+       * <code>repeated .xchange.BatchedReportResponseEntry data = 1;</code>
+       */
+      public com.github.blackjack200.xyron.Xchange.BatchedReportResponseEntry.Builder addDataBuilder(
+          int index) {
+        return getDataFieldBuilder().addBuilder(
+            index, com.github.blackjack200.xyron.Xchange.BatchedReportResponseEntry.getDefaultInstance());
+      }
+      /**
+       * <code>repeated .xchange.BatchedReportResponseEntry data = 1;</code>
+       */
+      public java.util.List<com.github.blackjack200.xyron.Xchange.BatchedReportResponseEntry.Builder> 
+           getDataBuilderList() {
+        return getDataFieldBuilder().getBuilderList();
+      }
+      private com.google.protobuf.RepeatedFieldBuilderV3<
+          com.github.blackjack200.xyron.Xchange.BatchedReportResponseEntry, com.github.blackjack200.xyron.Xchange.BatchedReportResponseEntry.Builder, com.github.blackjack200.xyron.Xchange.BatchedReportResponseEntryOrBuilder> 
+          getDataFieldBuilder() {
+        if (dataBuilder_ == null) {
+          dataBuilder_ = new com.google.protobuf.RepeatedFieldBuilderV3<
+              com.github.blackjack200.xyron.Xchange.BatchedReportResponseEntry, com.github.blackjack200.xyron.Xchange.BatchedReportResponseEntry.Builder, com.github.blackjack200.xyron.Xchange.BatchedReportResponseEntryOrBuilder>(
+                  data_,
+                  ((bitField0_ & 0x00000001) != 0),
+                  getParentForChildren(),
+                  isClean());
+          data_ = null;
+        }
+        return dataBuilder_;
+      }
+      @java.lang.Override
+      public final Builder setUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.setUnknownFields(unknownFields);
+      }
+
+      @java.lang.Override
+      public final Builder mergeUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.mergeUnknownFields(unknownFields);
+      }
+
+
+      // @@protoc_insertion_point(builder_scope:xchange.BatchedReportResponse)
+    }
+
+    // @@protoc_insertion_point(class_scope:xchange.BatchedReportResponse)
+    private static final com.github.blackjack200.xyron.Xchange.BatchedReportResponse DEFAULT_INSTANCE;
+    static {
+      DEFAULT_INSTANCE = new com.github.blackjack200.xyron.Xchange.BatchedReportResponse();
+    }
+
+    public static com.github.blackjack200.xyron.Xchange.BatchedReportResponse getDefaultInstance() {
+      return DEFAULT_INSTANCE;
+    }
+
+    private static final com.google.protobuf.Parser<BatchedReportResponse>
+        PARSER = new com.google.protobuf.AbstractParser<BatchedReportResponse>() {
+      @java.lang.Override
+      public BatchedReportResponse parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        Builder builder = newBuilder();
+        try {
+          builder.mergeFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          throw e.setUnfinishedMessage(builder.buildPartial());
+        } catch (com.google.protobuf.UninitializedMessageException e) {
+          throw e.asInvalidProtocolBufferException().setUnfinishedMessage(builder.buildPartial());
+        } catch (java.io.IOException e) {
+          throw new com.google.protobuf.InvalidProtocolBufferException(e)
+              .setUnfinishedMessage(builder.buildPartial());
+        }
+        return builder.buildPartial();
+      }
+    };
+
+    public static com.google.protobuf.Parser<BatchedReportResponse> parser() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<BatchedReportResponse> getParserForType() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.github.blackjack200.xyron.Xchange.BatchedReportResponse getDefaultInstanceForType() {
+      return DEFAULT_INSTANCE;
+    }
+
+  }
+
+  public interface JudgementDataOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:xchange.JudgementData)
+      com.google.protobuf.MessageOrBuilder {
+
+    /**
+     * <code>string type = 1;</code>
+     * @return The type.
+     */
+    java.lang.String getType();
+    /**
+     * <code>string type = 1;</code>
+     * @return The bytes for type.
+     */
+    com.google.protobuf.ByteString
+        getTypeBytes();
+
+    /**
+     * <code>.xchange.Judgement judgement = 2;</code>
+     * @return The enum numeric value on the wire for judgement.
+     */
+    int getJudgementValue();
+    /**
+     * <code>.xchange.Judgement judgement = 2;</code>
+     * @return The judgement.
+     */
+    com.github.blackjack200.xyron.AnticheatTypes.Judgement getJudgement();
+
+    /**
+     * <code>string message = 3;</code>
+     * @return The message.
+     */
+    java.lang.String getMessage();
+    /**
+     * <code>string message = 3;</code>
+     * @return The bytes for message.
+     */
+    com.google.protobuf.ByteString
+        getMessageBytes();
+  }
+  /**
+   * Protobuf type {@code xchange.JudgementData}
+   */
+  public static final class JudgementData extends
+      com.google.protobuf.GeneratedMessageV3 implements
+      // @@protoc_insertion_point(message_implements:xchange.JudgementData)
+      JudgementDataOrBuilder {
+  private static final long serialVersionUID = 0L;
+    // Use JudgementData.newBuilder() to construct.
+    private JudgementData(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+      super(builder);
+    }
+    private JudgementData() {
+      type_ = "";
+      judgement_ = 0;
+      message_ = "";
+    }
+
+    @java.lang.Override
+    @SuppressWarnings({"unused"})
+    protected java.lang.Object newInstance(
+        UnusedPrivateParameter unused) {
+      return new JudgementData();
+    }
+
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return com.github.blackjack200.xyron.Xchange.internal_static_xchange_JudgementData_descriptor;
+    }
+
+    @java.lang.Override
+    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return com.github.blackjack200.xyron.Xchange.internal_static_xchange_JudgementData_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              com.github.blackjack200.xyron.Xchange.JudgementData.class, com.github.blackjack200.xyron.Xchange.JudgementData.Builder.class);
+    }
+
+    public static final int TYPE_FIELD_NUMBER = 1;
+    @SuppressWarnings("serial")
+    private volatile java.lang.Object type_ = "";
+    /**
+     * <code>string type = 1;</code>
+     * @return The type.
+     */
+    @java.lang.Override
+    public java.lang.String getType() {
+      java.lang.Object ref = type_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        type_ = s;
+        return s;
+      }
+    }
+    /**
+     * <code>string type = 1;</code>
+     * @return The bytes for type.
+     */
+    @java.lang.Override
+    public com.google.protobuf.ByteString
+        getTypeBytes() {
+      java.lang.Object ref = type_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        type_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
+    public static final int JUDGEMENT_FIELD_NUMBER = 2;
+    private int judgement_ = 0;
+    /**
+     * <code>.xchange.Judgement judgement = 2;</code>
+     * @return The enum numeric value on the wire for judgement.
+     */
+    @java.lang.Override public int getJudgementValue() {
+      return judgement_;
+    }
+    /**
+     * <code>.xchange.Judgement judgement = 2;</code>
+     * @return The judgement.
+     */
+    @java.lang.Override public com.github.blackjack200.xyron.AnticheatTypes.Judgement getJudgement() {
+      com.github.blackjack200.xyron.AnticheatTypes.Judgement result = com.github.blackjack200.xyron.AnticheatTypes.Judgement.forNumber(judgement_);
+      return result == null ? com.github.blackjack200.xyron.AnticheatTypes.Judgement.UNRECOGNIZED : result;
+    }
+
+    public static final int MESSAGE_FIELD_NUMBER = 3;
+    @SuppressWarnings("serial")
+    private volatile java.lang.Object message_ = "";
+    /**
+     * <code>string message = 3;</code>
+     * @return The message.
+     */
+    @java.lang.Override
+    public java.lang.String getMessage() {
+      java.lang.Object ref = message_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        message_ = s;
+        return s;
+      }
+    }
+    /**
+     * <code>string message = 3;</code>
+     * @return The bytes for message.
+     */
+    @java.lang.Override
+    public com.google.protobuf.ByteString
+        getMessageBytes() {
+      java.lang.Object ref = message_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        message_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
+    private byte memoizedIsInitialized = -1;
+    @java.lang.Override
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
+
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    @java.lang.Override
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(type_)) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 1, type_);
+      }
+      if (judgement_ != com.github.blackjack200.xyron.AnticheatTypes.Judgement.DEBUG.getNumber()) {
+        output.writeEnum(2, judgement_);
+      }
+      if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(message_)) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 3, message_);
+      }
+      getUnknownFields().writeTo(output);
+    }
+
+    @java.lang.Override
+    public int getSerializedSize() {
+      int size = memoizedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(type_)) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, type_);
+      }
+      if (judgement_ != com.github.blackjack200.xyron.AnticheatTypes.Judgement.DEBUG.getNumber()) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeEnumSize(2, judgement_);
+      }
+      if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(message_)) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(3, message_);
+      }
+      size += getUnknownFields().getSerializedSize();
+      memoizedSize = size;
+      return size;
+    }
+
+    @java.lang.Override
+    public boolean equals(final java.lang.Object obj) {
+      if (obj == this) {
+       return true;
+      }
+      if (!(obj instanceof com.github.blackjack200.xyron.Xchange.JudgementData)) {
+        return super.equals(obj);
+      }
+      com.github.blackjack200.xyron.Xchange.JudgementData other = (com.github.blackjack200.xyron.Xchange.JudgementData) obj;
+
+      if (!getType()
+          .equals(other.getType())) return false;
+      if (judgement_ != other.judgement_) return false;
+      if (!getMessage()
+          .equals(other.getMessage())) return false;
+      if (!getUnknownFields().equals(other.getUnknownFields())) return false;
+      return true;
+    }
+
+    @java.lang.Override
+    public int hashCode() {
+      if (memoizedHashCode != 0) {
+        return memoizedHashCode;
+      }
+      int hash = 41;
+      hash = (19 * hash) + getDescriptor().hashCode();
+      hash = (37 * hash) + TYPE_FIELD_NUMBER;
+      hash = (53 * hash) + getType().hashCode();
+      hash = (37 * hash) + JUDGEMENT_FIELD_NUMBER;
+      hash = (53 * hash) + judgement_;
+      hash = (37 * hash) + MESSAGE_FIELD_NUMBER;
+      hash = (53 * hash) + getMessage().hashCode();
+      hash = (29 * hash) + getUnknownFields().hashCode();
+      memoizedHashCode = hash;
+      return hash;
+    }
+
+    public static com.github.blackjack200.xyron.Xchange.JudgementData parseFrom(
+        java.nio.ByteBuffer data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.github.blackjack200.xyron.Xchange.JudgementData parseFrom(
+        java.nio.ByteBuffer data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.github.blackjack200.xyron.Xchange.JudgementData parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.github.blackjack200.xyron.Xchange.JudgementData parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.github.blackjack200.xyron.Xchange.JudgementData parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.github.blackjack200.xyron.Xchange.JudgementData parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.github.blackjack200.xyron.Xchange.JudgementData parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static com.github.blackjack200.xyron.Xchange.JudgementData parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+
+    public static com.github.blackjack200.xyron.Xchange.JudgementData parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input);
+    }
+
+    public static com.github.blackjack200.xyron.Xchange.JudgementData parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static com.github.blackjack200.xyron.Xchange.JudgementData parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static com.github.blackjack200.xyron.Xchange.JudgementData parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+
+    @java.lang.Override
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder() {
+      return DEFAULT_INSTANCE.toBuilder();
+    }
+    public static Builder newBuilder(com.github.blackjack200.xyron.Xchange.JudgementData prototype) {
+      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+    @java.lang.Override
+    public Builder toBuilder() {
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
+    }
+
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    /**
+     * Protobuf type {@code xchange.JudgementData}
+     */
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:xchange.JudgementData)
+        com.github.blackjack200.xyron.Xchange.JudgementDataOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return com.github.blackjack200.xyron.Xchange.internal_static_xchange_JudgementData_descriptor;
+      }
+
+      @java.lang.Override
+      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return com.github.blackjack200.xyron.Xchange.internal_static_xchange_JudgementData_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                com.github.blackjack200.xyron.Xchange.JudgementData.class, com.github.blackjack200.xyron.Xchange.JudgementData.Builder.class);
+      }
+
+      // Construct using com.github.blackjack200.xyron.Xchange.JudgementData.newBuilder()
+      private Builder() {
+
+      }
+
+      private Builder(
+          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        super(parent);
+
+      }
+      @java.lang.Override
+      public Builder clear() {
+        super.clear();
+        bitField0_ = 0;
+        type_ = "";
+        judgement_ = 0;
+        message_ = "";
+        return this;
+      }
+
+      @java.lang.Override
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return com.github.blackjack200.xyron.Xchange.internal_static_xchange_JudgementData_descriptor;
+      }
+
+      @java.lang.Override
+      public com.github.blackjack200.xyron.Xchange.JudgementData getDefaultInstanceForType() {
+        return com.github.blackjack200.xyron.Xchange.JudgementData.getDefaultInstance();
+      }
+
+      @java.lang.Override
+      public com.github.blackjack200.xyron.Xchange.JudgementData build() {
+        com.github.blackjack200.xyron.Xchange.JudgementData result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      @java.lang.Override
+      public com.github.blackjack200.xyron.Xchange.JudgementData buildPartial() {
+        com.github.blackjack200.xyron.Xchange.JudgementData result = new com.github.blackjack200.xyron.Xchange.JudgementData(this);
+        if (bitField0_ != 0) { buildPartial0(result); }
+        onBuilt();
+        return result;
+      }
+
+      private void buildPartial0(com.github.blackjack200.xyron.Xchange.JudgementData result) {
+        int from_bitField0_ = bitField0_;
+        if (((from_bitField0_ & 0x00000001) != 0)) {
+          result.type_ = type_;
+        }
+        if (((from_bitField0_ & 0x00000002) != 0)) {
+          result.judgement_ = judgement_;
+        }
+        if (((from_bitField0_ & 0x00000004) != 0)) {
+          result.message_ = message_;
+        }
+      }
+
+      @java.lang.Override
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof com.github.blackjack200.xyron.Xchange.JudgementData) {
+          return mergeFrom((com.github.blackjack200.xyron.Xchange.JudgementData)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(com.github.blackjack200.xyron.Xchange.JudgementData other) {
+        if (other == com.github.blackjack200.xyron.Xchange.JudgementData.getDefaultInstance()) return this;
+        if (!other.getType().isEmpty()) {
+          type_ = other.type_;
+          bitField0_ |= 0x00000001;
+          onChanged();
+        }
+        if (other.judgement_ != 0) {
+          setJudgementValue(other.getJudgementValue());
+        }
+        if (!other.getMessage().isEmpty()) {
+          message_ = other.message_;
+          bitField0_ |= 0x00000004;
+          onChanged();
+        }
+        this.mergeUnknownFields(other.getUnknownFields());
+        onChanged();
+        return this;
+      }
+
+      @java.lang.Override
+      public final boolean isInitialized() {
+        return true;
+      }
+
+      @java.lang.Override
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        if (extensionRegistry == null) {
+          throw new java.lang.NullPointerException();
+        }
+        try {
+          boolean done = false;
+          while (!done) {
+            int tag = input.readTag();
+            switch (tag) {
+              case 0:
+                done = true;
+                break;
+              case 10: {
+                type_ = input.readStringRequireUtf8();
+                bitField0_ |= 0x00000001;
+                break;
+              } // case 10
+              case 16: {
+                judgement_ = input.readEnum();
+                bitField0_ |= 0x00000002;
+                break;
+              } // case 16
+              case 26: {
+                message_ = input.readStringRequireUtf8();
+                bitField0_ |= 0x00000004;
+                break;
+              } // case 26
+              default: {
+                if (!super.parseUnknownField(input, extensionRegistry, tag)) {
+                  done = true; // was an endgroup tag
+                }
+                break;
+              } // default:
+            } // switch (tag)
+          } // while (!done)
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          throw e.unwrapIOException();
+        } finally {
+          onChanged();
+        } // finally
+        return this;
+      }
+      private int bitField0_;
+
+      private java.lang.Object type_ = "";
+      /**
+       * <code>string type = 1;</code>
+       * @return The type.
+       */
+      public java.lang.String getType() {
+        java.lang.Object ref = type_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          type_ = s;
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <code>string type = 1;</code>
+       * @return The bytes for type.
+       */
+      public com.google.protobuf.ByteString
+          getTypeBytes() {
+        java.lang.Object ref = type_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          type_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>string type = 1;</code>
+       * @param value The type to set.
+       * @return This builder for chaining.
+       */
+      public Builder setType(
+          java.lang.String value) {
+        if (value == null) { throw new NullPointerException(); }
+        type_ = value;
+        bitField0_ |= 0x00000001;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string type = 1;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearType() {
+        type_ = getDefaultInstance().getType();
+        bitField0_ = (bitField0_ & ~0x00000001);
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string type = 1;</code>
+       * @param value The bytes for type to set.
+       * @return This builder for chaining.
+       */
+      public Builder setTypeBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) { throw new NullPointerException(); }
+        checkByteStringIsUtf8(value);
+        type_ = value;
+        bitField0_ |= 0x00000001;
+        onChanged();
+        return this;
+      }
+
+      private int judgement_ = 0;
+      /**
+       * <code>.xchange.Judgement judgement = 2;</code>
+       * @return The enum numeric value on the wire for judgement.
+       */
+      @java.lang.Override public int getJudgementValue() {
+        return judgement_;
+      }
+      /**
+       * <code>.xchange.Judgement judgement = 2;</code>
+       * @param value The enum numeric value on the wire for judgement to set.
+       * @return This builder for chaining.
+       */
+      public Builder setJudgementValue(int value) {
+        judgement_ = value;
+        bitField0_ |= 0x00000002;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>.xchange.Judgement judgement = 2;</code>
+       * @return The judgement.
+       */
+      @java.lang.Override
+      public com.github.blackjack200.xyron.AnticheatTypes.Judgement getJudgement() {
+        com.github.blackjack200.xyron.AnticheatTypes.Judgement result = com.github.blackjack200.xyron.AnticheatTypes.Judgement.forNumber(judgement_);
+        return result == null ? com.github.blackjack200.xyron.AnticheatTypes.Judgement.UNRECOGNIZED : result;
+      }
+      /**
+       * <code>.xchange.Judgement judgement = 2;</code>
+       * @param value The judgement to set.
+       * @return This builder for chaining.
+       */
+      public Builder setJudgement(com.github.blackjack200.xyron.AnticheatTypes.Judgement value) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
+        bitField0_ |= 0x00000002;
+        judgement_ = value.getNumber();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>.xchange.Judgement judgement = 2;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearJudgement() {
+        bitField0_ = (bitField0_ & ~0x00000002);
+        judgement_ = 0;
+        onChanged();
+        return this;
+      }
+
+      private java.lang.Object message_ = "";
+      /**
+       * <code>string message = 3;</code>
+       * @return The message.
+       */
+      public java.lang.String getMessage() {
+        java.lang.Object ref = message_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          message_ = s;
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <code>string message = 3;</code>
+       * @return The bytes for message.
+       */
+      public com.google.protobuf.ByteString
+          getMessageBytes() {
+        java.lang.Object ref = message_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          message_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>string message = 3;</code>
+       * @param value The message to set.
+       * @return This builder for chaining.
+       */
+      public Builder setMessage(
+          java.lang.String value) {
+        if (value == null) { throw new NullPointerException(); }
+        message_ = value;
+        bitField0_ |= 0x00000004;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string message = 3;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearMessage() {
+        message_ = getDefaultInstance().getMessage();
+        bitField0_ = (bitField0_ & ~0x00000004);
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string message = 3;</code>
+       * @param value The bytes for message to set.
+       * @return This builder for chaining.
+       */
+      public Builder setMessageBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) { throw new NullPointerException(); }
+        checkByteStringIsUtf8(value);
+        message_ = value;
+        bitField0_ |= 0x00000004;
+        onChanged();
+        return this;
+      }
+      @java.lang.Override
+      public final Builder setUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.setUnknownFields(unknownFields);
+      }
+
+      @java.lang.Override
+      public final Builder mergeUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.mergeUnknownFields(unknownFields);
+      }
+
+
+      // @@protoc_insertion_point(builder_scope:xchange.JudgementData)
+    }
+
+    // @@protoc_insertion_point(class_scope:xchange.JudgementData)
+    private static final com.github.blackjack200.xyron.Xchange.JudgementData DEFAULT_INSTANCE;
+    static {
+      DEFAULT_INSTANCE = new com.github.blackjack200.xyron.Xchange.JudgementData();
+    }
+
+    public static com.github.blackjack200.xyron.Xchange.JudgementData getDefaultInstance() {
+      return DEFAULT_INSTANCE;
+    }
+
+    private static final com.google.protobuf.Parser<JudgementData>
+        PARSER = new com.google.protobuf.AbstractParser<JudgementData>() {
+      @java.lang.Override
+      public JudgementData parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        Builder builder = newBuilder();
+        try {
+          builder.mergeFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          throw e.setUnfinishedMessage(builder.buildPartial());
+        } catch (com.google.protobuf.UninitializedMessageException e) {
+          throw e.asInvalidProtocolBufferException().setUnfinishedMessage(builder.buildPartial());
+        } catch (java.io.IOException e) {
+          throw new com.google.protobuf.InvalidProtocolBufferException(e)
+              .setUnfinishedMessage(builder.buildPartial());
+        }
+        return builder.buildPartial();
+      }
+    };
+
+    public static com.google.protobuf.Parser<JudgementData> parser() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<JudgementData> getParserForType() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.github.blackjack200.xyron.Xchange.JudgementData getDefaultInstanceForType() {
+      return DEFAULT_INSTANCE;
+    }
+
+  }
+
   /**
    * Protobuf service {@code xchange.Anticheat}
    */
@@ -6074,12 +7242,20 @@ com.github.blackjack200.xyron.Xchange.TimestampedReportData defaultValue) {
           com.google.protobuf.RpcCallback<com.google.protobuf.Empty> done);
 
       /**
-       * <code>rpc Report(.xchange.PlayerReport) returns (.xchange.ReportResponse);</code>
+       * <code>rpc Report(.xchange.ReportData) returns (.xchange.ReportResponse);</code>
        */
       public abstract void report(
           com.google.protobuf.RpcController controller,
-          com.github.blackjack200.xyron.Xchange.PlayerReport request,
+          com.github.blackjack200.xyron.Xchange.ReportData request,
           com.google.protobuf.RpcCallback<com.github.blackjack200.xyron.Xchange.ReportResponse> done);
+
+      /**
+       * <code>rpc ReportBatched(.xchange.BatchedReportData) returns (.xchange.BatchedReportResponse);</code>
+       */
+      public abstract void reportBatched(
+          com.google.protobuf.RpcController controller,
+          com.github.blackjack200.xyron.Xchange.BatchedReportData request,
+          com.google.protobuf.RpcCallback<com.github.blackjack200.xyron.Xchange.BatchedReportResponse> done);
 
     }
 
@@ -6105,9 +7281,17 @@ com.github.blackjack200.xyron.Xchange.TimestampedReportData defaultValue) {
         @java.lang.Override
         public  void report(
             com.google.protobuf.RpcController controller,
-            com.github.blackjack200.xyron.Xchange.PlayerReport request,
+            com.github.blackjack200.xyron.Xchange.ReportData request,
             com.google.protobuf.RpcCallback<com.github.blackjack200.xyron.Xchange.ReportResponse> done) {
           impl.report(controller, request, done);
+        }
+
+        @java.lang.Override
+        public  void reportBatched(
+            com.google.protobuf.RpcController controller,
+            com.github.blackjack200.xyron.Xchange.BatchedReportData request,
+            com.google.protobuf.RpcCallback<com.github.blackjack200.xyron.Xchange.BatchedReportResponse> done) {
+          impl.reportBatched(controller, request, done);
         }
 
       };
@@ -6137,7 +7321,9 @@ com.github.blackjack200.xyron.Xchange.TimestampedReportData defaultValue) {
             case 1:
               return impl.removePlayer(controller, (com.github.blackjack200.xyron.Xchange.PlayerReceipt)request);
             case 2:
-              return impl.report(controller, (com.github.blackjack200.xyron.Xchange.PlayerReport)request);
+              return impl.report(controller, (com.github.blackjack200.xyron.Xchange.ReportData)request);
+            case 3:
+              return impl.reportBatched(controller, (com.github.blackjack200.xyron.Xchange.BatchedReportData)request);
             default:
               throw new java.lang.AssertionError("Can't get here.");
           }
@@ -6157,7 +7343,9 @@ com.github.blackjack200.xyron.Xchange.TimestampedReportData defaultValue) {
             case 1:
               return com.github.blackjack200.xyron.Xchange.PlayerReceipt.getDefaultInstance();
             case 2:
-              return com.github.blackjack200.xyron.Xchange.PlayerReport.getDefaultInstance();
+              return com.github.blackjack200.xyron.Xchange.ReportData.getDefaultInstance();
+            case 3:
+              return com.github.blackjack200.xyron.Xchange.BatchedReportData.getDefaultInstance();
             default:
               throw new java.lang.AssertionError("Can't get here.");
           }
@@ -6178,6 +7366,8 @@ com.github.blackjack200.xyron.Xchange.TimestampedReportData defaultValue) {
               return com.google.protobuf.Empty.getDefaultInstance();
             case 2:
               return com.github.blackjack200.xyron.Xchange.ReportResponse.getDefaultInstance();
+            case 3:
+              return com.github.blackjack200.xyron.Xchange.BatchedReportResponse.getDefaultInstance();
             default:
               throw new java.lang.AssertionError("Can't get here.");
           }
@@ -6203,12 +7393,20 @@ com.github.blackjack200.xyron.Xchange.TimestampedReportData defaultValue) {
         com.google.protobuf.RpcCallback<com.google.protobuf.Empty> done);
 
     /**
-     * <code>rpc Report(.xchange.PlayerReport) returns (.xchange.ReportResponse);</code>
+     * <code>rpc Report(.xchange.ReportData) returns (.xchange.ReportResponse);</code>
      */
     public abstract void report(
         com.google.protobuf.RpcController controller,
-        com.github.blackjack200.xyron.Xchange.PlayerReport request,
+        com.github.blackjack200.xyron.Xchange.ReportData request,
         com.google.protobuf.RpcCallback<com.github.blackjack200.xyron.Xchange.ReportResponse> done);
+
+    /**
+     * <code>rpc ReportBatched(.xchange.BatchedReportData) returns (.xchange.BatchedReportResponse);</code>
+     */
+    public abstract void reportBatched(
+        com.google.protobuf.RpcController controller,
+        com.github.blackjack200.xyron.Xchange.BatchedReportData request,
+        com.google.protobuf.RpcCallback<com.github.blackjack200.xyron.Xchange.BatchedReportResponse> done);
 
     public static final
         com.google.protobuf.Descriptors.ServiceDescriptor
@@ -6243,8 +7441,13 @@ com.github.blackjack200.xyron.Xchange.TimestampedReportData defaultValue) {
               done));
           return;
         case 2:
-          this.report(controller, (com.github.blackjack200.xyron.Xchange.PlayerReport)request,
+          this.report(controller, (com.github.blackjack200.xyron.Xchange.ReportData)request,
             com.google.protobuf.RpcUtil.<com.github.blackjack200.xyron.Xchange.ReportResponse>specializeCallback(
+              done));
+          return;
+        case 3:
+          this.reportBatched(controller, (com.github.blackjack200.xyron.Xchange.BatchedReportData)request,
+            com.google.protobuf.RpcUtil.<com.github.blackjack200.xyron.Xchange.BatchedReportResponse>specializeCallback(
               done));
           return;
         default:
@@ -6266,7 +7469,9 @@ com.github.blackjack200.xyron.Xchange.TimestampedReportData defaultValue) {
         case 1:
           return com.github.blackjack200.xyron.Xchange.PlayerReceipt.getDefaultInstance();
         case 2:
-          return com.github.blackjack200.xyron.Xchange.PlayerReport.getDefaultInstance();
+          return com.github.blackjack200.xyron.Xchange.ReportData.getDefaultInstance();
+        case 3:
+          return com.github.blackjack200.xyron.Xchange.BatchedReportData.getDefaultInstance();
         default:
           throw new java.lang.AssertionError("Can't get here.");
       }
@@ -6287,6 +7492,8 @@ com.github.blackjack200.xyron.Xchange.TimestampedReportData defaultValue) {
           return com.google.protobuf.Empty.getDefaultInstance();
         case 2:
           return com.github.blackjack200.xyron.Xchange.ReportResponse.getDefaultInstance();
+        case 3:
+          return com.github.blackjack200.xyron.Xchange.BatchedReportResponse.getDefaultInstance();
         default:
           throw new java.lang.AssertionError("Can't get here.");
       }
@@ -6340,7 +7547,7 @@ com.github.blackjack200.xyron.Xchange.TimestampedReportData defaultValue) {
 
       public  void report(
           com.google.protobuf.RpcController controller,
-          com.github.blackjack200.xyron.Xchange.PlayerReport request,
+          com.github.blackjack200.xyron.Xchange.ReportData request,
           com.google.protobuf.RpcCallback<com.github.blackjack200.xyron.Xchange.ReportResponse> done) {
         channel.callMethod(
           getDescriptor().getMethods().get(2),
@@ -6351,6 +7558,21 @@ com.github.blackjack200.xyron.Xchange.TimestampedReportData defaultValue) {
             done,
             com.github.blackjack200.xyron.Xchange.ReportResponse.class,
             com.github.blackjack200.xyron.Xchange.ReportResponse.getDefaultInstance()));
+      }
+
+      public  void reportBatched(
+          com.google.protobuf.RpcController controller,
+          com.github.blackjack200.xyron.Xchange.BatchedReportData request,
+          com.google.protobuf.RpcCallback<com.github.blackjack200.xyron.Xchange.BatchedReportResponse> done) {
+        channel.callMethod(
+          getDescriptor().getMethods().get(3),
+          controller,
+          request,
+          com.github.blackjack200.xyron.Xchange.BatchedReportResponse.getDefaultInstance(),
+          com.google.protobuf.RpcUtil.generalizeCallback(
+            done,
+            com.github.blackjack200.xyron.Xchange.BatchedReportResponse.class,
+            com.github.blackjack200.xyron.Xchange.BatchedReportResponse.getDefaultInstance()));
       }
     }
 
@@ -6372,7 +7594,12 @@ com.github.blackjack200.xyron.Xchange.TimestampedReportData defaultValue) {
 
       public com.github.blackjack200.xyron.Xchange.ReportResponse report(
           com.google.protobuf.RpcController controller,
-          com.github.blackjack200.xyron.Xchange.PlayerReport request)
+          com.github.blackjack200.xyron.Xchange.ReportData request)
+          throws com.google.protobuf.ServiceException;
+
+      public com.github.blackjack200.xyron.Xchange.BatchedReportResponse reportBatched(
+          com.google.protobuf.RpcController controller,
+          com.github.blackjack200.xyron.Xchange.BatchedReportData request)
           throws com.google.protobuf.ServiceException;
     }
 
@@ -6409,13 +7636,25 @@ com.github.blackjack200.xyron.Xchange.TimestampedReportData defaultValue) {
 
       public com.github.blackjack200.xyron.Xchange.ReportResponse report(
           com.google.protobuf.RpcController controller,
-          com.github.blackjack200.xyron.Xchange.PlayerReport request)
+          com.github.blackjack200.xyron.Xchange.ReportData request)
           throws com.google.protobuf.ServiceException {
         return (com.github.blackjack200.xyron.Xchange.ReportResponse) channel.callBlockingMethod(
           getDescriptor().getMethods().get(2),
           controller,
           request,
           com.github.blackjack200.xyron.Xchange.ReportResponse.getDefaultInstance());
+      }
+
+
+      public com.github.blackjack200.xyron.Xchange.BatchedReportResponse reportBatched(
+          com.google.protobuf.RpcController controller,
+          com.github.blackjack200.xyron.Xchange.BatchedReportData request)
+          throws com.google.protobuf.ServiceException {
+        return (com.github.blackjack200.xyron.Xchange.BatchedReportResponse) channel.callBlockingMethod(
+          getDescriptor().getMethods().get(3),
+          controller,
+          request,
+          com.github.blackjack200.xyron.Xchange.BatchedReportResponse.getDefaultInstance());
       }
 
     }
@@ -6434,11 +7673,6 @@ com.github.blackjack200.xyron.Xchange.TimestampedReportData defaultValue) {
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internal_static_xchange_TimestampedReportData_fieldAccessorTable;
   private static final com.google.protobuf.Descriptors.Descriptor
-    internal_static_xchange_ServerExecution_descriptor;
-  private static final 
-    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internal_static_xchange_ServerExecution_fieldAccessorTable;
-  private static final com.google.protobuf.Descriptors.Descriptor
     internal_static_xchange_AddPlayerRequest_descriptor;
   private static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
@@ -6449,25 +7683,40 @@ com.github.blackjack200.xyron.Xchange.TimestampedReportData defaultValue) {
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internal_static_xchange_AddPlayerRequest_DataEntry_fieldAccessorTable;
   private static final com.google.protobuf.Descriptors.Descriptor
-    internal_static_xchange_PlayerReport_descriptor;
+    internal_static_xchange_ReportData_descriptor;
   private static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internal_static_xchange_PlayerReport_fieldAccessorTable;
+      internal_static_xchange_ReportData_fieldAccessorTable;
   private static final com.google.protobuf.Descriptors.Descriptor
-    internal_static_xchange_PlayerReport_DataEntry_descriptor;
+    internal_static_xchange_ReportData_DataEntry_descriptor;
   private static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internal_static_xchange_PlayerReport_DataEntry_fieldAccessorTable;
-  private static final com.google.protobuf.Descriptors.Descriptor
-    internal_static_xchange_JudgementData_descriptor;
-  private static final 
-    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internal_static_xchange_JudgementData_fieldAccessorTable;
+      internal_static_xchange_ReportData_DataEntry_fieldAccessorTable;
   private static final com.google.protobuf.Descriptors.Descriptor
     internal_static_xchange_ReportResponse_descriptor;
   private static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internal_static_xchange_ReportResponse_fieldAccessorTable;
+  private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_xchange_BatchedReportData_descriptor;
+  private static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_xchange_BatchedReportData_fieldAccessorTable;
+  private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_xchange_BatchedReportResponseEntry_descriptor;
+  private static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_xchange_BatchedReportResponseEntry_fieldAccessorTable;
+  private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_xchange_BatchedReportResponse_descriptor;
+  private static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_xchange_BatchedReportResponse_fieldAccessorTable;
+  private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_xchange_JudgementData_descriptor;
+  private static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_xchange_JudgementData_fieldAccessorTable;
 
   public static com.google.protobuf.Descriptors.FileDescriptor
       getDescriptor() {
@@ -6482,30 +7731,35 @@ com.github.blackjack200.xyron.Xchange.TimestampedReportData defaultValue) {
       "ayer.proto\032\025anticheat_types.proto\"#\n\rPla" +
       "yerReceipt\022\022\n\ninternalId\030\001 \001(\t\"B\n\025Timest" +
       "ampedReportData\022)\n\004data\030\001 \003(\0132\033.xchange." +
-      "WildcardReportData\"2\n\017ServerExecution\022\014\n" +
-      "\004type\030\001 \001(\t\022\021\n\textraData\030\002 \001(\t\"\263\001\n\020AddPl" +
-      "ayerRequest\022\037\n\006player\030\001 \001(\0132\017.xchange.Pl" +
-      "ayer\0221\n\004data\030\002 \003(\0132#.xchange.AddPlayerRe" +
-      "quest.DataEntry\032K\n\tDataEntry\022\013\n\003key\030\001 \001(" +
-      "\003\022-\n\005value\030\002 \001(\0132\036.xchange.TimestampedRe" +
-      "portData:\0028\001\"\303\001\n\014PlayerReport\022&\n\006player\030" +
-      "\001 \001(\0132\026.xchange.PlayerReceipt\022\017\n\007latency" +
-      "\030\002 \001(\001\022-\n\004data\030\003 \003(\0132\037.xchange.PlayerRep" +
-      "ort.DataEntry\032K\n\tDataEntry\022\013\n\003key\030\001 \001(\003\022" +
-      "-\n\005value\030\002 \001(\0132\036.xchange.TimestampedRepo" +
-      "rtData:\0028\001\"\210\001\n\rJudgementData\022\014\n\004type\030\001 \001" +
-      "(\t\022%\n\tjudgement\030\002 \001(\0162\022.xchange.Judgemen" +
-      "t\022\017\n\007message\030\003 \001(\t\0221\n\017extraExecutions\030\004 " +
-      "\003(\0132\030.xchange.ServerExecution\"<\n\016ReportR" +
-      "esponse\022*\n\njudgements\030\001 \003(\0132\026.xchange.Ju" +
-      "dgementData2\313\001\n\tAnticheat\022@\n\tAddPlayer\022\031" +
-      ".xchange.AddPlayerRequest\032\026.xchange.Play" +
-      "erReceipt\"\000\022@\n\014RemovePlayer\022\026.xchange.Pl" +
-      "ayerReceipt\032\026.google.protobuf.Empty\"\000\022:\n" +
-      "\006Report\022\025.xchange.PlayerReport\032\027.xchange" +
-      ".ReportResponse\"\000B=\n\035com.github.blackjac" +
-      "k200.xyronZ\006xyron/\210\001\001\312\002\rprokits\\xyron\320\002\001" +
-      "b\006proto3"
+      "WildcardReportData\"\263\001\n\020AddPlayerRequest\022" +
+      "\037\n\006player\030\001 \001(\0132\017.xchange.Player\0221\n\004data" +
+      "\030\002 \003(\0132#.xchange.AddPlayerRequest.DataEn" +
+      "try\032K\n\tDataEntry\022\013\n\003key\030\001 \001(\003\022-\n\005value\030\002" +
+      " \001(\0132\036.xchange.TimestampedReportData:\0028\001" +
+      "\"\277\001\n\nReportData\022&\n\006player\030\001 \001(\0132\026.xchang" +
+      "e.PlayerReceipt\022\017\n\007latency\030\002 \001(\001\022+\n\004data" +
+      "\030\003 \003(\0132\035.xchange.ReportData.DataEntry\032K\n" +
+      "\tDataEntry\022\013\n\003key\030\001 \001(\003\022-\n\005value\030\002 \001(\0132\036" +
+      ".xchange.TimestampedReportData:\0028\001\"<\n\016Re" +
+      "portResponse\022*\n\njudgements\030\001 \003(\0132\026.xchan" +
+      "ge.JudgementData\"6\n\021BatchedReportData\022!\n" +
+      "\004data\030\001 \003(\0132\023.xchange.ReportData\"p\n\032Batc" +
+      "hedReportResponseEntry\022&\n\006player\030\001 \001(\0132\026" +
+      ".xchange.PlayerReceipt\022*\n\njudgements\030\002 \003" +
+      "(\0132\026.xchange.JudgementData\"J\n\025BatchedRep" +
+      "ortResponse\0221\n\004data\030\001 \003(\0132#.xchange.Batc" +
+      "hedReportResponseEntry\"U\n\rJudgementData\022" +
+      "\014\n\004type\030\001 \001(\t\022%\n\tjudgement\030\002 \001(\0162\022.xchan" +
+      "ge.Judgement\022\017\n\007message\030\003 \001(\t2\230\002\n\tAntich" +
+      "eat\022@\n\tAddPlayer\022\031.xchange.AddPlayerRequ" +
+      "est\032\026.xchange.PlayerReceipt\"\000\022@\n\014RemoveP" +
+      "layer\022\026.xchange.PlayerReceipt\032\026.google.p" +
+      "rotobuf.Empty\"\000\0228\n\006Report\022\023.xchange.Repo" +
+      "rtData\032\027.xchange.ReportResponse\"\000\022M\n\rRep" +
+      "ortBatched\022\032.xchange.BatchedReportData\032\036" +
+      ".xchange.BatchedReportResponse\"\000B=\n\035com." +
+      "github.blackjack200.xyronZ\006xyron/\210\001\001\312\002\rp" +
+      "rokits\\xyron\320\002\001b\006proto3"
     };
     descriptor = com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
@@ -6527,14 +7781,8 @@ com.github.blackjack200.xyron.Xchange.TimestampedReportData defaultValue) {
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_xchange_TimestampedReportData_descriptor,
         new java.lang.String[] { "Data", });
-    internal_static_xchange_ServerExecution_descriptor =
-      getDescriptor().getMessageTypes().get(2);
-    internal_static_xchange_ServerExecution_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_xchange_ServerExecution_descriptor,
-        new java.lang.String[] { "Type", "ExtraData", });
     internal_static_xchange_AddPlayerRequest_descriptor =
-      getDescriptor().getMessageTypes().get(3);
+      getDescriptor().getMessageTypes().get(2);
     internal_static_xchange_AddPlayerRequest_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_xchange_AddPlayerRequest_descriptor,
@@ -6545,30 +7793,48 @@ com.github.blackjack200.xyron.Xchange.TimestampedReportData defaultValue) {
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_xchange_AddPlayerRequest_DataEntry_descriptor,
         new java.lang.String[] { "Key", "Value", });
-    internal_static_xchange_PlayerReport_descriptor =
-      getDescriptor().getMessageTypes().get(4);
-    internal_static_xchange_PlayerReport_fieldAccessorTable = new
+    internal_static_xchange_ReportData_descriptor =
+      getDescriptor().getMessageTypes().get(3);
+    internal_static_xchange_ReportData_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_xchange_PlayerReport_descriptor,
+        internal_static_xchange_ReportData_descriptor,
         new java.lang.String[] { "Player", "Latency", "Data", });
-    internal_static_xchange_PlayerReport_DataEntry_descriptor =
-      internal_static_xchange_PlayerReport_descriptor.getNestedTypes().get(0);
-    internal_static_xchange_PlayerReport_DataEntry_fieldAccessorTable = new
+    internal_static_xchange_ReportData_DataEntry_descriptor =
+      internal_static_xchange_ReportData_descriptor.getNestedTypes().get(0);
+    internal_static_xchange_ReportData_DataEntry_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_xchange_PlayerReport_DataEntry_descriptor,
+        internal_static_xchange_ReportData_DataEntry_descriptor,
         new java.lang.String[] { "Key", "Value", });
-    internal_static_xchange_JudgementData_descriptor =
-      getDescriptor().getMessageTypes().get(5);
-    internal_static_xchange_JudgementData_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_xchange_JudgementData_descriptor,
-        new java.lang.String[] { "Type", "Judgement", "Message", "ExtraExecutions", });
     internal_static_xchange_ReportResponse_descriptor =
-      getDescriptor().getMessageTypes().get(6);
+      getDescriptor().getMessageTypes().get(4);
     internal_static_xchange_ReportResponse_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_xchange_ReportResponse_descriptor,
         new java.lang.String[] { "Judgements", });
+    internal_static_xchange_BatchedReportData_descriptor =
+      getDescriptor().getMessageTypes().get(5);
+    internal_static_xchange_BatchedReportData_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_xchange_BatchedReportData_descriptor,
+        new java.lang.String[] { "Data", });
+    internal_static_xchange_BatchedReportResponseEntry_descriptor =
+      getDescriptor().getMessageTypes().get(6);
+    internal_static_xchange_BatchedReportResponseEntry_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_xchange_BatchedReportResponseEntry_descriptor,
+        new java.lang.String[] { "Player", "Judgements", });
+    internal_static_xchange_BatchedReportResponse_descriptor =
+      getDescriptor().getMessageTypes().get(7);
+    internal_static_xchange_BatchedReportResponse_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_xchange_BatchedReportResponse_descriptor,
+        new java.lang.String[] { "Data", });
+    internal_static_xchange_JudgementData_descriptor =
+      getDescriptor().getMessageTypes().get(8);
+    internal_static_xchange_JudgementData_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_xchange_JudgementData_descriptor,
+        new java.lang.String[] { "Type", "Judgement", "Message", });
     com.google.protobuf.EmptyProto.getDescriptor();
     com.github.blackjack200.xyron.PlayerWrappers.getDescriptor();
     com.github.blackjack200.xyron.PlayerOuterClass.getDescriptor();

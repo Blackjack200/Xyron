@@ -48,7 +48,7 @@ func (s *SimpleAnticheat) RemovePlayer(_ context.Context, r *xyron.PlayerReceipt
 	return &emptypb.Empty{}, nil
 }
 
-func (s *SimpleAnticheat) Report(_ context.Context, r *xyron.PlayerReport) (*xyron.ReportResponse, error) {
+func (s *SimpleAnticheat) Report(_ context.Context, r *xyron.ReportData) (*xyron.ReportResponse, error) {
 	var p *InternalPlayer
 	s.mu.Lock()
 	if pp, ok := s.players[r.Player.GetInternalId()]; !ok {
@@ -60,4 +60,39 @@ func (s *SimpleAnticheat) Report(_ context.Context, r *xyron.PlayerReport) (*xyr
 	//log.Printf("RP:%v", r.Player.InternalId)
 	jdjm := s.handleData(p, r.Data)
 	return &xyron.ReportResponse{Judgements: jdjm}, nil
+}
+
+func (s *SimpleAnticheat) ReportBatch(_ context.Context, data *xyron.BatchedReportData) (*xyron.BatchedReportResponse, error) {
+	f := func(d *xyron.ReportData) *xyron.BatchedReportResponseEntry {
+		s.mu.Lock()
+		var p *InternalPlayer
+		if pp, ok := s.players[d.Player.GetInternalId()]; !ok {
+			return nil
+		} else {
+			p = pp
+		}
+		s.mu.Unlock()
+		//log.Printf("RP:%v", r.Player.InternalId)
+		jdjm := s.handleData(p, d.Data)
+		return &xyron.BatchedReportResponseEntry{
+			Player:     d.Player,
+			Judgements: jdjm,
+		}
+	}
+	wg := sync.WaitGroup{}
+	mu := &sync.Mutex{}
+	var res []*xyron.BatchedReportResponseEntry
+	for _, d := range data.Data {
+		d := d
+		wg.Add(1)
+		go func() {
+			resp := f(d)
+			mu.Lock()
+			res = append(res, resp)
+			mu.Unlock()
+			wg.Done()
+		}()
+	}
+	wg.Wait()
+	return &xyron.BatchedReportResponse{Data: res}, nil
 }

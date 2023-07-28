@@ -28,10 +28,18 @@ interface AnticheatInterface
     /**
      * Method <code>report</code>
      *
-     * @param \prokits\xyron\PlayerReport $request
+     * @param \prokits\xyron\ReportData $request
      * @return \prokits\xyron\ReportResponse
      */
-    public function report(\prokits\xyron\PlayerReport $request);
+    public function report(\prokits\xyron\ReportData $request);
+
+    /**
+     * Method <code>reportBatched</code>
+     *
+     * @param \prokits\xyron\BatchedReportData $request
+     * @return \prokits\xyron\BatchedReportResponse
+     */
+    public function reportBatched(\prokits\xyron\BatchedReportData $request);
 
 }
 

@@ -21,38 +21,45 @@ message TimestampedReportData {
   repeated WildcardReportData data = 1;
 }
 
-//TODO improve this
-message ServerExecution{
-  string type = 1;
-  string extraData = 2;
-}
-
 message AddPlayerRequest{
   Player player = 1;
   //timestamp->report data
   map<int64, TimestampedReportData> data = 2;
 }
 
-message PlayerReport{
+message ReportData{
   PlayerReceipt player = 1;
   double latency = 2;
   //timestamp->report data
   map<int64, TimestampedReportData> data = 3;
 }
 
+message ReportResponse{
+  repeated JudgementData judgements = 1;
+}
+
+message BatchedReportData{
+  repeated ReportData data = 1;
+}
+
+message BatchedReportResponseEntry{
+  PlayerReceipt player = 1;
+  repeated JudgementData judgements = 2;
+}
+
+message BatchedReportResponse{
+  repeated BatchedReportResponseEntry data = 1;
+}
+
 message JudgementData{
   string type = 1;
   Judgement judgement = 2;
   string message = 3;
-  repeated ServerExecution extraExecutions = 4;
-}
-
-message ReportResponse{
-  repeated JudgementData judgements = 1;
 }
 
 service Anticheat {
   rpc AddPlayer(AddPlayerRequest) returns (PlayerReceipt) {}
   rpc RemovePlayer(PlayerReceipt) returns (google.protobuf.Empty) {}
-  rpc Report(PlayerReport) returns (ReportResponse){}
+  rpc Report(ReportData) returns (ReportResponse){}
+  rpc ReportBatched(BatchedReportData) returns (BatchedReportResponse){}
 }

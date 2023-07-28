@@ -54,6 +54,7 @@ message PlayerEatFoodData {
 
 message PlayerAttackData {
   AttackData data = 1;
+  bool damaged = 2;
 }
 
 message PlayerEffectData {
