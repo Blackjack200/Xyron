@@ -32,11 +32,12 @@ type InternalPlayer struct {
 	CloseInventory *BufferedTimestampedData[bool]
 	Attack         *BufferedTimestampedData[*xyron.AttackData]
 
-	OnGround     *BufferedTimestampedData[bool]
-	OnIce        *BufferedTimestampedData[bool]
-	InCobweb     *BufferedTimestampedData[bool]
-	InSweetBerry *BufferedTimestampedData[bool]
-	OnClimbable  *BufferedTimestampedData[bool]
+	OnGround          *BufferedTimestampedData[bool]
+	OnIce             *BufferedTimestampedData[bool]
+	InCobweb          *BufferedTimestampedData[bool]
+	IntersectedLiquid *BufferedTimestampedData[bool]
+	InSweetBerry      *BufferedTimestampedData[bool]
+	OnClimbable       *BufferedTimestampedData[bool]
 
 	InAirTick         uint32
 	OnGroundTick      uint32
@@ -72,6 +73,7 @@ func NewInternalPlayer(log *logrus.Logger, checks []any, os xyron.DeviceOS, name
 		OnGround:          NewBufferedTimestampedData(true),
 		OnIce:             NewBufferedTimestampedData(false),
 		InCobweb:          NewBufferedTimestampedData(false),
+		IntersectedLiquid: NewBufferedTimestampedData(false),
 		InSweetBerry:      NewBufferedTimestampedData(false),
 		OnClimbable:       NewBufferedTimestampedData(false),
 		InAirTick:         0,
@@ -94,17 +96,18 @@ func (p *InternalPlayer) SetLocation(pos *xyron.EntityPositionData) {
 		p.DeltaPosition.Set(cur.Sub(prev))
 	}
 	if pos != nil {
-		OnGround, OnIce, InCobweb, InSweetBerry, OnClimbable := p.CheckGroundState(pos)
+		OnGround, OnIce, InCobweb, InSweetBerry, OnClimbable, IntersectedLiquid := p.CheckGroundState(pos)
 		p.OnGround.Set(p.timestampThisTick, OnGround)
 		p.OnIce.Set(p.timestampThisTick, OnIce)
 		p.InCobweb.Set(p.timestampThisTick, InCobweb)
 		p.InSweetBerry.Set(p.timestampThisTick, InSweetBerry)
 		p.OnClimbable.Set(p.timestampThisTick, OnClimbable)
+		p.IntersectedLiquid.Set(p.timestampThisTick, IntersectedLiquid)
 	}
 }
 
 func (p *InternalPlayer) CheckGroundState(pos *xyron.EntityPositionData) (
-	OnGround, OnIce, InCobweb, InSweetBerry, OnClimbable bool,
+	OnGround, OnIce, InCobweb, InSweetBerry, OnClimbable bool, IntersectedLiquid bool,
 ) {
 	check := func(checkFeature func(*xyron.BlockFeature) bool) func([]*xyron.BlockData) bool {
 		return func(bb []*xyron.BlockData) bool {
@@ -121,12 +124,14 @@ func (p *InternalPlayer) CheckGroundState(pos *xyron.EntityPositionData) (
 	checkCobweb := check(func(f *xyron.BlockFeature) bool { return f.IsCobweb })
 	checkSweetBerry := check(func(f *xyron.BlockFeature) bool { return f.IsSweetBerry })
 	checkClimbable := check(func(f *xyron.BlockFeature) bool { return f.IsClimbable })
+	checkLiquid := check(func(f *xyron.BlockFeature) bool { return f.IsLiquid })
 
 	OnGround = checkSolid(pos.CollidedBlocks) || checkSolid(pos.IntersectedBlocks) || checkSolid([]*xyron.BlockData{pos.BelowThatAffectMovement})
 	OnIce = checkIce(pos.CollidedBlocks) || checkIce(pos.IntersectedBlocks) || checkIce([]*xyron.BlockData{pos.BelowThatAffectMovement})
 	InCobweb = checkCobweb(pos.CollidedBlocks) || checkCobweb(pos.IntersectedBlocks) || checkCobweb([]*xyron.BlockData{pos.BelowThatAffectMovement})
 	InSweetBerry = checkSweetBerry(pos.CollidedBlocks) || checkSweetBerry(pos.IntersectedBlocks) || checkSweetBerry([]*xyron.BlockData{pos.BelowThatAffectMovement})
 	OnClimbable = checkClimbable(pos.CollidedBlocks) || checkClimbable(pos.IntersectedBlocks) || checkClimbable([]*xyron.BlockData{pos.BelowThatAffectMovement})
+	IntersectedLiquid = checkLiquid(pos.IntersectedBlocks) || checkLiquid([]*xyron.BlockData{pos.BelowThatAffectMovement})
 	return
 }
 

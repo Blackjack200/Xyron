@@ -83,7 +83,7 @@ class Loader extends PluginBase implements Listener {
 
 	protected function onEnable() : void {
 		$this->getServer()->getPluginManager()->registerEvents($this, $this);
-		$this->executor = self::createThreadPoolExecutor($this, $this->autoload, "localhost:8884");
+		$this->executor = self::createThreadPoolExecutor($this, $this->autoload, "127.0.0.1:8884");
 		$this->executor->start();
 		//more than 100000 years available LOL so PHP_INT_MAX
 		Await::do(function() {

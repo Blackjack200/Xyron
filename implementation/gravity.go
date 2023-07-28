@@ -17,17 +17,14 @@ type Gravity struct {
 var _ anticheat.MoveDataHandler = &Gravity{}
 
 func init() {
-	oldA := Available
-	Available = func() []any {
-		return append(oldA(), &Gravity{
+	register(func() any {
+		return &Gravity{
 			anticheat.NewEvaluator(80, 0.75, 0.96),
 			0.005,
 			0.997,
-		})
-	}
+		}
+	})
 }
-
-const epsilon = 0.00000001
 
 func (g *Gravity) HandleMoveData(p *anticheat.InternalPlayer, data *xyron.PlayerMoveData) *xyron.JudgementData {
 	if math.Abs(mgl64.Clamp(p.Motion.Current().Get().Y(), -epsilon, epsilon)) > epsilon {
@@ -39,11 +36,13 @@ func (g *Gravity) HandleMoveData(p *anticheat.InternalPlayer, data *xyron.Player
 	}
 	if p.Location.Previous() == nil ||
 		//TODO better high jump support
-		p.InAirTick < 15 ||
+		p.InAirTick < 20 ||
+		(!p.Flying.Current().Get() && p.CurrentTimestamp()-p.Flying.Current().Timestamp() < 20) ||
+		p.IntersectedLiquid.Current().Get() ||
 		p.OnGround.Current().Get() {
 		return nil
 	}
-	newOnGround, _, _, _, _ := p.CheckGroundState(data.NewPosition)
+	newOnGround, _, _, _, _, _ := p.CheckGroundState(data.NewPosition)
 	//sometimes when player land and death, false positives appear
 	if newOnGround {
 		return nil
@@ -74,7 +73,7 @@ func (g *Gravity) HandleMoveData(p *anticheat.InternalPlayer, data *xyron.Player
 
 	equalness := 1 - math.Min(measuredDeltaY/predictedDeltaY, predictedDeltaY/measuredDeltaY)
 
-	if !p.Location.Current().IsFlying {
+	if !p.Location.Current().IsFlying && !data.NewPosition.IsFlying {
 		g.HandleMaxRate(equalness, g.PredictionLatitude, g.UnstableRate)
 	}
 	return &xyron.JudgementData{
@@ -97,19 +96,19 @@ func (g *Gravity) predictDeltaY(p *anticheat.InternalPlayer, prevDeltaY float64)
 	predictedDeltaY *= 0.9800000190734863
 
 	//FIXME stuck block prediction not works at all
-	/*
-			//Cobweb https://github.com/Blackjack200/minecraft_client_1_16_2/blob/master/net/minecraft/world/entity/Entity.java#L516
-		//https://github.com/Blackjack200/minecraft_client_1_16_2/blob/c7f87b96efaeb477d9604354aa23ada0eb637ec6/net/minecraft/world/level/block/WebBlock.java#L17C1
-		if p.InCobweb.Current().Get() || newInCobweb {
-			println("COB")
-			predictedDeltaY *= 0.05
-		}
 
-		//SweetBerry https://github.com/Blackjack200/minecraft_client_1_16_2/blob/c7f87b96efaeb477d9604354aa23ada0eb637ec6/net/minecraft/world/level/block/SweetBerryBushBlock.java#L73
-		if p.InSweetBerry.Current().Get() || newInSweetBerry {
-			predictedDeltaY *= 0.75
-		}
-	*/
+	//Cobweb https://github.com/Blackjack200/minecraft_client_1_16_2/blob/master/net/minecraft/world/entity/Entity.java#L516
+	//https://github.com/Blackjack200/minecraft_client_1_16_2/blob/c7f87b96efaeb477d9604354aa23ada0eb637ec6/net/minecraft/world/level/block/WebBlock.java#L17C1
+	if p.InCobweb.Current().Get() {
+		println("COB")
+		predictedDeltaY *= 0.05
+	}
+
+	//SweetBerry https://github.com/Blackjack200/minecraft_client_1_16_2/blob/c7f87b96efaeb477d9604354aa23ada0eb637ec6/net/minecraft/world/level/block/SweetBerryBushBlock.java#L73
+	if p.InSweetBerry.Current().Get() {
+		predictedDeltaY *= 0.75
+	}
+
 	return predictedDeltaY
 }
 

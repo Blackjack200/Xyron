@@ -2,7 +2,6 @@ package anticheat
 
 import (
 	"github.com/blackjack200/xyron/xyron"
-	"sync"
 )
 
 func (s *SimpleAnticheat) handleData(p *InternalPlayer, tdata map[int64]*xyron.TimestampedReportData) (r []*xyron.JudgementData) {
@@ -16,23 +15,14 @@ func (s *SimpleAnticheat) handleData(p *InternalPlayer, tdata map[int64]*xyron.T
 	for _, timestamp := range sorted {
 		p.timestampThisTick = timestamp
 		for _, wdata := range tdata[timestamp].Data {
-			wg := &sync.WaitGroup{}
-			mu := &sync.Mutex{}
 			for _, c := range checks {
-				wg.Add(1)
 				c := c
-				go func() {
-					data := s.callHandlers(p, c, wdata)
-					mu.Lock()
-					r = append(r, data...)
-					mu.Unlock()
-					wg.Done()
-				}()
+				data := s.callHandlers(p, c, wdata)
+				r = append(r, data...)
 			}
 			p.tickHandlingMu.Lock()
 			s.tickPlayer(p, wdata)
 			p.tickHandlingMu.Unlock()
-			wg.Wait()
 		}
 		p.Tick()
 	}

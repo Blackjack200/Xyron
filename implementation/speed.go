@@ -38,10 +38,12 @@ func (g *Speed) HandleMoveData(p *anticheat.InternalPlayer, data *xyron.PlayerMo
 	if p.Location.Previous() == nil ||
 		//TODO better high jump support
 		p.InAirTick < 15 ||
+		p.IntersectedLiquid.Current().Get() ||
+		(!p.Flying.Current().Get() && p.CurrentTimestamp()-p.Flying.Current().Timestamp() < 20) ||
 		p.OnGround.Current().Get() {
 		return nil
 	}
-	newOnGround, _, _, _, _ := p.CheckGroundState(data.NewPosition)
+	newOnGround, _, _, _, _, _ := p.CheckGroundState(data.NewPosition)
 	//sometimes when player land and death, false positives appear
 	if newOnGround {
 		return nil
@@ -81,7 +83,7 @@ func (g *Speed) HandleMoveData(p *anticheat.InternalPlayer, data *xyron.PlayerMo
 	predictedDeltaXZ := prevDeltaXZ*0.91 + sp
 
 	equalness := 1 - math.Min(measuredDeltaXZ/predictedDeltaXZ, predictedDeltaXZ/measuredDeltaXZ)
-	if !p.Location.Current().IsFlying {
+	if !p.Location.Current().IsFlying && !data.NewPosition.IsFlying {
 		g.HandleMaxRate(equalness, g.PredictionLatitude, g.UnstableRate)
 	}
 	return &xyron.JudgementData{

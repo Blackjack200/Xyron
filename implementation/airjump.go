@@ -14,18 +14,17 @@ type AirJump struct {
 var _ = anticheat.ActionDataHandler(&AirJump{})
 
 func init() {
-	oldA := Available
-	Available = func() []any {
-		return append(oldA(), &AirJump{
+	register(func() any {
+		return &AirJump{
 			anticheat.NewEvaluator(8, 0.3, 0.8),
 			0.9999,
-		})
-	}
+		}
+	})
 }
 
 func (a *AirJump) HandleActionData(p *anticheat.InternalPlayer, data *xyron.PlayerActionData) *xyron.JudgementData {
 	measured := 0.0
-	newOnGround, _, _, _, _ := p.CheckGroundState(data.Position)
+	newOnGround, _, _, _, _, _ := p.CheckGroundState(data.Position)
 	if data.Action == xyron.PlayerAction_Jump &&
 		!p.OnGround.Current().Get() &&
 		!newOnGround &&

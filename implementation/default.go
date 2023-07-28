@@ -11,6 +11,21 @@ var Available = func() []any {
 	return nil
 }
 
+const epsilon = 0.00000001
+
+func register(newF func() any) {
+	oldA := Available
+	Available = func() []any {
+		return append(oldA(), newF())
+	}
+}
+
+func clear() {
+	Available = func() []any {
+		return nil
+	}
+}
+
 func toVec3(pos *xyron.Vec3F) mgl64.Vec3 {
 	return mgl64.Vec3{
 		float64(pos.X),
