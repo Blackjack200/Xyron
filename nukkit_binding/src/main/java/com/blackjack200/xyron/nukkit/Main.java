@@ -30,7 +30,7 @@ public class Main {
         }
         val pp = ppf.get();
         System.out.println(pp.getInternalId());
-        val rp = Xchange.PlayerReport.newBuilder()
+        val rp = Xchange.ReportData.newBuilder()
                 .setPlayer(pp)
                 .setLatency(0.01);
         val jd = client.report(rp.build()).get();

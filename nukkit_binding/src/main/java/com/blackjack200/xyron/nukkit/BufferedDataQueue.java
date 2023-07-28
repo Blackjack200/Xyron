@@ -35,7 +35,7 @@ public class BufferedDataQueue {
                     .addAllData(map.get(timestamp)).build());
             map.remove(timestamp);
         }
-        val rp = Xchange.PlayerReport.newBuilder()
+        val rp = Xchange.ReportData.newBuilder()
                 .setPlayer(p)
                 .setLatency(latency)
                 .putAllData(needSendMap)

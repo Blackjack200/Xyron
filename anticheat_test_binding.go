@@ -41,8 +41,12 @@ func (w *WrappedAnticheatClient) RemovePlayer(ctx context.Context, in *xyron.Pla
 	return w.server.RemovePlayer(ctx, in)
 }
 
-func (w *WrappedAnticheatClient) Report(ctx context.Context, in *xyron.PlayerReport, opts ...grpc.CallOption) (*xyron.ReportResponse, error) {
+func (w *WrappedAnticheatClient) Report(ctx context.Context, in *xyron.ReportData, opts ...grpc.CallOption) (*xyron.ReportResponse, error) {
 	return w.server.Report(ctx, in)
+}
+
+func (w *WrappedAnticheatClient) ReportBatched(ctx context.Context, in *xyron.BatchedReportData, opts ...grpc.CallOption) (*xyron.BatchedReportResponse, error) {
+	return w.server.ReportBatched(ctx, in)
 }
 
 func getField(s interface{}, n string) reflect.Value {
@@ -98,7 +102,7 @@ func (b *BufferedDataQueue) Flush(ctx context.Context, c xyron.AnticheatClient, 
 		delete(b.m, v)
 	}
 	b.mu.Unlock()
-	return c.Report(ctx, &xyron.PlayerReport{
+	return c.Report(ctx, &xyron.ReportData{
 		Player:  p,
 		Latency: latency,
 		Data:    needSendMap,
