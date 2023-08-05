@@ -61,7 +61,7 @@ func (g *Gravity) HandleMoveData(p *anticheat.InternalPlayer, data *xyron.Player
 // predictDeltaY https://github.com/Blackjack200/minecraft_client_1_16_2/blob/master/net/minecraft/world/entity/LivingEntity.java#L1891-1911
 func (g *Gravity) predictDeltaY(p *anticheat.InternalPlayer, prevDeltaY float64) float64 {
 	predictedDeltaY := prevDeltaY
-	if e, ok := p.GetEffect(func(f *xyron.EffectFeature) bool {
+	if e, ok := p.Effect(func(f *xyron.EffectFeature) bool {
 		return f.IsLevitation
 	}); ok {
 		predictedDeltaY += (0.05*(float64(e.Amplifier+1)) - prevDeltaY) * 0.2

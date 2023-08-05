@@ -7,26 +7,25 @@ import (
 	"math"
 )
 
-type Speed struct {
+type SpeedAir struct {
 	*anticheat.Evaluator
 	PredictionLatitude float64
 	UnstableRate       float64
 }
 
-var _ anticheat.MoveDataHandler = &Speed{}
+var _ anticheat.MoveDataHandler = &SpeedAir{}
 
 func init() {
-	oldA := Available
-	Available = func() []any {
-		return append(oldA(), &Speed{
+	register(func() any {
+		return &SpeedAir{
 			anticheat.NewEvaluator(80, 0.75, 0.96),
 			0.05,
 			0.997,
-		})
-	}
+		}
+	})
 }
 
-func (g *Speed) HandleMoveData(p *anticheat.InternalPlayer, data *xyron.PlayerMoveData) *xyron.JudgementData {
+func (g *SpeedAir) HandleMoveData(p *anticheat.InternalPlayer, data *xyron.PlayerMoveData) *xyron.JudgementData {
 	if !isPlayerFreeFalling(p, data.NewPosition) {
 		return nil
 	}
@@ -50,18 +49,18 @@ func (g *Speed) HandleMoveData(p *anticheat.InternalPlayer, data *xyron.PlayerMo
 	if p.Sprinting.Current().Get() {
 		factor = 0.026
 	}
-	predictedDeltaXZ := deltaXZ*0.91 + factor
+	predictedMaxDeltaXZ := deltaXZ*0.91 + factor
 
 	if !p.Location.Current().IsFlying &&
 		!data.NewPosition.IsFlying &&
 		!p.Location.Current().AllowFlying {
-		g.HandleRelativeUnstableRate(measuredFutureDeltaXZ, predictedDeltaXZ, g.PredictionLatitude, g.UnstableRate)
+		g.HandleRelativeUnstableRate(measuredFutureDeltaXZ, predictedMaxDeltaXZ, g.PredictionLatitude, g.UnstableRate)
 	}
 
-	equalness := math.Abs(measuredFutureDeltaXZ - predictedDeltaXZ)
+	equalness := math.Abs(measuredFutureDeltaXZ - predictedMaxDeltaXZ)
 	return &xyron.JudgementData{
-		Type:      "Speed",
+		Type:      "SpeedAir",
 		Judgement: g.Evaluate(),
-		Message:   fmt.Sprintf("p:%v pred-xz:%.5f xz:%.5f delta:%.5f", g.PossibilityString(), predictedDeltaXZ, deltaXZ, equalness),
+		Message:   fmt.Sprintf("p:%v pred-xz:%.5f xz:%.5f delta:%.5f", g.PossibilityString(), predictedMaxDeltaXZ, deltaXZ, equalness),
 	}
 }

@@ -64,7 +64,7 @@ func (pred *predictor) entityTravel(p *anticheat.InternalPlayer, deltaMovement m
 	predictedDeltaMovement := pred.handleRelativeFrictionAndCalculateMovement(p, deltaMovement, friction)
 	predictedDeltaY := predictedDeltaMovement.Y()
 
-	if e, ok := p.GetEffect(func(f *xyron.EffectFeature) bool {
+	if e, ok := p.Effect(func(f *xyron.EffectFeature) bool {
 		return f.IsLevitation
 	}); ok {
 		predictedDeltaY += (0.05*(float64(e.Amplifier+1)) - predictedDeltaMovement.Y()) * 0.2
@@ -155,7 +155,7 @@ func (pred *predictor) getFrictionInfluencedSpeed(p *anticheat.InternalPlayer, f
 
 func (pred *predictor) getSpeed(p *anticheat.InternalPlayer) float64 {
 	speed := defaultAttributeSpeed
-	if e, ok := p.GetEffect(func(f *xyron.EffectFeature) bool {
+	if e, ok := p.Effect(func(f *xyron.EffectFeature) bool {
 		return f.IsSpeed
 	}); ok {
 		//modifier

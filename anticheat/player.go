@@ -151,7 +151,7 @@ func (p *InternalPlayer) Tick() {
 	}
 }
 
-func (p *InternalPlayer) GetEffect(flag func(feature *xyron.EffectFeature) bool) (*xyron.EffectFeature, bool) {
+func (p *InternalPlayer) Effect(flag func(feature *xyron.EffectFeature) bool) (*xyron.EffectFeature, bool) {
 	for _, e := range p.effects {
 		if flag(e) {
 			return e, true

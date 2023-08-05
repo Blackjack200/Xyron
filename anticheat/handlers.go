@@ -35,7 +35,7 @@ func (s *SimpleAnticheat) tickPlayer(p *InternalPlayer, wdata *xyron.WildcardRep
 		p.SetLocation(data.ActionData.Position)
 		switch data.ActionData.Action {
 		case xyron.PlayerAction_Jump:
-			eff, ok := p.GetEffect(func(f *xyron.EffectFeature) bool {
+			eff, ok := p.Effect(func(f *xyron.EffectFeature) bool {
 				return f.IsJumpBoost
 			})
 			if ok {
