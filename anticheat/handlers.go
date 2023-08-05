@@ -2,27 +2,26 @@ package anticheat
 
 import (
 	"github.com/blackjack200/xyron/xyron"
+	"time"
 )
 
 func (s *SimpleAnticheat) handleData(p *InternalPlayer, tdata map[int64]*xyron.TimestampedReportData) (r []*xyron.JudgementData) {
-	checks := p.checks
 	var keys []int64
 	for timestamp, _ := range tdata {
 		keys = append(keys, timestamp)
 	}
 	sorted := ComparableSlice[int64](keys)
 	sorted.Sort()
+	p.lastReport = time.Now()
 	for _, timestamp := range sorted {
 		p.timestampThisTick = timestamp
 		for _, wdata := range tdata[timestamp].Data {
-			for _, c := range checks {
+			for _, c := range p.checks {
 				c := c
 				data := s.callHandlers(p, c, wdata)
 				r = append(r, data...)
 			}
-			p.dataProcessingMu.Lock()
 			s.tickPlayer(p, wdata)
-			p.dataProcessingMu.Unlock()
 		}
 		p.Tick()
 	}
@@ -35,14 +34,9 @@ func (s *SimpleAnticheat) tickPlayer(p *InternalPlayer, wdata *xyron.WildcardRep
 		p.SetLocation(data.ActionData.Position)
 		switch data.ActionData.Action {
 		case xyron.PlayerAction_Jump:
-			eff, ok := p.Effect(func(f *xyron.EffectFeature) bool {
+			p.Jump.Set(p.timestampThisTick, p.Effect(func(f *xyron.EffectFeature) bool {
 				return f.IsJumpBoost
-			})
-			if ok {
-				p.Jump.Set(p.timestampThisTick, int64(eff.Amplifier))
-			} else {
-				p.Jump.Set(p.timestampThisTick, 0)
-			}
+			}))
 		case xyron.PlayerAction_StartSprint:
 			p.Sprinting.Set(p.timestampThisTick, true)
 		case xyron.PlayerAction_StopSprint:

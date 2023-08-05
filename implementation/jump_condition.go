@@ -24,7 +24,7 @@ func init() {
 
 func (a *JumpCondition) HandleActionData(p *anticheat.InternalPlayer, data *xyron.PlayerActionData) *xyron.JudgementData {
 	measured := 0.0
-	newOnGround, _, _, _, _, _ := p.CheckGroundState(data.Position)
+	newOnGround, _, _, _, _, _, _ := p.CheckGroundState(data.Position)
 	if data.Action == xyron.PlayerAction_Jump &&
 		!p.OnGround.Current().Get() &&
 		!newOnGround &&

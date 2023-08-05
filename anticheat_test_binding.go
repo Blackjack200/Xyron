@@ -114,7 +114,8 @@ func main() {
 	log.Formatter = &logrus.TextFormatter{ForceColors: true}
 	log.Level = logrus.DebugLevel
 
-	c := &WrappedAnticheatClient{anticheat.NewSimpleAnticheatServer(log, implementation.Available)}
+	s, stop := anticheat.NewSimpleAnticheatServer(log, implementation.Available)
+	c := &WrappedAnticheatClient{s}
 
 	chat.Global.Subscribe(chat.StdoutSubscriber{})
 
@@ -147,6 +148,7 @@ func main() {
 		}()
 	}) {
 	}
+	stop()
 }
 
 func handleEffects(p *player.Player, hdrs *[]*xyron.WildcardReportData) {
@@ -450,15 +452,18 @@ func (h *playerHandler) getXyronPositionData(pos, rot mgl64.Vec3) *xyron.EntityP
 	xpos[1] = int(math.Floor(h.p.Type().BBox(h.p).Min()[1] - 0.50001))
 	b, _ := ToXyronBlockData(h.p.World(), h.p.World().Block(xpos), xpos)
 	return &xyron.EntityPositionData{
-		Position:                ToXyronVec3(pos),
-		Direction:               ToXyronVec3(rot),
-		BoundingBox:             ToXyronBBox(h.p.Type().BBox(h.p)),
+		Position:      ToXyronVec3(pos),
+		Direction:     ToXyronVec3(rot),
+		BoundingBox:   ToXyronBBox(h.p.Type().BBox(h.p)),
+		IsImmobile:    h.p.Immobile(),
+		IsOnGround:    h.p.OnGround(),
+		AllowFlying:   h.p.GameMode().AllowsFlying(),
+		IsFlying:      h.p.Flying(),
+		HaveGravity:   true,
+		MovementSpeed: h.p.Speed(),
+		//TODO
+		WouldCollideVertically:  false,
 		BelowThatAffectMovement: b,
-		IsImmobile:              h.p.Immobile(),
-		IsOnGround:              h.p.OnGround(),
-		AllowFlying:             h.p.GameMode().AllowsFlying(),
-		IsFlying:                h.p.Flying(),
-		HaveGravity:             true,
 		CollidedBlocks:          getColliedBlocks(h.p),
 		IntersectedBlocks:       getIntersectedBlocks(h.p),
 	}

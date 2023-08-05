@@ -4,83 +4,91 @@ import (
 	"github.com/blackjack200/xyron/xyron"
 	"github.com/go-gl/mathgl/mgl64"
 	"github.com/sirupsen/logrus"
-	"sync"
+	"time"
 )
 
 type InternalPlayer struct {
-	dataProcessingMu *sync.Mutex
-	log              *logrus.Logger
-	checks           []any
+	log               *logrus.Logger
+	lastReport        time.Time
+	timestampThisTick int64
+	checks            []any
 
-	Os            xyron.DeviceOS
-	Input         xyron.InputMode
-	Name          string
-	GameMode      xyron.GameMode
-	Alive         *BufferedTimestampedData[bool]
-	effects       []*xyron.EffectFeature
-	Motion        *BufferedTimestampedData[mgl64.Vec3]
-	Jump          *BufferedTimestampedData[int64]
+	Name string
+
+	Os       xyron.DeviceOS
+	Input    xyron.InputMode
+	GameMode xyron.GameMode
+
+	Alive *BufferedTimestampedData[bool]
+
+	effects []*xyron.EffectFeature
+
 	Location      *BufferedData[*xyron.EntityPositionData]
 	DeltaPosition *BufferedData[mgl64.Vec3]
 
-	Sprinting      *BufferedTimestampedData[bool]
-	Sneaking       *BufferedTimestampedData[bool]
-	Gliding        *BufferedTimestampedData[bool]
-	Swimming       *BufferedTimestampedData[bool]
-	Flying         *BufferedTimestampedData[bool]
+	Attack   *BufferedTimestampedData[*xyron.AttackData]
+	Motion   *BufferedTimestampedData[mgl64.Vec3]
+	Jump     *BufferedTimestampedData[float64]
+	Teleport *BufferedTimestampedData[mgl64.Vec3]
+
 	OpenInventory  *BufferedTimestampedData[bool]
 	CloseInventory *BufferedTimestampedData[bool]
-	Attack         *BufferedTimestampedData[*xyron.AttackData]
 
-	OnGround          *BufferedTimestampedData[bool]
-	OnIce             *BufferedTimestampedData[bool]
-	InCobweb          *BufferedTimestampedData[bool]
+	Sprinting *BufferedTimestampedData[bool]
+	Sneaking  *BufferedTimestampedData[bool]
+	Gliding   *BufferedTimestampedData[bool]
+	Swimming  *BufferedTimestampedData[bool]
+	Flying    *BufferedTimestampedData[bool]
+
+	OnGround     *BufferedTimestampedData[bool]
+	OnIce        *BufferedTimestampedData[bool]
+	OnClimbable  *BufferedTimestampedData[bool]
+	InCobweb     *BufferedTimestampedData[bool]
+	InSweetBerry *BufferedTimestampedData[bool]
+
 	IntersectedLiquid *BufferedTimestampedData[bool]
-	InSweetBerry      *BufferedTimestampedData[bool]
-	OnClimbable       *BufferedTimestampedData[bool]
+	IntersectedSolid  *BufferedTimestampedData[bool]
 
-	InAirTick         uint32
-	OnGroundTick      uint32
-	OnIceTick         uint32
-	timestampThisTick int64
-
-	Teleport *BufferedTimestampedData[mgl64.Vec3]
+	InAirTick    uint32
+	OnGroundTick uint32
+	OnIceTick    uint32
 }
 
 func NewInternalPlayer(log *logrus.Logger, checks []any, os xyron.DeviceOS, name string) *InternalPlayer {
 	return &InternalPlayer{
-		dataProcessingMu:  &sync.Mutex{},
 		log:               log,
+		lastReport:        time.Now(),
+		timestampThisTick: 0,
 		checks:            checks,
+		Name:              name,
 		Os:                os,
 		Input:             0,
-		Name:              name,
 		GameMode:          0,
 		Alive:             NewBufferedTimestampedData(true),
 		effects:           nil,
+		Location:          NewBufferedData((*xyron.EntityPositionData)(nil)),
+		DeltaPosition:     NewBufferedData(mgl64.Vec3{}),
+		Attack:            NewBufferedTimestampedData((*xyron.AttackData)(nil)),
 		Motion:            NewBufferedTimestampedData(mgl64.Vec3{}),
-		Jump:              NewBufferedTimestampedData[int64](0),
-		Location:          NewBufferedData[*xyron.EntityPositionData](nil),
-		DeltaPosition:     NewBufferedData[mgl64.Vec3](mgl64.Vec3{}),
+		Jump:              NewBufferedTimestampedData(float64(0)),
+		Teleport:          NewBufferedTimestampedData(mgl64.Vec3{}),
+		OpenInventory:     NewBufferedTimestampedData(false),
+		CloseInventory:    NewBufferedTimestampedData(false),
 		Sprinting:         NewBufferedTimestampedData(false),
 		Sneaking:          NewBufferedTimestampedData(false),
 		Gliding:           NewBufferedTimestampedData(false),
 		Swimming:          NewBufferedTimestampedData(false),
 		Flying:            NewBufferedTimestampedData(false),
-		OpenInventory:     NewBufferedTimestampedData(false),
-		CloseInventory:    NewBufferedTimestampedData(false),
-		Attack:            NewBufferedTimestampedData[*xyron.AttackData](nil),
 		OnGround:          NewBufferedTimestampedData(true),
 		OnIce:             NewBufferedTimestampedData(false),
-		InCobweb:          NewBufferedTimestampedData(false),
-		IntersectedLiquid: NewBufferedTimestampedData(false),
-		InSweetBerry:      NewBufferedTimestampedData(false),
 		OnClimbable:       NewBufferedTimestampedData(false),
+		InCobweb:          NewBufferedTimestampedData(false),
+		InSweetBerry:      NewBufferedTimestampedData(false),
+		IntersectedLiquid: NewBufferedTimestampedData(false),
+		IntersectedSolid:  NewBufferedTimestampedData(false),
 		InAirTick:         0,
 		OnGroundTick:      0,
 		OnIceTick:         0,
-		timestampThisTick: 0,
-		Teleport:          NewBufferedTimestampedData(mgl64.Vec3{}),
 	}
 }
 
@@ -92,18 +100,25 @@ func (p *InternalPlayer) SetLocation(pos *xyron.EntityPositionData) {
 		p.DeltaPosition.Set(cur.Sub(prev))
 	}
 	if pos != nil {
-		OnGround, OnIce, InCobweb, InSweetBerry, OnClimbable, IntersectedLiquid := p.CheckGroundState(pos)
+		OnGround, OnIce, InCobweb, InSweetBerry, OnClimbable, IntersectedLiquid, IntersectedSolid := p.CheckGroundState(pos)
 		p.OnGround.Set(p.timestampThisTick, OnGround)
 		p.OnIce.Set(p.timestampThisTick, OnIce)
 		p.InCobweb.Set(p.timestampThisTick, InCobweb)
 		p.InSweetBerry.Set(p.timestampThisTick, InSweetBerry)
 		p.OnClimbable.Set(p.timestampThisTick, OnClimbable)
 		p.IntersectedLiquid.Set(p.timestampThisTick, IntersectedLiquid)
+		p.IntersectedSolid.Set(p.timestampThisTick, IntersectedSolid)
 	}
 }
 
 func (p *InternalPlayer) CheckGroundState(pos *xyron.EntityPositionData) (
-	OnGround, OnIce, InCobweb, InSweetBerry, OnClimbable bool, IntersectedLiquid bool,
+	OnGround,
+	OnIce,
+	InCobweb,
+	InSweetBerry,
+	OnClimbable,
+	IntersectedLiquid,
+	IntersectedSolid bool,
 ) {
 	check := func(checkFeature func(*xyron.BlockFeature) bool) func([]*xyron.BlockData) bool {
 		return func(bb []*xyron.BlockData) bool {
@@ -122,12 +137,13 @@ func (p *InternalPlayer) CheckGroundState(pos *xyron.EntityPositionData) (
 	checkClimbable := check(func(f *xyron.BlockFeature) bool { return f.IsClimbable })
 	checkLiquid := check(func(f *xyron.BlockFeature) bool { return f.IsLiquid })
 
-	OnGround = checkSolid(pos.CollidedBlocks) || checkSolid(pos.IntersectedBlocks) || checkSolid([]*xyron.BlockData{pos.BelowThatAffectMovement})
-	OnIce = checkIce(pos.CollidedBlocks) || checkIce(pos.IntersectedBlocks) || checkIce([]*xyron.BlockData{pos.BelowThatAffectMovement})
+	OnGround = checkSolid(pos.CollidedBlocks) || checkSolid([]*xyron.BlockData{pos.BelowThatAffectMovement})
+	OnIce = checkIce(pos.CollidedBlocks) || checkIce([]*xyron.BlockData{pos.BelowThatAffectMovement})
 	InCobweb = checkCobweb(pos.CollidedBlocks) || checkCobweb(pos.IntersectedBlocks) || checkCobweb([]*xyron.BlockData{pos.BelowThatAffectMovement})
 	InSweetBerry = checkSweetBerry(pos.CollidedBlocks) || checkSweetBerry(pos.IntersectedBlocks) || checkSweetBerry([]*xyron.BlockData{pos.BelowThatAffectMovement})
 	OnClimbable = checkClimbable(pos.CollidedBlocks) || checkClimbable(pos.IntersectedBlocks) || checkClimbable([]*xyron.BlockData{pos.BelowThatAffectMovement})
 	IntersectedLiquid = checkLiquid(pos.IntersectedBlocks) || checkLiquid([]*xyron.BlockData{pos.BelowThatAffectMovement})
+	IntersectedSolid = checkSolid(pos.IntersectedBlocks)
 	return
 }
 
@@ -151,20 +167,11 @@ func (p *InternalPlayer) Tick() {
 	}
 }
 
-func (p *InternalPlayer) Effect(flag func(feature *xyron.EffectFeature) bool) (*xyron.EffectFeature, bool) {
+func (p *InternalPlayer) Effect(flag func(feature *xyron.EffectFeature) bool) float64 {
 	for _, e := range p.effects {
 		if flag(e) {
-			return e, true
+			return float64(e.Amplifier)
 		}
 	}
-	return nil, false
-}
-
-func (p *InternalPlayer) HasEffect(flag func(feature *xyron.EffectFeature) bool) bool {
-	for _, e := range p.effects {
-		if flag(e) {
-			return true
-		}
-	}
-	return false
+	return 0
 }

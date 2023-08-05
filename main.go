@@ -20,10 +20,11 @@ func main() {
 	}
 	log.Print("Listen")
 	s := grpc.NewServer()
-	t := anticheat.NewSimpleAnticheatServer(logrus.New(), implementation.Available)
+	t, stop := anticheat.NewSimpleAnticheatServer(logrus.New(), implementation.Available)
 	xyron.RegisterAnticheatServer(s, t)
 	if err := s.Serve(lis); err != nil {
 		panic(err)
 	}
 	s.Stop()
+	stop()
 }

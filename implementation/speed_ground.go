@@ -58,16 +58,13 @@ func (g *SpeedGround) HandleMoveData(p *anticheat.InternalPlayer, data *xyron.Pl
 
 	effectsFactor := 1.0
 
-	if e, ok := p.Effect(func(f *xyron.EffectFeature) bool {
+	effectsFactor *= 1 + 0.2*p.Effect(func(f *xyron.EffectFeature) bool {
 		return f.IsSpeed
-	}); ok {
-		effectsFactor *= 1 + 0.2*float64(e.Amplifier)
-	}
-	if e, ok := p.Effect(func(f *xyron.EffectFeature) bool {
+	})
+
+	effectsFactor *= 1 - 0.15*p.Effect(func(f *xyron.EffectFeature) bool {
 		return f.IsSlowness
-	}); ok {
-		effectsFactor *= 1 - 0.15*float64(e.Amplifier)
-	}
+	})
 
 	slippernessFactor := math.Pow(0.6/slipperness, 3)
 	predictedMaxDX := delta.X()*slipperness*0.91 + 0.1*movementFactor*effectsFactor*slippernessFactor

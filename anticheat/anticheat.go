@@ -6,8 +6,9 @@ import (
 	"github.com/blackjack200/xyron/xyron"
 	"github.com/sirupsen/logrus"
 	"google.golang.org/protobuf/types/known/emptypb"
-	"log"
 	"sync"
+	"sync/atomic"
+	"time"
 )
 
 type SimpleAnticheat struct {
@@ -16,33 +17,69 @@ type SimpleAnticheat struct {
 	log     *logrus.Logger
 	players map[string]*InternalPlayer
 	checks  func() []any
+	running atomic.Bool
 }
 
-func NewSimpleAnticheatServer(log *logrus.Logger, checks func() []any) *SimpleAnticheat {
-	return &SimpleAnticheat{
+func NewSimpleAnticheatServer(log *logrus.Logger, checks func() []any) (*SimpleAnticheat, func()) {
+	s := &SimpleAnticheat{
 		mu:      &sync.Mutex{},
 		log:     log,
 		players: make(map[string]*InternalPlayer),
 		checks:  checks,
+		running: atomic.Bool{},
+	}
+	s.running.Store(true)
+	go func() {
+		t := time.NewTicker(time.Second * 5)
+		for s.running.Load() {
+			select {
+			case _ = <-t.C:
+				s.mu.Lock()
+				for id, p := range s.players {
+					if time.Now().Sub(p.lastReport).Seconds() > 30 {
+						s.log.
+							WithField("player", p.Name).
+							WithField("player_id", id).
+							Debugf("timeout")
+						delete(s.players, id)
+					}
+				}
+				s.mu.Unlock()
+			}
+			time.Sleep(time.Second)
+		}
+	}()
+	return s, func() {
+		s.running.Store(false)
 	}
 }
 
 func (s *SimpleAnticheat) AddPlayer(_ context.Context, req *xyron.AddPlayerRequest) (*xyron.PlayerReceipt, error) {
 	s.mu.Lock()
 	defer s.mu.Unlock()
+
 	if _, ok := s.players[req.Player.Name]; ok {
 		return nil, fmt.Errorf("player already exists: %v", req.Player.Name)
 	}
-	log.Printf("AP:%v", req.Player.Name)
-	ip := NewInternalPlayer(s.log, s.checks(), req.Player.Os, req.Player.Name)
-	s.players[req.Player.Name] = ip
-	s.handleData(ip, req.Data)
+
+	id := internalId(req.Player.Name)
+	p := NewInternalPlayer(s.log, s.checks(), req.Player.Os, req.Player.Name)
+	s.players[id] = p
+	s.handleData(p, req.Data)
+
+	s.log.
+		WithField("player", req.Player.Name).
+		WithField("player_id", id).
+		Debugf("add")
+
 	return &xyron.PlayerReceipt{InternalId: req.Player.Name}, nil
 }
 
 func (s *SimpleAnticheat) RemovePlayer(_ context.Context, r *xyron.PlayerReceipt) (*emptypb.Empty, error) {
 	s.mu.Lock()
-	log.Printf("DP:%v", r.InternalId)
+	s.log.
+		WithField("player_id", r.InternalId).
+		Debugf("remove")
 	delete(s.players, r.InternalId)
 	s.mu.Unlock()
 	return &emptypb.Empty{}, nil

@@ -37,7 +37,7 @@ func isPlayerFreeFalling(p *anticheat.InternalPlayer, futurePos *xyron.EntityPos
 	motionDelay := int64(0)
 
 	// we shouldn't use "future" data, but this is a special condition, false positives appear when player land and death.
-	futureOnGround, _, _, _, _, _ := p.CheckGroundState(futurePos)
+	futureOnGround, _, _, _, _, _, _ := p.CheckGroundState(futurePos)
 	futureImmobile := futurePos.IsImmobile
 
 	motion := p.Motion.Current()

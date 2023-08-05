@@ -1,12 +1,20 @@
 package anticheat
 
 import (
+	"fmt"
 	"github.com/blackjack200/xyron/xyron"
 	"github.com/df-mc/dragonfly/server/block/cube"
 	"github.com/go-gl/mathgl/mgl64"
 	"math"
 	"sort"
 )
+
+var internalIdCounter = int64(0)
+
+func internalId(name string) string {
+	internalIdCounter++
+	return fmt.Sprintf("%v_%v", name, internalIdCounter)
+}
 
 type BufferedData[T any] struct {
 	prev, cur T

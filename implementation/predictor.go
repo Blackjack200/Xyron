@@ -45,9 +45,9 @@ func (pred *predictor) entityTravel(p *anticheat.InternalPlayer, deltaMovement m
 	//without collides, deltaPosition is deltaMovement
 	gravity := 0.08
 	isFalling := deltaMovement.Y() <= 0.0
-	if !isFalling && p.HasEffect(func(f *xyron.EffectFeature) bool {
+	if !isFalling && p.Effect(func(f *xyron.EffectFeature) bool {
 		return f.IsSlowFalling
-	}) {
+	}) != 0 {
 		gravity = 0.01
 	}
 
@@ -64,10 +64,10 @@ func (pred *predictor) entityTravel(p *anticheat.InternalPlayer, deltaMovement m
 	predictedDeltaMovement := pred.handleRelativeFrictionAndCalculateMovement(p, deltaMovement, friction)
 	predictedDeltaY := predictedDeltaMovement.Y()
 
-	if e, ok := p.Effect(func(f *xyron.EffectFeature) bool {
+	if amp := p.Effect(func(f *xyron.EffectFeature) bool {
 		return f.IsLevitation
-	}); ok {
-		predictedDeltaY += (0.05*(float64(e.Amplifier+1)) - predictedDeltaMovement.Y()) * 0.2
+	}); amp != 0 {
+		predictedDeltaY += (0.05*(amp+1) - predictedDeltaMovement.Y()) * 0.2
 	} else if p.Location.Current().HaveGravity {
 		predictedDeltaY -= gravity
 		//TODO WTF https://github.com/Blackjack200/minecraft_client_1_16_2/blob/master/net/minecraft/world/entity/LivingEntity.java#L1905
@@ -155,12 +155,10 @@ func (pred *predictor) getFrictionInfluencedSpeed(p *anticheat.InternalPlayer, f
 
 func (pred *predictor) getSpeed(p *anticheat.InternalPlayer) float64 {
 	speed := defaultAttributeSpeed
-	if e, ok := p.Effect(func(f *xyron.EffectFeature) bool {
+	//modifier
+	speed += 0.2 * p.Effect(func(f *xyron.EffectFeature) bool {
 		return f.IsSpeed
-	}); ok {
-		//modifier
-		speed += 0.2 * float64(e.Amplifier)
-	}
+	})
 	return speed
 }
 
