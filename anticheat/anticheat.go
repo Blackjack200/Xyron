@@ -58,11 +58,12 @@ func (s *SimpleAnticheat) AddPlayer(_ context.Context, req *xyron.AddPlayerReque
 	s.mu.Lock()
 	defer s.mu.Unlock()
 
-	if _, ok := s.players[req.Player.Name]; ok {
-		return nil, fmt.Errorf("player already exists: %v", req.Player.Name)
+	id := internalId(req.Player.Name)
+
+	if _, ok := s.players[id]; ok {
+		return nil, fmt.Errorf("player already exists: %v", id)
 	}
 
-	id := internalId(req.Player.Name)
 	p := NewInternalPlayer(s.log, s.checks(), req.Player.Os, req.Player.Name)
 	s.players[id] = p
 	s.handleData(p, req.Data)
@@ -70,16 +71,16 @@ func (s *SimpleAnticheat) AddPlayer(_ context.Context, req *xyron.AddPlayerReque
 	s.log.
 		WithField("player", req.Player.Name).
 		WithField("player_id", id).
-		Debugf("add")
+		Infof("add")
 
-	return &xyron.PlayerReceipt{InternalId: req.Player.Name}, nil
+	return &xyron.PlayerReceipt{InternalId: id}, nil
 }
 
 func (s *SimpleAnticheat) RemovePlayer(_ context.Context, r *xyron.PlayerReceipt) (*emptypb.Empty, error) {
 	s.mu.Lock()
 	s.log.
 		WithField("player_id", r.InternalId).
-		Debugf("remove")
+		Infof("remove")
 	delete(s.players, r.InternalId)
 	s.mu.Unlock()
 	return &emptypb.Empty{}, nil

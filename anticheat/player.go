@@ -26,13 +26,21 @@ type InternalPlayer struct {
 	Location      *BufferedData[*xyron.EntityPositionData]
 	DeltaPosition *BufferedData[mgl64.Vec3]
 
+	HeldItem *BufferedTimestampedData[*xyron.ItemData]
+
 	Attack   *BufferedTimestampedData[*xyron.AttackData]
-	Motion   *BufferedTimestampedData[mgl64.Vec3]
 	Jump     *BufferedTimestampedData[float64]
+	Eat      *BufferedTimestampedData[bool]
 	Teleport *BufferedTimestampedData[mgl64.Vec3]
+
+	Motion         *BufferedTimestampedData[mgl64.Vec3]
+	MotionCoolDown int64
 
 	OpenInventory  *BufferedTimestampedData[bool]
 	CloseInventory *BufferedTimestampedData[bool]
+
+	PlaceBlock *BufferedTimestampedData[*xyron.PlayerPlaceBlockData]
+	BreakBlock *BufferedTimestampedData[*xyron.PlayerBreakBlockData]
 
 	Sprinting *BufferedTimestampedData[bool]
 	Sneaking  *BufferedTimestampedData[bool]
@@ -68,12 +76,17 @@ func NewInternalPlayer(log *logrus.Logger, checks []any, os xyron.DeviceOS, name
 		effects:           nil,
 		Location:          NewBufferedData((*xyron.EntityPositionData)(nil)),
 		DeltaPosition:     NewBufferedData(mgl64.Vec3{}),
+		HeldItem:          NewBufferedTimestampedData((*xyron.ItemData)(nil)),
 		Attack:            NewBufferedTimestampedData((*xyron.AttackData)(nil)),
-		Motion:            NewBufferedTimestampedData(mgl64.Vec3{}),
 		Jump:              NewBufferedTimestampedData(float64(0)),
+		Eat:               NewBufferedTimestampedData(false),
 		Teleport:          NewBufferedTimestampedData(mgl64.Vec3{}),
+		Motion:            NewBufferedTimestampedData(mgl64.Vec3{}),
+		MotionCoolDown:    0,
 		OpenInventory:     NewBufferedTimestampedData(false),
 		CloseInventory:    NewBufferedTimestampedData(false),
+		PlaceBlock:        NewBufferedTimestampedData((*xyron.PlayerPlaceBlockData)(nil)),
+		BreakBlock:        NewBufferedTimestampedData((*xyron.PlayerBreakBlockData)(nil)),
 		Sprinting:         NewBufferedTimestampedData(false),
 		Sneaking:          NewBufferedTimestampedData(false),
 		Gliding:           NewBufferedTimestampedData(false),
@@ -164,6 +177,9 @@ func (p *InternalPlayer) Tick() {
 		p.OnIceTick++
 	} else {
 		p.OnIceTick = 0
+	}
+	if p.MotionCoolDown > 0 {
+		p.MotionCoolDown--
 	}
 }
 

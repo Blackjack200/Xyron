@@ -64,18 +64,17 @@ func (s *SimpleAnticheat) tickPlayer(p *InternalPlayer, wdata *xyron.WildcardRep
 		default:
 			s.log.Errorf("unhandled action data: %v", data.ActionData.Action)
 		}
-		//TODO
 	case *xyron.WildcardReportData_MoveData:
 		p.SetLocation(data.MoveData.NewPosition)
 		if data.MoveData.Teleport {
 			p.Teleport.Set(p.timestampThisTick, toVec3(data.MoveData.NewPosition.Position))
 		}
 	case *xyron.WildcardReportData_PlaceBlockData:
-		//TODO
+		p.PlaceBlock.Set(p.timestampThisTick, data.PlaceBlockData)
 	case *xyron.WildcardReportData_BreakBlockData:
-		//TODO
+		p.BreakBlock.Set(p.timestampThisTick, data.BreakBlockData)
 	case *xyron.WildcardReportData_EatFoodData:
-		//TODO
+		p.Eat.Set(p.timestampThisTick, data.EatFoodData.Status == xyron.ConsumeStatus_Stop)
 	case *xyron.WildcardReportData_AttackData:
 		p.Attack.Set(p.timestampThisTick, data.AttackData.Data)
 	case *xyron.WildcardReportData_EffectData:
@@ -83,13 +82,15 @@ func (s *SimpleAnticheat) tickPlayer(p *InternalPlayer, wdata *xyron.WildcardRep
 	case *xyron.WildcardReportData_GameModeData:
 		p.GameMode = data.GameModeData.GameMode
 	case *xyron.WildcardReportData_MotionData:
-		p.Motion.Set(p.timestampThisTick, toVec3(data.MotionData.Motion))
+		motion := data.MotionData.Motion
+		p.Motion.Set(p.timestampThisTick, toVec3(motion))
+		p.MotionCoolDown += int64(((motion.X+motion.Y)/2 + 2) * 15)
 	case *xyron.WildcardReportData_InputModeData:
 		p.Input = data.InputModeData.InputMode
 	case *xyron.WildcardReportData_LifeData:
 		p.Alive.Set(p.timestampThisTick, data.LifeData.Alive)
 	case *xyron.WildcardReportData_HeldItemChangeData:
-	//TODO
+		p.HeldItem.Set(p.timestampThisTick, data.HeldItemChangeData.Item)
 	default:
 		s.log.Errorf("unhandled data: %T", data)
 	}

@@ -20,14 +20,17 @@ func init() {
 	register(func() any {
 		return &SpeedGround{
 			anticheat.NewEvaluator(80, 0.75, 0.96),
-			0.05,
+			0.45,
 			0.997,
 		}
 	})
 }
 
 func (g *SpeedGround) HandleMoveData(p *anticheat.InternalPlayer, data *xyron.PlayerMoveData) *xyron.JudgementData {
-	if !isPlayerFreeFalling(p, data.NewPosition) {
+	if isPlayerFreeFalling(p, data.NewPosition) {
+		return nil
+	}
+	if p.OnGroundTick < 5 {
 		return nil
 	}
 	if p.Location.Previous() == nil {
@@ -39,6 +42,8 @@ func (g *SpeedGround) HandleMoveData(p *anticheat.InternalPlayer, data *xyron.Pl
 
 	futurePos := toVec3(data.NewPosition.Position)
 	deltaFuture := futurePos.Sub(oldPos)
+
+	//FIXME a huge amount of inaccuracies, currently assuming the inaccuracies < 0.45
 
 	if isZero(futurePos.Sub(pos).Len()) {
 		return nil
@@ -72,11 +77,7 @@ func (g *SpeedGround) HandleMoveData(p *anticheat.InternalPlayer, data *xyron.Pl
 	pred := mgl64.Vec2{predictedMaxDX, predictedMaxDZ}.Len()
 	measured := mgl64.Vec2{deltaFuture.X(), deltaFuture.Z()}.Len()
 
-	if !p.Location.Current().IsFlying &&
-		!data.NewPosition.IsFlying &&
-		!p.Location.Current().AllowFlying {
-		g.HandleRelativeUnstableRate(measured, pred, g.PredictionLatitude, g.UnstableRate)
-	}
+	g.HandleRelativeUnstableRate(measured, pred, g.PredictionLatitude, g.UnstableRate)
 
 	equalness := math.Abs(measured - pred)
 	return &xyron.JudgementData{
