@@ -65,7 +65,7 @@ contribute, please follow these guidelines:
 Xyron is licensed under the [MIT License](https://opensource.org/licenses/MIT). You are free to use, modify, and
 distribute the code as per the terms of the license.
 
-## Contact
+## Contact & Support
 
 If you have any questions, suggestions, or feedback, you can reach out to us by opening a GitHub issue. We'd love to
 hear from you!
