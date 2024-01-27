@@ -16,8 +16,6 @@
     }
   ],
   "require": {
-    "grpc/grpc": "^1.52.0",
-    "google/protobuf": "^3.23.4",
-    "ext-grpc": "*"
+    "google/protobuf": "^3.23.4"
   }
 }
